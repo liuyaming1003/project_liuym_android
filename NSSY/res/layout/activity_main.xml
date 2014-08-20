@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:navigation="http://schemas.android.com/apk/res/com.liuym.nssy"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.liuym.nssy.MainActivity" >
+
+    <com.liuym.nssy.Navigation
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        navigation:btn_leftText="返回"
+        navigation:btn_rightText="下一步"
+        navigation:tv_title="测试" />
+
+</LinearLayout>
