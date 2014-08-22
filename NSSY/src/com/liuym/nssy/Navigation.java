@@ -1,9 +1,16 @@
 package com.liuym.nssy;
 
+import java.util.List;
+
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -20,6 +27,8 @@ public class Navigation extends LinearLayout {
 	private String strTitle;
 	private int left_drawable;
 	private int right_drawable;
+	private int backgroundColor;
+	private int backgroundAlpha;
 
 	public Navigation(Context context) {
 		super(context);
@@ -38,7 +47,7 @@ public class Navigation extends LinearLayout {
 
 			final int attrIds[] = new int[] { R.attr.btn_leftText,
 					R.attr.btn_rightText, R.attr.tv_title,
-					R.attr.left_drawable, R.attr.right_drawable };
+					R.attr.left_drawable, R.attr.right_drawable, R.attr.backgroundColor , R.attr.backgroundAlpha};
 
 			Context context = getContext();
 
@@ -50,6 +59,8 @@ public class Navigation extends LinearLayout {
 			CharSequence t3 = array.getText(2);
 			left_drawable = array.getResourceId(3, 0);
 			right_drawable = array.getResourceId(4, 0);
+			backgroundColor = array.getColor(5, 0);
+			backgroundAlpha = array.getInt(6, 255);
 
 			array.recycle();
 
@@ -81,7 +92,10 @@ public class Navigation extends LinearLayout {
 		setGravity(Gravity.CENTER_VERTICAL);
 		// 设置背景
 		//setBackgroundResource(R.drawable.navigation_bg);
-		setBackgroundColor(Color.BLACK);
+		setBackgroundColor(backgroundColor);
+		if(backgroundAlpha >= 0 && backgroundAlpha <= 255){
+			getBackground().setAlpha(backgroundAlpha);
+		}
 
 		Context context = getContext();
 
@@ -92,7 +106,7 @@ public class Navigation extends LinearLayout {
 		} else {
 
 			//btn_left.setBackgroundResource(R.drawable.backbg);// 设置背景
-			btn_left.setBackgroundColor(Color.WHITE);
+			btn_left.setBackgroundColor(Color.alpha(0));
 		}
 		btn_left.setTextColor(Color.WHITE);// 字体颜色
 
@@ -207,4 +221,13 @@ public class Navigation extends LinearLayout {
 		this.right_drawable = right_drawable;
 	}
 
+	public void pushNavigation(Activity push,  Intent pushIntent){
+		push.startActivity(pushIntent);
+		push.overridePendingTransition(R.anim.navigation_push_in,R.anim.navigation_push_out);
+	}
+
+	public void popNavigation(Activity pop){
+		pop.finish();
+		pop.overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
+	}
 }
