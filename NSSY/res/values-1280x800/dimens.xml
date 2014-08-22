@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+    <dimen name="navigation_height">44dp</dimen>
+    
+    <!-- 登录界面 -->
+    <dimen name="logon_btn_width">1305dp</dimen>
+    <dimen name="logon_btn_height">137dp</dimen>
+    <dimen name="logon_btn_marginRight">5dp</dimen>
+    <dimen name="logon_btn_marginTop">85dp</dimen>
+    
+    <!-- 用户框 -->
+    <dimen name="text_username_width">227dp</dimen>
+    <dimen name="text_username_height">64dp</dimen>
+    <dimen name="text_username_marginLeft">37dp</dimen>
+    <dimen name="text_username_marginTop">84dp</dimen>
+    
+    <!-- 密码框 -->
+    <dimen name="text_password_width">227dp</dimen>
+    <dimen name="text_password_height">64dp</dimen>
+    <dimen name="text_password_marginLeft">37dp</dimen>
+    <dimen name="text_password_marginTop">158dp</dimen>
+</resources>

@@ -4,10 +4,10 @@
     android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#E0E0E0"
+    android:orientation="vertical"
     tools:context="com.liuym.nssy.TeacherActivity" >
-
+    
     <com.liuym.nssy.Navigation
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
@@ -22,8 +22,7 @@
     <RelativeLayout
         android:id="@+id/Center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/Bottom"
+        android:layout_height="150dp"
         android:layout_below="@+id/navigationView" >
 
         <Button
@@ -31,13 +30,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="个人" />
-        
+
         <Button
             android:id="@+id/glassBtn"
-            android:layout_alignTop="@+id/teacherBtn"
-            android:layout_toRightOf="@+id/teacherBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/teacherBtn"
+            android:layout_toRightOf="@+id/teacherBtn"
             android:text="班级" />
 
         <EditText
@@ -52,9 +51,16 @@
 
             <requestFocus />
         </EditText>
-
     </RelativeLayout>
 
+     <RelativeLayout
+        android:id="@+id/tableview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/Bottom"
+        android:layout_below="@+id/Center" >
+    </RelativeLayout>
+    
     <LinearLayout
         android:id="@+id/Bottom"
         android:layout_width="match_parent"
@@ -65,24 +71,23 @@
         <Button
             android:id="@+id/first"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="首页" />
 
         <Button
             android:id="@+id/second"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="IBEACON" />
 
         <Button
             android:id="@+id/logout"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="注销" />
-
     </LinearLayout>
 
 </RelativeLayout>

@@ -22,7 +22,7 @@ public class TeacherActivity extends Activity {
 		LayoutInflater inflater = LayoutInflater.from(this); 
 		teackerView = inflater.inflate(R.layout.activity_teacher, null);
 		ibeactonView = inflater.inflate(R.layout.activity_ibeacon, null);
-		
+		setTeackerView();
 		navi = (Navigation)findViewById(R.id.navigationView);
 		navi.getBtn_left().setOnClickListener(new OnClickListener() {			
 			@Override
@@ -38,7 +38,7 @@ public class TeacherActivity extends Activity {
 			}
 		});
 		
-		findViewById(R.id.first).setEnabled(true);
+		findViewById(R.id.first).setEnabled(false);
 		
 		findViewById(R.id.teacherBtn).setOnClickListener(new OnClickListener() {			
 			@Override
@@ -60,6 +60,7 @@ public class TeacherActivity extends Activity {
 	}
 	
 	private void setIbeaconView(){
+		setContentView(ibeactonView);
 		if(ibViewIsFirst){
 			ibViewIsFirst = false;
 			findViewById(R.id.logout).setOnClickListener(new OnClickListener() {			
@@ -69,7 +70,7 @@ public class TeacherActivity extends Activity {
 				}
 			});
 			
-			findViewById(R.id.second).setEnabled(true);
+			findViewById(R.id.second).setEnabled(false);
 			
 			findViewById(R.id.first).setOnClickListener(new OnClickListener() {			
 				@Override
@@ -77,7 +78,7 @@ public class TeacherActivity extends Activity {
 					setTeackerView();
 				}
 			});
-		}
+		}		
 	}
 	
 	private void changedActivity(Class<?> inClass){

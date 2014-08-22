@@ -11,7 +11,7 @@
     <com.liuym.nssy.Navigation
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/navigation_height"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         navigation:backgroundAlpha="180"
@@ -40,44 +40,45 @@
 
             <Button
                 android:id="@+id/Logon"
-                android:layout_width="100dp"
-                android:layout_height="130dp"
+                android:layout_width="@dimen/logon_btn_width"
+                android:layout_height="@dimen/logon_btn_height"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="85dp"
+                android:layout_marginRight="@dimen/logon_btn_marginRight"
+                android:layout_marginTop="@dimen/logon_btn_marginTop"
                 android:background="@drawable/login_btn_cn"
-                android:text="登入" />
+                android:text="@string/button_text_logon" />
 
             <EditText
                 android:id="@+id/username"
-                android:layout_width="300dp"
-                android:layout_height="64dp"
+                android:layout_width="@dimen/text_username_width"
+                android:layout_height="@dimen/text_username_height"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="85dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="@dimen/text_username_marginLeft"
+                android:layout_marginTop="@dimen/text_username_marginTop"
+                android:background="@string/edittext_bgcolor_username"
+                android:maxLength="@string/edittext_maxlength_username"
                 android:gravity="center"
-                android:hint="        用户名  USERNAME"
-                android:background="#00000000"
-                android:ems="10" >
-            </EditText>
-            
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="300dp"
-                android:layout_height="64dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="158dp"
-                android:layout_marginLeft="50dp"
-                android:gravity="center"
-                android:hint="        密   码  PASSWORD"
-                android:password="true"
-                android:background="#00000000"
-                android:ems="10" >
+                android:hint="@string/edittext_hint_username"
+                android:singleLine="true">
             </EditText>
 
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="@dimen/text_password_width"
+                android:layout_height="@dimen/text_password_height"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/text_password_marginLeft"
+                android:layout_marginTop="@dimen/text_password_marginTop"
+                android:background="@string/edittext_bgcolor_password"
+                android:maxLength="@string/edittext_maxlength_password"
+                android:gravity="center"
+                android:hint="@string/edittext_hint_password"
+                android:inputType="textPassword"
+                android:singleLine="true" >
+            </EditText>
         </RelativeLayout>
     </RelativeLayout>
 
