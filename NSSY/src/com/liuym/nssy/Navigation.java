@@ -230,4 +230,10 @@ public class Navigation extends LinearLayout {
 		pop.finish();
 		pop.overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
 	}
+	
+	public void popRootNavigation(Activity push,  Intent pushIntent){
+		//pushIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+		push.startActivity(pushIntent);
+		push.overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
+	}
 }

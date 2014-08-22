@@ -26,6 +26,19 @@
         android:layout_below="@+id/navigationView"
         android:layout_above="@+id/Bottom" >
 
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="94dp"
+            android:layout_marginTop="158dp"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
     </RelativeLayout>
     
     <LinearLayout

@@ -4,8 +4,8 @@
     android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#E0E0E0"
+    android:orientation="vertical"
     tools:context="com.liuym.nssy.MainActivity" >
 
     <com.liuym.nssy.Navigation
@@ -17,26 +17,68 @@
         navigation:backgroundAlpha="180"
         navigation:backgroundColor="#22292C"
         navigation:tv_title="首页" >
-
     </com.liuym.nssy.Navigation>
 
     <RelativeLayout
         android:id="@+id/Center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/navigationView"
-        android:layout_above="@+id/Bottom">
+        android:layout_above="@+id/Bottom"
+        android:layout_below="@+id/navigationView" >
 
-        <Button
-            android:id="@+id/Logon"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="61dp"
-            android:layout_marginTop="71dp"
-            android:text="登入" />
-        
+            android:layout_centerVertical="true" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/login_bg_cn"
+                android:scaleType="fitCenter" />
+
+            <Button
+                android:id="@+id/Logon"
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="85dp"
+                android:background="@drawable/login_btn_cn"
+                android:text="登入" />
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="300dp"
+                android:layout_height="64dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="85dp"
+                android:layout_marginLeft="50dp"
+                android:gravity="center"
+                android:hint="        用户名  USERNAME"
+                android:background="#00000000"
+                android:ems="10" >
+            </EditText>
+            
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="300dp"
+                android:layout_height="64dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="158dp"
+                android:layout_marginLeft="50dp"
+                android:gravity="center"
+                android:hint="        密   码  PASSWORD"
+                android:password="true"
+                android:background="#00000000"
+                android:ems="10" >
+            </EditText>
+
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout

@@ -47,7 +47,9 @@ public class MainActivity extends Activity {
     }
     
     private void push(){
-		navi.pushNavigation(this, new Intent(MainActivity.this, TeacherActivity.class));
+    	Intent intent = new Intent(MainActivity.this, TeacherActivity.class);
+    	//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		navi.pushNavigation(this, intent);
     }
 
     @Override

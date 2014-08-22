@@ -26,7 +26,7 @@ public class TeacherActivity extends Activity {
 		findViewById(R.id.logout).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				pop();
+				popRoot();
 			}
 		});
 		
@@ -48,16 +48,23 @@ public class TeacherActivity extends Activity {
 	}
 	
 	private void changedActivity(Class<?> inClass){
-		startActivity(new Intent(TeacherActivity.this, inClass));
+		Intent intent = new Intent(TeacherActivity.this, inClass);
+		intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+		startActivity(intent);
 		overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
 	}
 	
 	private void push(Class<?> inClass){
-		navi.pushNavigation(this, new Intent(TeacherActivity.this, inClass));
+		Intent intent = new Intent(TeacherActivity.this, inClass);		
+		navi.pushNavigation(this, intent);
 	}
 
 	private void pop(){
 		navi.popNavigation(this);
+	}
+	
+	private void popRoot(){
+		navi.popRootNavigation(this, new Intent(TeacherActivity.this, MainActivity.class));
 	}
 
 	@Override
@@ -71,7 +78,7 @@ public class TeacherActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_BACK){
 			//pop
-			navi.popNavigation(this);
+			navi.popRootNavigation(this, new Intent(TeacherActivity.this, MainActivity.class));
 			return true;   
 		}
 		return super.onKeyDown(keyCode, event);
