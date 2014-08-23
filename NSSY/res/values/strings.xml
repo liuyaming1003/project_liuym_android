@@ -11,9 +11,9 @@
     <!-- 登录界面 -->
     <string name="button_text_logon">登录</string>
     <string name="edittext_hint_username">用户名  USERNAME</string>
-    <string name="edittext_bgcolor_username">#00000000</string>
+    <color name="edittext_bgcolor_username">#00000000</color>
     <string name="edittext_maxlength_username">16</string>
     <string name="edittext_hint_password">密  码  PASSWORD</string>
-    <string name="edittext_bgcolor_password">#00000000</string>
+    <color name="edittext_bgcolor_password">#00000000</color>
     <string name="edittext_maxlength_password">10</string>
 </resources>

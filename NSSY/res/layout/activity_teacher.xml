@@ -7,7 +7,7 @@
     android:background="#E0E0E0"
     android:orientation="vertical"
     tools:context="com.liuym.nssy.TeacherActivity" >
-    
+
     <com.liuym.nssy.Navigation
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
@@ -38,29 +38,20 @@
             android:layout_alignTop="@+id/teacherBtn"
             android:layout_toRightOf="@+id/teacherBtn"
             android:text="班级" />
-
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/glassBtn"
-            android:layout_below="@+id/glassBtn"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="87dp"
-            android:ems="10" >
-
-            <requestFocus />
-        </EditText>
     </RelativeLayout>
 
-     <RelativeLayout
-        android:id="@+id/tableview"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/Bottom"
         android:layout_below="@+id/Center" >
+            <View
+                android:id="@+id/tableview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </View>
     </RelativeLayout>
-    
+
     <LinearLayout
         android:id="@+id/Bottom"
         android:layout_width="match_parent"
