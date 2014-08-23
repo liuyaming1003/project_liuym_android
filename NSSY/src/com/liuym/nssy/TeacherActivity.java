@@ -7,17 +7,19 @@ import java.util.Map;
 
 import com.liuym.listviewAdapter.MyListViewAdapter;
 import com.liuym.listviewAdapter.MyListViewAdapter.ListViewInterface;
+import com.liuym.listviewAdapter.MyViewPagerAdapter;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 public class TeacherActivity extends Activity{
 	private LayoutInflater inflater = null;
@@ -25,7 +27,7 @@ public class TeacherActivity extends Activity{
 	private View teackerView = null;
 	private View ibeactonView = null;
 	private boolean ibViewIsFirst = true;
-	private View tableView = null;
+	private ViewPager viewPager = null;
 	private View order_view = null;
 	private View history_view = null;
 	@Override
@@ -90,9 +92,13 @@ public class TeacherActivity extends Activity{
 			}
 		});*/
 
-		tableView = (View)findViewById(R.id.tableview);
-
-
+		viewPager = (ViewPager)findViewById(R.id.viewPager);
+		initOrderListView();
+		initHistoryListView();
+		final ArrayList<View> views = new ArrayList<View>();
+		views.add(order_view);
+		views.add(history_view);
+		viewPager.setAdapter(new MyViewPagerAdapter(views));
 	}
 
 	private void initOrderListView(){
@@ -105,30 +111,69 @@ public class TeacherActivity extends Activity{
 			public void setCell(View view, int position) {
 				//设置CellView 里面的数据
 				System.out.println("setCell index = " + position);
+				Button button = (Button)view.findViewById(R.id.cell_button);
+				button.setText("按钮 " + position);
 			}
-			
+
 			@Override
-			public View getCell(int position) {
+			public View getCell(final int position) {
 				System.out.println("getCell index = " + position);
-				
-				
-				
-				return null;
+				View CellView = inflater.inflate(R.layout.order_cell, null);
+				Button button = (Button)CellView.findViewById(R.id.cell_button);
+				button.setText("按钮 " + position);
+				button.setOnClickListener(new OnClickListener() {					
+					@Override
+					public void onClick(View arg0) {
+						System.out.println("button index = " + position);					
+					}
+				});
+				return CellView;
 			}
 		}));
 	}
 	
+	private void initHistoryListView(){
+		//init Order ListView
+		history_view = inflater.inflate(R.layout.my_listview, null);
+		ListView listView = (ListView)history_view.findViewById(R.id.myListView);
+		listView.setAdapter(new MyListViewAdapter(this, getOrderList(), 
+				new ListViewInterface() {			
+			@Override
+			public void setCell(View view, int position) {
+				//设置CellView 里面的数据
+				System.out.println("setCell index = " + position);
+				Button button = (Button)view.findViewById(R.id.cell_button);
+				button.setText("按钮 " + position);
+			}
+
+			@Override
+			public View getCell(final int position) {
+				System.out.println("getCell index = " + position);
+				View CellView = inflater.inflate(R.layout.order_cell, null);
+				Button button = (Button)CellView.findViewById(R.id.cell_button);
+				button.setText("按钮 " + position);
+				button.setOnClickListener(new OnClickListener() {					
+					@Override
+					public void onClick(View arg0) {
+						System.out.println("button index = " + position);					
+					}
+				});
+				return CellView;
+			}
+		}));
+	}
+
 	private List<Map<String, Object>> getOrderList(){  
-        List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();  
-        for (int i = 0; i < 10; i++) {  
-            Map<String, Object> map=new HashMap<String, Object>();  
-            map.put("image", R.drawable.ic_launcher);  
-            map.put("title", "这是一个标题"+i);  
-            map.put("info", "这是一个详细信息"+i);  
-            list.add(map);  
-        }  
-        return list;  
-    }
+		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();  
+		for (int i = 0; i < 30; i++) {  
+			Map<String, Object> map=new HashMap<String, Object>();  
+			map.put("image", R.drawable.ic_launcher);  
+			map.put("title", "这是一个标题"+i);  
+			map.put("info", "这是一个详细信息"+i);  
+			list.add(map);  
+		}  
+		return list;  
+	}
 
 	private void setTeackerView(){
 		setContentView(teackerView);
@@ -154,13 +199,6 @@ public class TeacherActivity extends Activity{
 				}
 			});
 		}		
-	}
-
-	private void changedActivity(Class<?> inClass){
-		Intent intent = new Intent(TeacherActivity.this, inClass);
-		intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-		startActivity(intent);
-		overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
 	}
 
 	private void push(Class<?> inClass){

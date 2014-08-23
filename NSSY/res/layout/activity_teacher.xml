@@ -38,6 +38,19 @@
             android:layout_alignTop="@+id/teacherBtn"
             android:layout_toRightOf="@+id/teacherBtn"
             android:text="班级" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/glassBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -45,11 +58,11 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/Bottom"
         android:layout_below="@+id/Center" >
-            <View
-                android:id="@+id/tableview"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
-            </View>
+            </android.support.v4.view.ViewPager>
     </RelativeLayout>
 
     <LinearLayout
