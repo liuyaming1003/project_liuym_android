@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:navigation="http://schemas.android.com/apk/res/com.liuym.nssyniassisent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0E0E0"
+    android:orientation="vertical"
+    tools:context="com.liuym.nssyniassisent.TeacherActivity" >
+
+    <com.liuym.nssyniassisent.Navigation
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        navigation:backgroundAlpha="180"
+        navigation:backgroundColor="#22292C"
+        navigation:tv_title="教师" >
+    </com.liuym.nssyniassisent.Navigation>
+
+    <RelativeLayout
+        android:id="@+id/Center"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/navigationView" >
+
+        <TextView
+            android:id="@+id/teacher_info"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:textSize="12sp"
+            android:text="李丽霞,你的校园网无线网络已连接: 00:30:25" />
+        
+        <Button
+            android:id="@+id/teacherBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/teacher_info"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"            
+            android:background="#00000000"
+            android:drawableTop="@drawable/personal_report_icon"
+            android:text="个人电脑保修" />
+
+        <Button
+            android:id="@+id/glassBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/teacherBtn"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="#00000000"
+            android:drawableTop="@drawable/class_report_icon"
+            android:text="班级电脑报修" />
+
+        
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/Bottom"
+        android:layout_below="@+id/Center" >
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </android.support.v4.view.ViewPager>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/Bottom"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/tool_bar_bg"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"  
+            android:background="#00000000"
+            android:drawableTop="@drawable/tool_bar_home_icon"    
+            android:textColor="#FFFFFF"      
+            android:text="首页" />
+
+        <Button
+            android:id="@+id/second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:drawableTop="@drawable/tool_bar_ibeacon_icon"    
+            android:textColor="#FFFFFF"
+            android:text="IBEACON" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:drawableTop="@drawable/tool_bar_logout_icon"    
+            android:textColor="#FFFFFF"
+            android:text="注销" />
+    </LinearLayout>
+
+</RelativeLayout>

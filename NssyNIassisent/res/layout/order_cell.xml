@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" >
+
+        <RelativeLayout
+            android:id="@+id/info"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"            
+            android:background="@drawable/text_field_bg_241x40"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp" >
+
+            <TextView
+                android:id="@+id/order_name"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:text="李丽霞" />
+            <TextView
+                android:id="@+id/order_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/order_name"                
+                android:gravity="center"
+                android:textColor="#543423"
+                android:textSize="10sp"
+                android:text="2014.06.21 15:24:00\n二年级办公室" />
+            
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/cell_button"
+            android:layout_alignTop="@+id/info"
+            android:layout_alignBottom="@+id/info"
+            android:layout_toRightOf="@+id/info"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/cancel_link_btn"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:text="处理该单" />
+    </RelativeLayout>
+
+</RelativeLayout>

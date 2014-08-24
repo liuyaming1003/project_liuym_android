@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 登录界面 -->
+    <color name="navigation_bg_color">#22292C</color> 
+    <color name="edittext_bgcolor_username">#00000000</color>
+    <color name="edittext_bgcolor_password">#00000000</color>
+</resources>
