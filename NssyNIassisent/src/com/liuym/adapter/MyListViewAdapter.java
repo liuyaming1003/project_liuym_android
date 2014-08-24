@@ -55,8 +55,6 @@ public class MyListViewAdapter extends BaseAdapter {
 		}else{
 			listViewInterface.setCell(convertView, position);
 		}
-		Map<String, Object>map = (Map<String, Object>)getItem(position);
-		map.put("CellView", convertView);
 		return convertView;
 	}
 }

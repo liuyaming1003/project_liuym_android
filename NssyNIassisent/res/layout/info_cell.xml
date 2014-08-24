@@ -35,19 +35,20 @@
             android:id="@+id/info_detail"
             android:layout_below="@+id/info_title"
             android:layout_width="fill_parent"
-            android:layout_height="80dp"
-            android:maxLines="15"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"            
             android:scrollbars="vertical"
             android:singleLine="false"
-            android:textColor="#FF0000"
-            android:visibility="gone"
-            android:text="jakfjaldflakjdflasjdflkajsdlfjasldjfalsdjfaklsdjfa;sfasdfja;sldfjalsdfjalskdjfa;ls;jfdals;djfa;lsdjfalsdfjas;dlfjas
-            fasdfaslkdfa;sldfjas;ldkfja;sldjkfals;djfahgjga;lsgjal;djgal;sdfasdfaslkdfa;sldfjas;ldkfja;sldjkfals;djfahgjga;lsgjal;djgal;sd
-            fasdfaslkdfa;sldfjas;ldkfja;sldjkfals;djfahgjga;lsgjal;djgal;sd
-            fasdfaslkdfa;sldfjas;ldkfja;sldjkfals;djfahgjga;lsgjal;djgal;sd
-            fasdfaslkdfa;sldfjas;ldkfja;sldjkfals;djfahgjga;lsgjal;djgal;sd
-            fasdfaslkdfa;sldfjas;ldkfja;sldjkfals;djfahgjga;lsgjal;djgal;sd
-            fasdfaslkdfa;sldfjas;ldkfja;sldjkfals;djfahgjga;lsgjal;djgal;sd" />
+            android:textColor="#543423"
+            android:maxLines="6"
+            android:textSize="12sp"
+            android:text="南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座
+            南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座
+            南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座
+            南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座" />
     </RelativeLayout>
 
 </RelativeLayout>

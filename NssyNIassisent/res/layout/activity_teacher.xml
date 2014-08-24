@@ -21,14 +21,17 @@
     <RelativeLayout
         android:id="@+id/Center"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_below="@+id/navigationView" >
 
         <TextView
             android:id="@+id/teacher_info"
             android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:textSize="12sp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:textSize="13sp"
             android:text="李丽霞,你的校园网无线网络已连接: 00:30:25" />
         
         <Button
@@ -36,9 +39,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/teacher_info"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="20dp"            
+            android:layout_marginLeft="30dp"            
             android:background="#00000000"
             android:drawableTop="@drawable/personal_report_icon"
             android:text="个人电脑保修" />
@@ -49,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/teacherBtn"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="30dp"
             android:background="#00000000"
             android:drawableTop="@drawable/class_report_icon"
             android:text="班级电脑报修" />

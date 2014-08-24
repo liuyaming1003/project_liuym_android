@@ -1,5 +1,11 @@
 package com.liuym.nssyniassisent;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.liuym.nssyniassisent.R;
 import com.liuym.teacher.TeacherActivity;
 
@@ -7,21 +13,32 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class LogonActivity extends MainActivity {
 	private Navigation navi = null;
+	private EditText username = null;
+	private EditText password = null;
+	private Map<String, Object> map = null;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_logon);
         
+        map=new HashMap<String, Object>();
+        
         navi = (Navigation)findViewById(R.id.navigationView);
 		findViewById(R.id.Logon).setOnClickListener(new Button.OnClickListener() {			
 			@Override
-			public void onClick(View v) {
-				push(navi, TeacherActivity.class);
+			public void onClick(View v) {					  
+					map.put("username", username.getText().toString());
+					map.put("password", password.getText().toString());
+					push(navi, TeacherActivity.class, "LogonActivity", map);				
 			}
 		});
+		
+		username = (EditText)findViewById(R.id.username);
+		password = (EditText)findViewById(R.id.password);
     }
 	
 	@Override
