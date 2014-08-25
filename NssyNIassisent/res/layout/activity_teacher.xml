@@ -22,6 +22,7 @@
         android:id="@+id/Center"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/navigationView" >
 
         <TextView
@@ -35,18 +36,16 @@
             android:textSize="13sp" />
 
         <LinearLayout
-            android:id="@+id/Bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/teacher_info"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal" >
 
             <Button
                 android:id="@+id/teacherBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/report_personal_btn_bg_153x79" />
@@ -55,8 +54,6 @@
                 android:id="@+id/glassBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/teacherBtn"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
@@ -83,12 +80,13 @@
         android:layout_height="53dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/tool_bar_bg"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:gravity="center_vertical" >
 
         <Button
             android:id="@+id/first"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#00000000"
             android:drawableTop="@drawable/tool_bar_home_icon"
@@ -98,7 +96,7 @@
         <Button
             android:id="@+id/second"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#00000000"
             android:drawableTop="@drawable/tool_bar_ibeacon_icon"
@@ -108,7 +106,7 @@
         <Button
             android:id="@+id/logout"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#00000000"
             android:drawableTop="@drawable/tool_bar_logout_icon"

@@ -3,6 +3,7 @@ package com.liuym.nssyniassisent;
 import java.util.Map;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
@@ -16,6 +17,9 @@ public class MainActivity extends Activity {
 		int widthPixels=metrics.widthPixels;
 		int heightPixels=metrics.heightPixels;
 		System.out.println("width = " + widthPixels + ", height = " + heightPixels);        
+		
+		
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
     
     protected void push(Navigation navigation, Class<?> inClass){

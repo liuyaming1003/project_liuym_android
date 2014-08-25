@@ -19,9 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("InflateParams") 
 public class TeacherActivity extends MainActivity {
@@ -160,6 +160,7 @@ public class TeacherActivity extends MainActivity {
 					System.out.println("setCell !=");
 					detailView.setVisibility(View.GONE);
 				}
+				setHistoryViewOnClick(view, position);
 			}
 
 			@Override
@@ -168,6 +169,7 @@ public class TeacherActivity extends MainActivity {
 				View CellView = inflater.inflate(R.layout.history_cell, null);
 				View detailView = (View)CellView.findViewById(R.id.history_info);
 				detailView.setVisibility(View.GONE);
+				setHistoryViewOnClick(CellView, position);
 				return CellView;
 			}
 		});
@@ -175,7 +177,7 @@ public class TeacherActivity extends MainActivity {
 		
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
 		      public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
-		          long arg3){  
+		          long arg3){
 		    	  View detailView = (View)arg1.findViewById(R.id.history_info);
 		    	  if(history_select_index != arg2){
 		    		  if(history_select_index != -1){
@@ -193,12 +195,46 @@ public class TeacherActivity extends MainActivity {
 		      }  
 		    }); 
 	}
+	
+	private void setHistoryViewOnClick(View view, final int index){
+		System.out.println("index = " + index);
+		view.findViewById(R.id.history_btn_1).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+					toastShow("已上报 + " + index);		
+			}
+		});
+		
+		view.findViewById(R.id.history_btn_2).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+					toastShow("xxx为你服务 + " + index);		
+			}
+		});
+		
+		view.findViewById(R.id.history_btn_3).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+					toastShow("维修进行中 + " + index);		
+			}
+		});
+		
+		view.findViewById(R.id.history_btn_4).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+					toastShow("评价服务 + " + index);		
+			}
+		});
+	}
+	
+	private void toastShow(String showMessage){
+		Toast.makeText(this, showMessage, Toast.LENGTH_SHORT).show();
+	}
 
 	private List<Map<String, Object>> getOrderList(){  
 		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();  
 		for (int i = 0; i < 30; i++) {  
-			Map<String, Object> map=new HashMap<String, Object>();  
-			map.put("image", R.drawable.ic_launcher);  
+			Map<String, Object> map=new HashMap<String, Object>();
 			map.put("title", "这是一个标题"+i);  
 			map.put("info", "这是一个详细信息"+i);  
 			list.add(map);  

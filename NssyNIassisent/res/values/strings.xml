@@ -11,5 +11,7 @@
     <string name="edittext_maxlength_password">10</string>
     <string name="title_activity_ibeacon">IbeaconActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_person">PersonActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

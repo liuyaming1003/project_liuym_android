@@ -8,26 +8,27 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-        <TextView
+        <RelativeLayout
             android:id="@+id/history"
             android:layout_width="match_parent"
             android:layout_height="50dp"            
-            android:background="@drawable/repair_bg">            
-        </TextView>
-        
-        <RelativeLayout
+            android:background="@drawable/repair_bg" 
+            android:descendantFocusability="blocksDescendants">            
+        </RelativeLayout>
+        <LinearLayout
             android:id="@+id/history_info"
             android:layout_width="match_parent"
             android:layout_below="@+id/history"
-            android:layout_height="70dp"> 
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:descendantFocusability="blocksDescendants"> 
                         
             <Button 
-                android:id="@+id/button1"
+                android:id="@+id/history_btn_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="#00000000"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="5dp"
                 android:drawableTop="@drawable/reported_icon"
                 android:text="已上报"/>
@@ -35,62 +36,55 @@
                 android:id="@+id/image1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_toRightOf="@+id/button1"
                 android:src="@drawable/process_to_right_arrow"/>
             <Button 
-                android:id="@+id/button2"
+                android:id="@+id/history_btn_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/image1"
+                android:layout_weight="1"
                 android:background="#00000000"
-                android:layout_centerVertical="true"
                 android:drawableTop="@drawable/persional_icon"
                 android:text="xxx为你服务"/>
             <ImageView 
                 android:id="@+id/image2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_toRightOf="@+id/button2"
                 android:src="@drawable/process_to_right_arrow"/>
             
             <Button 
-                android:id="@+id/button3"
+                android:id="@+id/history_btn_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/image2"
+                android:layout_weight="1"
                 android:background="#00000000"
-                android:layout_centerVertical="true"
                 android:drawableTop="@drawable/settings_icon"
                 android:text="维修进行中"/>
             <ImageView 
                 android:id="@+id/image3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_toRightOf="@+id/button3"
                 android:src="@drawable/process_to_right_arrow"/>
             
             <Button 
-                android:id="@+id/button4"
+                android:id="@+id/history_btn_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/image3"
+                android:layout_weight="1"
                 android:background="#00000000"
-                android:layout_centerVertical="true"
                 android:drawableTop="@drawable/appraise_icon"
-                android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
                 android:text="评价服务"/>
             
-        </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

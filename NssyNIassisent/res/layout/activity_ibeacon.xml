@@ -46,10 +46,11 @@
     <LinearLayout
         android:id="@+id/Bottom"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="53dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/tool_bar_bg"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:gravity="center_vertical" >
 
         <Button
             android:id="@+id/first"
@@ -69,7 +70,7 @@
             android:background="#00000000"
             android:drawableTop="@drawable/tool_bar_ibeacon_icon"    
             android:textColor="#FFFFFF"
-            android:text="IBEACON" />
+            android:text="位置" />
 
         <Button
             android:id="@+id/logout"

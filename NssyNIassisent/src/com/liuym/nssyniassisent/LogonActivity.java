@@ -2,7 +2,6 @@ package com.liuym.nssyniassisent;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import com.liuym.nssyniassisent.R;
 import com.liuym.teacher.TeacherActivity;
 
@@ -52,14 +51,12 @@ public class LogonActivity extends MainActivity {
 	        ComponentName component = rti.topActivity;  
 
 	        Log.i("tracy", component.getClassName());  */
-
-			if ((System.currentTimeMillis() - mExitTime) > 2000) {
+			if ((System.currentTimeMillis() - mExitTime) > 2000) {// 如果两次按键时间间隔大于2000毫秒，则不退出
 				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-				mExitTime = System.currentTimeMillis();
+				mExitTime = System.currentTimeMillis();// 更新mExitTime
 			} else {
-				finish();
+				System.exit(0);// 否则退出程序
 			}
-
 			return true;   
 		}
 		return super.onKeyDown(keyCode, event);
