@@ -31,34 +31,37 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
-            android:textSize="13sp"
-            android:text="李丽霞,你的校园网无线网络已连接: 00:30:25" />
-        
-        <Button
-            android:id="@+id/teacherBtn"
-            android:layout_width="wrap_content"
+            android:text="李丽霞,你的校园网无线网络已连接: 00:30:25"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:id="@+id/Bottom"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/teacher_info"
-            android:layout_marginTop="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="30dp"            
-            android:background="#00000000"
-            android:drawableTop="@drawable/personal_report_icon"
-            android:text="个人电脑保修" />
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/glassBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/teacherBtn"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="30dp"
-            android:background="#00000000"
-            android:drawableTop="@drawable/class_report_icon"
-            android:text="班级电脑报修" />
+            <Button
+                android:id="@+id/teacherBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/report_personal_btn_bg_153x79" />
 
-        
-
+            <Button
+                android:id="@+id/glassBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/teacherBtn"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/report_class_btn_bg_153x79" />
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
@@ -66,17 +69,18 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/Bottom"
         android:layout_below="@+id/Center" >
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-            </android.support.v4.view.ViewPager>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </android.support.v4.view.ViewPager>
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/Bottom"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="53dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/tool_bar_bg"
         android:orientation="horizontal" >
@@ -84,32 +88,32 @@
         <Button
             android:id="@+id/first"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"  
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_home_icon"    
-            android:textColor="#FFFFFF"      
-            android:text="首页" />
+            android:drawableTop="@drawable/tool_bar_home_icon"
+            android:text="首页"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/second"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_ibeacon_icon"    
-            android:textColor="#FFFFFF"
-            android:text="IBEACON" />
+            android:drawableTop="@drawable/tool_bar_ibeacon_icon"
+            android:text="位置"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/logout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_logout_icon"    
-            android:textColor="#FFFFFF"
-            android:text="注销" />
+            android:drawableTop="@drawable/tool_bar_logout_icon"
+            android:text="注销"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 </RelativeLayout>

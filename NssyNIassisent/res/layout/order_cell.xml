@@ -13,7 +13,7 @@
         <RelativeLayout
             android:id="@+id/info"
             android:layout_width="240dp"
-            android:layout_height="wrap_content"            
+            android:layout_height="match_parent"            
             android:background="@drawable/text_field_bg_241x40"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="5dp"

@@ -5,26 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
 
 import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.adapter.MyViewPagerAdapter;
 import com.liuym.nssyniassisent.*;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,6 +37,8 @@ public class TeacherActivity extends MainActivity {
 	private int order_select_index = -1;
 	private View order_select_view = null;
 	private View history_view = null;
+	private int history_select_index = -1;
+	private View history_select_view = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -101,21 +97,9 @@ public class TeacherActivity extends MainActivity {
 					info_detail.setVisibility(View.GONE);
 				}
 				info_title.setText("南实集团: 举行《践行群众路线，做好群众工作》专题讲座");
-				info_detail.setText("南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座 " +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座");
+				info_detail.setText("南实校园讯（通讯员 陈一芹）4月29日下午，南山实验教育集团特邀人民大学博士、市委党校王连喜教授，" +
+						"举行了主题为《践行群众路线，做好群众工作》专题辅导讲座。讲座由南实集团党总支书记、总" +
+						"校长程显栋同志主持，集团全体党员干部180余人聆听讲座");
 			}
 
 			@Override
@@ -128,21 +112,9 @@ public class TeacherActivity extends MainActivity {
 				info_time.setText("2014.06.16 10:25:53");
 				info_title.setText("南实集团: 举行《践行群众路线，做好群众工作》专题讲座");
 				info_detail.setVisibility(View.GONE); 
-				info_detail.setText("南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座 " +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座" +
-						"南实集团: 举行《践行群众路线，做好群众工作》专题讲座");
+				info_detail.setText("南实校园讯（通讯员 陈一芹）4月29日下午，南山实验教育集团特邀人民大学博士、市委党校王连喜教授，" +
+						"举行了主题为《践行群众路线，做好群众工作》专题辅导讲座。讲座由南实集团党总支书记、总" +
+						"校长程显栋同志主持，集团全体党员干部180余人聆听讲座");
 				return CellView;
 			}
 		});
@@ -173,31 +145,53 @@ public class TeacherActivity extends MainActivity {
 		//init Order ListView
 		history_view = inflater.inflate(R.layout.my_listview, null);
 		ListView listView = (ListView)history_view.findViewById(R.id.myListView);
-		listView.setAdapter(new MyListViewAdapter(this, getOrderList(), 
+		
+		final MyListViewAdapter historyAdapter = new MyListViewAdapter(this, getOrderList(), 
 				new ListViewInterface() {			
 			@Override
 			public void setCell(View view, int position) {
 				//设置CellView 里面的数据
 				System.out.println("setCell index = " + position);
-				Button button = (Button)view.findViewById(R.id.cell_button);
-				button.setText("按钮 " + position);
+				View detailView = (View)view.findViewById(R.id.history_info);
+				if(history_select_index == position){
+					System.out.println("setCell ==");
+					detailView.setVisibility(View.VISIBLE);
+				}else{
+					System.out.println("setCell !=");
+					detailView.setVisibility(View.GONE);
+				}
 			}
 
 			@Override
 			public View getCell(final int position) {
 				System.out.println("getCell index = " + position);
-				View CellView = inflater.inflate(R.layout.order_cell, null);
-				Button button = (Button)CellView.findViewById(R.id.cell_button);
-				button.setText("按钮 " + position);
-				button.setOnClickListener(new OnClickListener() {					
-					@Override
-					public void onClick(View arg0) {
-						System.out.println("button index = " + position);					
-					}
-				});
+				View CellView = inflater.inflate(R.layout.history_cell, null);
+				View detailView = (View)CellView.findViewById(R.id.history_info);
+				detailView.setVisibility(View.GONE);
 				return CellView;
 			}
-		}));
+		});
+		listView.setAdapter(historyAdapter);
+		
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
+		      public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
+		          long arg3){  
+		    	  View detailView = (View)arg1.findViewById(R.id.history_info);
+		    	  if(history_select_index != arg2){
+		    		  if(history_select_index != -1){
+		    			  history_select_view.setVisibility(View.GONE);
+		    		  }
+		    		  history_select_index = arg2;	    		  
+		    	  }
+		    	  if(detailView.getVisibility() == View.VISIBLE){
+		    		  detailView.setVisibility(View.GONE);
+		    		  history_select_index = -1;
+		    	  }else{
+		    		  detailView.setVisibility(View.VISIBLE);
+		    	  }
+		    	  history_select_view = detailView;
+		      }  
+		    }); 
 	}
 
 	private List<Map<String, Object>> getOrderList(){  

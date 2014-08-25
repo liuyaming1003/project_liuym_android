@@ -1,11 +1,6 @@
 package com.liuym.nssyniassisent;
 
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
-
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,12 +29,7 @@ public class MainActivity extends Activity {
     	Bundle bundle = new Bundle();
     	SerializableMap serializableMap = new SerializableMap();
     	
-    	Map<String, Object> map1=new HashMap<String, Object>();  
-		map1.put("image", R.drawable.ic_launcher);  
-		map1.put("title", "这是一个标题");  
-		map1.put("info", "这是一个详细信息");
-    	
-    	serializableMap.setMap(map1);
+    	serializableMap.setMap(map);
     	bundle.putSerializable("map", serializableMap);    	
     	intent.putExtra("tag", tag);
     	intent.putExtras(bundle);
