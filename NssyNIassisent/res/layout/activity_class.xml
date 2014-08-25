@@ -2,11 +2,11 @@
     xmlns:navigation="http://schemas.android.com/apk/res/com.liuym.nssyniassisent"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"    
+    android:layout_height="match_parent"
     android:background="#E0E0E0"
     android:orientation="vertical"
-    tools:context=".PersonActivity" >
-    
+    tools:context=".ClassActivity" >
+
     <com.liuym.nssyniassisent.Navigation
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
@@ -16,15 +16,15 @@
         navigation:backgroundAlpha="180"
         navigation:backgroundColor="#22292C"
         navigation:btn_leftText="取消"
-        navigation:tv_title="个人设备保修" >
+        navigation:tv_title="班级设备保修" >
     </com.liuym.nssyniassisent.Navigation>
-    
+
     <RelativeLayout
         android:id="@+id/Center"
-        android:layout_below="@+id/navigationView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        
+        android:layout_height="match_parent"
+        android:layout_below="@+id/navigationView" >
+
         <TextView
             android:id="@+id/teacher_info"
             android:layout_width="match_parent"
@@ -36,20 +36,29 @@
             android:textSize="13sp" />
         
         <TextView
-            android:id="@+id/teacher_sure"
+            android:id="@+id/class_sure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/teacher_info"
             android:layout_alignParentTop="true"
             android:layout_marginTop="50dp"
-            android:text="教师电脑报修信息确认"
+            android:text="班级设备报修信息确认"
             android:textSize="18sp" />
         
-        <LinearLayout
-            android:id="@+id/Username"
-            android:layout_below="@+id/teacher_sure"
+        <TextView
+            android:id="@+id/class_sure_detail"
             android:layout_width="match_parent"
-            android:layout_height="50dp" 
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/class_sure"
+            android:layout_marginTop="10dp"
+            android:text="确认保修期请仔细核对您的报修信息,已免造成不必要的麻烦,谢谢!"
+            android:textSize="10sp" />
+        
+        <LinearLayout
+            android:id="@+id/Grade"
+            android:layout_below="@+id/class_sure_detail"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" 
             android:orientation="horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -59,10 +68,38 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
                 android:textSize="20sp"
-                android:text="姓名">                
+                android:text="年级">                
             </TextView>          
             <EditText 
-                android:id="@+id/username_info"
+                android:id="@+id/grage_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:singleLine="true"
+                android:background="@drawable/text_field_bg_241x40"
+                />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/Class"
+            android:layout_below="@+id/Grade"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" 
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp">  
+            <TextView 
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:textSize="20sp"
+                android:text="班级">                
+            </TextView>          
+            <EditText 
+                android:id="@+id/class_info"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
@@ -75,14 +112,13 @@
         
         <LinearLayout
             android:id="@+id/Phone"
-            android:layout_below="@+id/Username"
+            android:layout_below="@+id/Class"
             android:layout_width="match_parent"
-            android:layout_height="50dp" 
+            android:layout_height="40dp" 
             android:orientation="horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            >  
+            android:layout_marginTop="5dp">  
             <TextView 
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
@@ -91,14 +127,16 @@
                 android:text="电话">                
             </TextView>          
             <EditText 
+                android:id="@+id/phone_info"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal|center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
+                android:gravity="center_horizontal|center_vertical"
                 android:singleLine="true"
                 android:inputType="number"
-                android:background="@drawable/text_field_bg_241x40"/>
+                android:background="@drawable/text_field_bg_241x40"
+                />
         </LinearLayout>
         
         <LinearLayout 

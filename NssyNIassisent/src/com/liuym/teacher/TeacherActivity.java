@@ -67,6 +67,20 @@ public class TeacherActivity extends MainActivity {
 				setIbeaconView();
 			}
 		});
+		
+		findViewById(R.id.teacherBtn).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View arg0) {
+				push(navi, PersonActivity.class);
+			}
+		});
+		
+		findViewById(R.id.classBtn).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View arg0) {
+				push(navi, ClassActivity.class);
+			}
+		});
 
 		viewPager = (ViewPager)findViewById(R.id.viewPager);
 		initOrderListView();

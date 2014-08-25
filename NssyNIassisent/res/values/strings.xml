@@ -9,9 +9,5 @@
     <string name="edittext_maxlength_username">16</string>
     <string name="edittext_hint_password">密  码  PASSWORD</string>
     <string name="edittext_maxlength_password">10</string>
-    <string name="title_activity_ibeacon">IbeaconActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_person">PersonActivity</string>
-    <string name="action_settings">Settings</string>
 
 </resources>

@@ -15,11 +15,11 @@
         android:screenOrientation="sensorPortrait"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
-            android:name="com.liuym.nssyniassisent.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="sensorPortrait" >
         </activity>
         <activity
-            android:name="com.liuym.nssyniassisent.LogonActivity"
+            android:name=".LogonActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask" >
             <intent-filter>
@@ -33,9 +33,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.liuym.nssyniassisent.MainActivity" />
         </activity>
+        <activity android:name="com.liuym.teacher.PersonActivity" >
+        </activity>
         <activity
-            android:name="com.liuym.nssyniassisent.PersonActivity"
-            android:label="@string/title_activity_person" >
+            android:name="com.liuym.teacher.ClassActivity">
         </activity>
     </application>
 

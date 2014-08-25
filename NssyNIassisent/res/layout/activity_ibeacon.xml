@@ -24,23 +24,6 @@
         android:layout_below="@+id/navigationView"
         android:layout_above="@+id/Bottom" >
 
-        <TextView
-            android:id="@+id/info_detail"
-            android:layout_width="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:layout_height="80dp"
-            android:scrollbars="vertical"
-            android:singleLine="false"
-            android:textColor="#FF0000"
-            android:maxLines="5"
-            android:text="南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座
-            南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座
-            南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座
-            南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座南实集团: 举行《践行群众路线，做好群众工作》专题讲座" />
-
     </RelativeLayout>
     
     <LinearLayout

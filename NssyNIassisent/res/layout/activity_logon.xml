@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         navigation:backgroundAlpha="180"
         navigation:backgroundColor="#22292C"
-        navigation:tv_title="首页" >
+        navigation:tv_title="南山实验网络助手" >
     </com.liuym.nssyniassisent.Navigation>
 
     <RelativeLayout
