@@ -14,7 +14,7 @@ public class HttpRequest{
 	public HttpRequest(){
 	}
 
-	public static String httpGetRequest(String url) throws ClientProtocolException, IOException{
+	public static String httpGetRequest(String url, String hostAddr) throws ClientProtocolException, IOException{
 		String result = null;
 		HttpGet httpGet = new HttpGet(url);	
 		httpGet.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
@@ -22,7 +22,7 @@ public class HttpRequest{
 		httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4");
 		httpGet.setHeader("Cache-Control", "max-age=0");
 		httpGet.setHeader("Connection", "keep-alive");
-		httpGet.setHeader("Host", "172.16.88.64");
+		httpGet.setHeader("Host", hostAddr);
 		
 		HttpClient client = new DefaultHttpClient();
         // «Î«Û≥¨ ±

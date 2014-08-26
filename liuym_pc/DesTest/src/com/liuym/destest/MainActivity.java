@@ -8,6 +8,9 @@ import org.apache.http.client.ClientProtocolException;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -31,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
 	private String wifiIp;
 	private TextView resultView;
 	private Handler handler;
+	private String httpUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
 				String usernameText = username.getText().toString();
 				String passwordText = password.getText().toString();
 				String deskeyText = deskey.getText().toString();
-				String hostipText = hostip.getText().toString();
+				final String hostipText = hostip.getText().toString();
 				if(usernameText != null && passwordText != null 
 						&& deskeyText != null && hostipText != null){
 					
@@ -75,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
 							String data = MyDes.shareMyDes().encDes("username="+ new String(Base64.encodeBase64(usernameText.getBytes())) +",password="+ new String(Base64.encodeBase64(passwordText.getBytes())));
 							final String netUrl = "http://"+ hostipText +"/portal/entrance/http_index.jsp?userinfo=" + URLEncoder.encode(data, "utf-8") + "&userip="+ wifiIp +"&userPublicIp="+ wifiIp +"&language=Chinese";
 							setLogText("url地址" + netUrl);
-
+							httpUrl = netUrl;
 							logon.setEnabled(false);
 							new Thread(){
 								Message msg = new Message();
@@ -83,8 +87,9 @@ public class MainActivity extends ActionBarActivity {
 									String result = null;									
 									msg.what = 0;
 									try {
-										result = HttpRequest.httpGetRequest(netUrl);
+										result = HttpRequest.httpGetRequest(netUrl, hostipText);
 										msg.obj = "访问服务器返回数据 = " + result;
+										httpSendService();
 										handler.sendMessage(msg);
 									} catch (ClientProtocolException e) {
 										msg.obj = "Client 错误" + e.getMessage();
@@ -187,4 +192,19 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    private void httpSendService(){
+    	Intent intent = new Intent(HttpBackroundService.ACTION);
+    	saveUrl(httpUrl);
+    	startService(intent);
+    }
+    
+    private void saveUrl(String url){
+		SharedPreferences sharedPreferences = getSharedPreferences("httpUrl", Context.MODE_PRIVATE);
+		Editor editor = sharedPreferences.edit();
+		editor.putString("url", url);
+		editor.putString("hostAddr", hostip.getText().toString());
+		//保存数据
+		editor.commit();
+	}
 }
