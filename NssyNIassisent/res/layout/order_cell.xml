@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:id="@+id/info"
-            android:layout_width="240dp"
+            android:layout_width="220dp"
             android:layout_height="match_parent"            
             android:background="@drawable/text_field_bg_241x40"
             android:layout_alignParentLeft="true"
@@ -39,18 +39,18 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/cell_button"
+            android:id="@+id/order_button"
             android:layout_alignTop="@+id/info"
             android:layout_alignBottom="@+id/info"
             android:layout_toRightOf="@+id/info"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@drawable/cancel_link_btn"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="处理该单" />
     </RelativeLayout>
 

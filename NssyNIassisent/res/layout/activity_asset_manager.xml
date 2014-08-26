@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:navigation="http://schemas.android.com/apk/res/com.liuym.nssyniassisent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0E0E0"
+    android:orientation="vertical" >
+
+    <com.liuym.nssyniassisent.Navigation
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        navigation:backgroundAlpha="180"
+        navigation:backgroundColor="#22292C"
+        navigation:tv_title="资产管理" >
+    </com.liuym.nssyniassisent.Navigation>
+
+    <RelativeLayout
+        android:id="@+id/Center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/Bottom"
+        android:layout_below="@+id/navigationView" >
+
+        <RelativeLayout
+            android:id="@+id/Asset"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/assets_info_bg" >
+
+            <TextView
+                android:id="@+id/asset_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical"
+                android:text="ncy@nssyxx.com.cn\n15814606237  610643"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/asset_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/asset_info"
+                android:gravity="center_vertical"
+                android:text="聂超宇"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/Asset_Input"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/Asset"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical"
+                android:text="资产入库"
+                android:textSize="13sp" />
+            <Button 
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/assets_input_btn_bg"
+                android:textSize="20dp"
+                android:text="资产录入"/>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/Asset_Query"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/Asset_Input"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical"
+                android:text="资产查询"
+                android:textSize="13sp" />
+            <Button 
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/assets_search_btn_bg"
+                android:textSize="20dp"
+                android:text="资产查询"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/Bottom"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/tool_bar_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:drawableTop="@drawable/tool_bar_home_icon"
+            android:text="首页"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:drawableTop="@drawable/tool_bar_ibeacon_icon"
+            android:text="资产管理"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:drawableTop="@drawable/tool_bar_logout_icon"
+            android:text="注销"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</RelativeLayout>

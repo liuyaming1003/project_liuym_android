@@ -35,8 +35,9 @@
         </activity>
         <activity android:name="com.liuym.teacher.PersonActivity" >
         </activity>
-        <activity
-            android:name="com.liuym.teacher.ClassActivity">
+        <activity android:name="com.liuym.teacher.ClassActivity" >
+        </activity>
+        <activity android:name="com.liuym.worker.WorkerActivity" >
         </activity>
     </application>
 

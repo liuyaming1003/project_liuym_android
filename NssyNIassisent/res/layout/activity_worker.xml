@@ -1,0 +1,139 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:navigation="http://schemas.android.com/apk/res/com.liuym.nssyniassisent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0E0E0"
+    android:orientation="vertical"
+    tools:context="com.liuym.nssyniassisent.WorkerActivity" >
+
+    <com.liuym.nssyniassisent.Navigation
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        navigation:backgroundAlpha="180"
+        navigation:backgroundColor="#22292C"
+        navigation:tv_title="首页" >
+    </com.liuym.nssyniassisent.Navigation>
+
+    <RelativeLayout
+        android:id="@+id/Center"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/navigationView" >
+
+        <LinearLayout
+            android:id="@+id/Button_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/qurey_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/info_query" />
+
+            <Button
+                android:id="@+id/barcode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/code_query" />
+        </LinearLayout>
+        <TextView 
+            android:id="@+id/work_name"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/Button_id"
+            android:layout_above="@+id/metting"
+            android:layout_marginLeft="5dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:text="聂超宇" />
+        
+        <TextView 
+            android:id="@+id/work_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/work_name"
+            android:layout_alignBottom="@+id/work_name"
+            android:layout_toRightOf="@+id/work_name"
+            android:layout_marginRight="5dp"
+            android:textSize="12sp"
+            android:gravity="center_vertical"
+            android:text="ncy@nssyxx.com.cn\n15814606237  610643" />
+        
+        <TextView 
+            android:id="@+id/metting"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_alignParentBottom="true"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:textSize="13sp"
+            android:text="信息中心通知: 周三中午负责人会议,请与会人员准时参加会议"/>"
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/Bottom"
+        android:layout_below="@+id/Center" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </android.support.v4.view.ViewPager>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/Bottom"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/tool_bar_bg"
+        android:orientation="horizontal"
+        android:gravity="center_vertical" >
+
+        <Button
+            android:id="@+id/first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:drawableTop="@drawable/tool_bar_home_icon"
+            android:text="首页"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:drawableTop="@drawable/tool_bar_ibeacon_icon"
+            android:text="资产管理"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:drawableTop="@drawable/tool_bar_logout_icon"
+            android:text="注销"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</RelativeLayout>

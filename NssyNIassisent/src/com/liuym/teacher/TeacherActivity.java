@@ -42,14 +42,14 @@ public class TeacherActivity extends MainActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_teacher);
+		//setContentView(R.layout.activity_teacher);
 
 		getIntentValues();
 		
 		inflater = LayoutInflater.from(this); 
 		teackerView = inflater.inflate(R.layout.activity_teacher, null);
+		setContentView(teackerView);
 		ibeactonView = inflater.inflate(R.layout.activity_ibeacon, null);
-		setTeackerView();
 		navi = (Navigation)findViewById(R.id.navigationView);
 
 		findViewById(R.id.logout).setOnClickListener(new OnClickListener() {			
