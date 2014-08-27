@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:navigation="http://schemas.android.com/apk/res/com.liuym.nssyniassisent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0E0E0"
+    android:orientation="vertical" >
+
+    <com.liuym.nssyniassisent.Navigation
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        navigation:backgroundAlpha="180"
+        navigation:backgroundColor="#22292C"
+        navigation:btn_leftText="返回"
+        navigation:btn_rightText="下一步"
+        navigation:tv_title="接单明细" >
+    </com.liuym.nssyniassisent.Navigation>
+
+    
+
+</RelativeLayout>

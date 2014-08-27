@@ -20,12 +20,10 @@ import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyViewPagerAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.nssyniassisent.MainActivity;
-import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
 
 @SuppressLint("InflateParams") public class WorkerActivity extends MainActivity{
 	private LayoutInflater inflater = null;
-	private Navigation navi = null;
 	private View firstView = null;
 	private View secondView = null;
 	private boolean secondViewIsFirst = true;
@@ -42,11 +40,10 @@ import com.liuym.nssyniassisent.R;
 		setContentView(firstView);
 		secondView = inflater.inflate(R.layout.activity_asset_manager, null);
 		
-		navi = (Navigation)findViewById(R.id.navigationView);
 		findViewById(R.id.logout).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				popRoot(navi);
+				popRoot();
 			}
 		});
 		
@@ -72,19 +69,31 @@ import com.liuym.nssyniassisent.R;
 		final MyListViewAdapter infoAdapter = new MyListViewAdapter(this, getOrderList(),  
 				new ListViewInterface(){	
 			@Override
-			public void setCell(View CellView, int position) {
+			public void setCell(MyListViewAdapter adapter, View CellView, final int position) {
 				TextView order_name = (TextView)CellView.findViewById(R.id.order_name);
 				TextView order_info = (TextView)CellView.findViewById(R.id.order_info);
 				Button order_button = (Button)CellView.findViewById(R.id.order_button);
+				order_button.setOnClickListener(new OnClickListener() {					
+					@Override
+					public void onClick(View arg0) {
+						push(OrderDetailActivity.class);				
+					}
+				});
 			}
 
 			@Override
-			public View getCell(final int position) {
+			public View getCell(MyListViewAdapter adapter, final int position) {
 				System.out.println("getCell index = " + position);
 				View CellView = inflater.inflate(R.layout.order_cell, null);
 				TextView order_name = (TextView)CellView.findViewById(R.id.order_name);
 				TextView order_info = (TextView)CellView.findViewById(R.id.order_info);
 				Button order_button = (Button)CellView.findViewById(R.id.order_button);
+				order_button.setOnClickListener(new OnClickListener() {					
+					@Override
+					public void onClick(View arg0) {
+						push(OrderDetailActivity.class);				
+					}
+				});
 				return CellView;
 			}
 		});
@@ -119,7 +128,7 @@ import com.liuym.nssyniassisent.R;
 			findViewById(R.id.logout).setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					popRoot(navi);
+					popRoot();
 				}
 			});
 
@@ -129,6 +138,20 @@ import com.liuym.nssyniassisent.R;
 				@Override
 				public void onClick(View v) {
 					setFirstView();
+				}
+			});
+			
+			findViewById(R.id.asset_input_btn).setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					push(AssetInputActivity.class);
+				}
+			});
+			
+			findViewById(R.id.asset_query_btn).setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					push(AssetQueryActivity.class);
 				}
 			});
 		}

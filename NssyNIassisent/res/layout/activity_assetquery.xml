@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:navigation="http://schemas.android.com/apk/res/com.liuym.nssyniassisent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0E0E0"
+    android:orientation="vertical" >
+
+    <com.liuym.nssyniassisent.Navigation
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        navigation:backgroundAlpha="180"
+        navigation:backgroundColor="#22292C"
+        navigation:btn_leftText="返回"
+        navigation:tv_title="资产查询" >
+    </com.liuym.nssyniassisent.Navigation>
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/navigationView"
+        >
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp">
+            <RelativeLayout 
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#FFFFFF"
+                >
+                <TextView 
+                    android:id="@+id/input_query_textview"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="输入查询"/>
+                <EditText 
+                    android:id="@+id/input_query_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/input_query_button"
+                    android:layout_toRightOf="@+id/input_query_textview"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:background="#E0E0E0"
+                    android:singleLine="true"
+                    />
+                <Button 
+                    android:id="@+id/input_query_button"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/asset_query_btn_bg"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"/>
+            </RelativeLayout>
+            
+            <RelativeLayout 
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#FFFFFF"
+                >
+                <TextView 
+                    android:id="@+id/scan_query_textview"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="扫描查询"/>
+                <Button 
+                    android:id="@+id/scan_query_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/scan_query_textview"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/asset_query_code_btn_bg"/>
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" >
+
+                <TextView
+                    android:id="@+id/code_info_textview"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="条码信息" />
+
+                <EditText
+                    android:id="@+id/code_info_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/code_info_textview"
+                    android:background="#FFFFFF"
+                    android:singleLine="true"
+                    android:gravity="center_vertical|center_horizontal" />
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp" 
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+
+                <TextView
+                    android:id="@+id/username_info_textview"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="使用人" />
+
+                <EditText
+                    android:id="@+id/username_info_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/username_info_textview"
+                    android:background="#FFFFFF"
+                    android:singleLine="true"
+                    android:gravity="center_vertical|center_horizontal" />
+                <ImageView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/asset_query_modify"/>
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp" 
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+
+                <TextView
+                    android:id="@+id/address_ip_textview"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="IP地址" />
+
+                <EditText
+                    android:id="@+id/address_ip_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/address_ip_textview"
+                    android:background="#FFFFFF"
+                    android:singleLine="true"
+                    android:gravity="center_vertical|center_horizontal" />
+                <ImageView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/asset_query_modify"/>
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp" 
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+
+                <TextView
+                    android:id="@+id/address_mac_textview"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="MAC地址" />
+
+                <EditText
+                    android:id="@+id/address_mac_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/address_mac_textview"
+                    android:background="#FFFFFF"
+                    android:singleLine="true"
+                    android:gravity="center_vertical|center_horizontal" />
+                <ImageView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/asset_query_modify"/>
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" >
+
+                <TextView
+                    android:id="@+id/address_port_textview"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="端口信息" />
+
+                <EditText
+                    android:id="@+id/address_port_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/address_port_textview"
+                    android:background="#FFFFFF"
+                    android:singleLine="true"
+                    android:gravity="center_vertical|center_horizontal" />
+                <ImageView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/asset_query_modify"/>
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp" 
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+
+                <TextView
+                    android:id="@+id/records_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:textSize="14sp"
+                    android:text="维修记录查询" />
+                <MultiAutoCompleteTextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/records_textview"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="top"
+                    android:background="#FFFFFF"/>
+
+                
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    
+
+</RelativeLayout>

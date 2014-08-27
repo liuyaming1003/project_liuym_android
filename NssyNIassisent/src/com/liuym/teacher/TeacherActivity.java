@@ -26,7 +26,6 @@ import android.widget.Toast;
 @SuppressLint("InflateParams") 
 public class TeacherActivity extends MainActivity {
 	private LayoutInflater inflater = null;
-	private Navigation navi = null;
 	private View teackerView = null;
 	private View ibeactonView = null;
 	private boolean ibViewIsFirst = true;
@@ -50,12 +49,11 @@ public class TeacherActivity extends MainActivity {
 		teackerView = inflater.inflate(R.layout.activity_teacher, null);
 		setContentView(teackerView);
 		ibeactonView = inflater.inflate(R.layout.activity_ibeacon, null);
-		navi = (Navigation)findViewById(R.id.navigationView);
 
 		findViewById(R.id.logout).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				popRoot(navi);
+				popRoot();
 			}
 		});
 
@@ -71,14 +69,14 @@ public class TeacherActivity extends MainActivity {
 		findViewById(R.id.teacherBtn).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				push(navi, PersonActivity.class);
+				push(PersonActivity.class);
 			}
 		});
 		
 		findViewById(R.id.classBtn).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				push(navi, ClassActivity.class);
+				push(ClassActivity.class);
 			}
 		});
 
@@ -98,7 +96,7 @@ public class TeacherActivity extends MainActivity {
 		final MyListViewAdapter infoAdapter = new MyListViewAdapter(this, getOrderList(),  
 				new ListViewInterface(){	
 			@Override
-			public void setCell(View CellView, int position) {
+			public void setCell(MyListViewAdapter adapter, View CellView, int position) {
 				TextView info_time = (TextView)CellView.findViewById(R.id.info_time);
 				TextView info_title = (TextView)CellView.findViewById(R.id.info_title);
 				TextView info_detail = (TextView)CellView.findViewById(R.id.info_detail);
@@ -117,7 +115,7 @@ public class TeacherActivity extends MainActivity {
 			}
 
 			@Override
-			public View getCell(final int position) {
+			public View getCell(MyListViewAdapter adapter, final int position) {
 				System.out.println("getCell index = " + position);
 				View CellView = inflater.inflate(R.layout.info_cell, null);
 				TextView info_time = (TextView)CellView.findViewById(R.id.info_time);
@@ -163,7 +161,7 @@ public class TeacherActivity extends MainActivity {
 		final MyListViewAdapter historyAdapter = new MyListViewAdapter(this, getOrderList(), 
 				new ListViewInterface() {			
 			@Override
-			public void setCell(View view, int position) {
+			public void setCell(MyListViewAdapter adapter, View view, int position) {
 				//设置CellView 里面的数据
 				System.out.println("setCell index = " + position);
 				View detailView = (View)view.findViewById(R.id.history_info);
@@ -178,7 +176,7 @@ public class TeacherActivity extends MainActivity {
 			}
 
 			@Override
-			public View getCell(final int position) {
+			public View getCell(MyListViewAdapter adapter, final int position) {
 				System.out.println("getCell index = " + position);
 				View CellView = inflater.inflate(R.layout.history_cell, null);
 				View detailView = (View)CellView.findViewById(R.id.history_info);
@@ -267,7 +265,7 @@ public class TeacherActivity extends MainActivity {
 			findViewById(R.id.logout).setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					popRoot(navi);
+					popRoot();
 				}
 			});
 

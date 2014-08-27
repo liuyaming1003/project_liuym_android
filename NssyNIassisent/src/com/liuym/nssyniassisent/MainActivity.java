@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 
 public class MainActivity extends Activity {
     @Override
@@ -22,12 +23,13 @@ public class MainActivity extends Activity {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
     
-    protected void push(Navigation navigation, Class<?> inClass){
-		Intent intent = new Intent(MainActivity.this, inClass);		
-		navigation.pushNavigation(this, intent);
+    protected void push(Class<?> inClass){
+		Intent intent = new Intent(MainActivity.this, inClass);	
+		startActivity(intent);
+		overridePendingTransition(R.anim.navigation_push_in,R.anim.navigation_push_out);
 	}
     
-    protected void push(Navigation navigation, Class<?> inClass, String tag, Map<String, Object> map){
+    protected void push(Class<?> inClass, String tag, Map<String, Object> map){
     	Intent intent = new Intent(MainActivity.this, inClass);	
     	
     	Bundle bundle = new Bundle();
@@ -37,14 +39,34 @@ public class MainActivity extends Activity {
     	bundle.putSerializable("map", serializableMap);    	
     	intent.putExtra("tag", tag);
     	intent.putExtras(bundle);
-		navigation.pushNavigation(this, intent);
+    	startActivity(intent);
+		overridePendingTransition(R.anim.navigation_push_in,R.anim.navigation_push_out);
     }
 
-    protected void pop(Navigation navigation){
-    	navigation.popNavigation(this);
+    protected void pop(){
+    	finish();
+    	overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
+	}
+    
+    protected void pop(Class<?> inClass){
+    	startActivity(new Intent(MainActivity.this, inClass));
+		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
 	}
 
-    protected void popRoot(Navigation navigation){
-    	navigation.popRootNavigation(this, new Intent(MainActivity.this, LogonActivity.class));
+    protected void popRoot(){
+    	startActivity(new Intent(MainActivity.this, LogonActivity.class));
+		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
+	}
+    
+    
+    
+    @Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK){  
+			finish();
+			overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
+			return true;   
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

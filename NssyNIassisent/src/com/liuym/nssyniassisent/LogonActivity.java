@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LogonActivity extends MainActivity {
-	private Navigation navi = null;
 	private EditText username = null;
 	private EditText password = null;
 	private Map<String, Object> map = null;
@@ -26,16 +25,15 @@ public class LogonActivity extends MainActivity {
 
 		map=new HashMap<String, Object>();
 
-		navi = (Navigation)findViewById(R.id.navigationView);
 		findViewById(R.id.Logon).setOnClickListener(new Button.OnClickListener() {			
 			@Override
 			public void onClick(View v) {					  
 				map.put("username", username.getText().toString());
 				map.put("password", password.getText().toString());
 				if(username.getText().toString().equals("1")){
-					push(navi, TeacherActivity.class, "LogonActivity", map);
+					push(TeacherActivity.class, "LogonActivity", map);
 				}else{
-					push(navi, WorkerActivity.class, "LogonActivity", map);
+					push(WorkerActivity.class, "LogonActivity", map);
 				}
 			}
 		});

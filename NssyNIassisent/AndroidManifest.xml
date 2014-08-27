@@ -37,7 +37,17 @@
         </activity>
         <activity android:name="com.liuym.teacher.ClassActivity" >
         </activity>
-        <activity android:name="com.liuym.worker.WorkerActivity" >
+        <activity
+            android:name="com.liuym.worker.WorkerActivity"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity android:name="com.liuym.worker.AssetInputActivity" >
+        </activity>
+        <activity android:name="com.liuym.worker.AssetQueryActivity" >
+        </activity>
+        <activity android:name="com.liuym.worker.OrderDetailActivity" >
+        </activity>
+        <activity android:name="com.liuym.worker.OrderFinishActivity" >
         </activity>
     </application>
 

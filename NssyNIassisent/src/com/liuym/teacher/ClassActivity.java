@@ -18,14 +18,14 @@ public class ClassActivity extends MainActivity {
 		navi.getBtn_left().setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				pop(navi);
+				pop();
 			}
 		});
 		
 		findViewById(R.id.confirm_btn).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				pop(navi);
+				pop();
 			}
 		});	
 	}
