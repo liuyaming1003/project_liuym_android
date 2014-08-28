@@ -5,13 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.adapter.MyViewPagerAdapter;
 import com.liuym.nssyniassisent.*;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,6 +33,7 @@ public class TeacherActivity extends MainActivity {
 
 	//tableview
 	private ViewPager viewPager = null;
+	private View viewPager_title_img = null;
 	private View order_view = null;
 	private int order_select_index = -1;
 	private View order_select_view = null;
@@ -44,7 +46,7 @@ public class TeacherActivity extends MainActivity {
 		//setContentView(R.layout.activity_teacher);
 
 		getIntentValues();
-		
+
 		inflater = LayoutInflater.from(this); 
 		teackerView = inflater.inflate(R.layout.activity_teacher, null);
 		setContentView(teackerView);
@@ -59,26 +61,44 @@ public class TeacherActivity extends MainActivity {
 
 		findViewById(R.id.first).setEnabled(false);
 
-		findViewById(R.id.second).setOnClickListener(new OnClickListener() {			
+		/*findViewById(R.id.second).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				setIbeaconView();
 			}
-		});
-		
+		});*/
+
 		findViewById(R.id.teacherBtn).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
 				push(PersonActivity.class);
 			}
 		});
-		
+
 		findViewById(R.id.classBtn).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
 				push(ClassActivity.class);
 			}
 		});
+
+		viewPager_title_img = (View)findViewById(R.id.viewpager_title_img);
+		findViewById(R.id.history_button).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View arg0) {
+				viewPager.setCurrentItem(1);
+				viewPager_title_img.setBackgroundResource(R.drawable.tab_bar_1_selected);
+			}
+		});
+
+		findViewById(R.id.message_button).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View arg0) {
+				viewPager.setCurrentItem(0);
+				viewPager_title_img.setBackgroundResource(R.drawable.tab_bar_0_selected);
+			}
+		});
+
 
 		viewPager = (ViewPager)findViewById(R.id.viewPager);
 		initOrderListView();
@@ -87,6 +107,33 @@ public class TeacherActivity extends MainActivity {
 		views.add(order_view);
 		views.add(history_view);
 		viewPager.setAdapter(new MyViewPagerAdapter(views));
+		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+				switch(arg0){
+				case 0:
+					viewPager_title_img.setBackgroundResource(R.drawable.tab_bar_0_selected);
+					break;
+				case 1:
+					viewPager_title_img.setBackgroundResource(R.drawable.tab_bar_1_selected);
+					break;
+				}
+			}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	private void initOrderListView(){
@@ -132,32 +179,32 @@ public class TeacherActivity extends MainActivity {
 		});
 		listView.setAdapter(infoAdapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
-	      public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
-	          long arg3){  
-	    	  TextView textView = (TextView)arg1.findViewById(R.id.info_detail);
-	    	  if(order_select_index != arg2){
-	    		  if(order_select_index != -1){
-	    			  order_select_view.setVisibility(View.GONE);
-	    		  }
-	    		  order_select_index = arg2;	    		  
-	    	  }
-	    	  if(textView.getVisibility() == View.VISIBLE){
-	    		  textView.setVisibility(View.GONE);
-	    		  order_select_index = -1;
-	    	  }else{
-	    		  textView.setVisibility(View.VISIBLE);
-	    		  /*textView.setMovementMethod(ScrollingMovementMethod.getInstance()); */
-	    	  }
-	    	  order_select_view = textView;
-	      }  
-	    }); 
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
+					long arg3){  
+				TextView textView = (TextView)arg1.findViewById(R.id.info_detail);
+				if(order_select_index != arg2){
+					if(order_select_index != -1){
+						order_select_view.setVisibility(View.GONE);
+					}
+					order_select_index = arg2;	    		  
+				}
+				if(textView.getVisibility() == View.VISIBLE){
+					textView.setVisibility(View.GONE);
+					order_select_index = -1;
+				}else{
+					textView.setVisibility(View.VISIBLE);
+					/*textView.setMovementMethod(ScrollingMovementMethod.getInstance()); */
+				}
+				order_select_view = textView;
+			}  
+		}); 
 	}
 
 	private void initHistoryListView(){
 		//init Order ListView
 		history_view = inflater.inflate(R.layout.my_listview, null);
 		ListView listView = (ListView)history_view.findViewById(R.id.myListView);
-		
+
 		final MyListViewAdapter historyAdapter = new MyListViewAdapter(this, getOrderList(), 
 				new ListViewInterface() {			
 			@Override
@@ -186,59 +233,59 @@ public class TeacherActivity extends MainActivity {
 			}
 		});
 		listView.setAdapter(historyAdapter);
-		
+
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
-		      public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
-		          long arg3){
-		    	  View detailView = (View)arg1.findViewById(R.id.history_info);
-		    	  if(history_select_index != arg2){
-		    		  if(history_select_index != -1){
-		    			  history_select_view.setVisibility(View.GONE);
-		    		  }
-		    		  history_select_index = arg2;	    		  
-		    	  }
-		    	  if(detailView.getVisibility() == View.VISIBLE){
-		    		  detailView.setVisibility(View.GONE);
-		    		  history_select_index = -1;
-		    	  }else{
-		    		  detailView.setVisibility(View.VISIBLE);
-		    	  }
-		    	  history_select_view = detailView;
-		      }  
-		    }); 
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
+					long arg3){
+				View detailView = (View)arg1.findViewById(R.id.history_info);
+				if(history_select_index != arg2){
+					if(history_select_index != -1){
+						history_select_view.setVisibility(View.GONE);
+					}
+					history_select_index = arg2;	    		  
+				}
+				if(detailView.getVisibility() == View.VISIBLE){
+					detailView.setVisibility(View.GONE);
+					history_select_index = -1;
+				}else{
+					detailView.setVisibility(View.VISIBLE);
+				}
+				history_select_view = detailView;
+			}  
+		}); 
 	}
-	
+
 	private void setHistoryViewOnClick(View view, final int index){
 		System.out.println("index = " + index);
 		view.findViewById(R.id.history_btn_1).setOnClickListener(new OnClickListener() {			
 			@Override
-			public void onClick(View v) {
-					toastShow("已上报 + " + index);		
+			public void onClick(View v) {	
+				showHistoryDialog(1);
 			}
 		});
-		
+
 		view.findViewById(R.id.history_btn_2).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-					toastShow("xxx为你服务 + " + index);		
+				showHistoryDialog(2);		
 			}
 		});
-		
+
 		view.findViewById(R.id.history_btn_3).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-					toastShow("维修进行中 + " + index);		
+				showHistoryDialog(3);
 			}
 		});
-		
+
 		view.findViewById(R.id.history_btn_4).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-					toastShow("评价服务 + " + index);		
+				showHistoryDialog(4);	
 			}
 		});
 	}
-	
+
 	private void toastShow(String showMessage){
 		Toast.makeText(this, showMessage, Toast.LENGTH_SHORT).show();
 	}
@@ -280,6 +327,95 @@ public class TeacherActivity extends MainActivity {
 		}		
 	}
 
+	private void showHistoryDialog(int index){
+		final Dialog dialog = new Dialog(this, R.style.MyDialog);
+		View view = null;
+		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
+		switch (index) {
+		case 1:			
+		{
+			for (int i = 0; i < 20; i++) {  
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("cell_info", "20140601 09:30:00 张晓颖"); 
+				list.add(map);  
+			}  
+			view = inflater.inflate(R.layout.repair_queue, null);
+			TextView repair_queue_textview = (TextView)view.findViewById(R.id.repair_queue_num);
+			repair_queue_textview.setText("您前面还有" + list.size() + "位在等待");
+			ListView listView = (ListView)view.findViewById(R.id.myListView);
+			MyListViewAdapter infoAdapter = new MyListViewAdapter(this, list,  
+					new ListViewInterface(){
+				@Override
+				public void setCell(MyListViewAdapter adapter, View CellView, int position) {
+					TextView repair_queue_cell_info = (TextView)CellView.findViewById(R.id.repair_queue_cell_info);
+					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+					repair_queue_cell_info.setText((String)map.get("cell_info"));
+				}
+
+				@Override
+				public View getCell(MyListViewAdapter adapter, final int position) {
+					System.out.println("getCell index = " + position);
+					View CellView = inflater.inflate(R.layout.repair_queue_cell, null);
+					TextView repair_queue_cell_info = (TextView)CellView.findViewById(R.id.repair_queue_cell_info);
+					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+					repair_queue_cell_info.setText((String)map.get("cell_info"));
+					return CellView;
+				}
+			});
+			listView.setAdapter(infoAdapter);
+			break;
+		}
+		case 2:
+			view = inflater.inflate(R.layout.repair_worker_info, null);
+			break;
+		case 3:{
+			for (int i = 0; i < 20; i++) {  
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("cell_info", "20140601 09:30:00 故障原因已查明,正在排障,请耐心等待!"); 
+				list.add(map);  
+			}  
+			view = inflater.inflate(R.layout.repair_status, null);
+			ListView listView = (ListView)view.findViewById(R.id.myListView);
+			MyListViewAdapter infoAdapter = new MyListViewAdapter(this, list,  
+					new ListViewInterface(){
+				@Override
+				public void setCell(MyListViewAdapter adapter, View CellView, int position) {
+					TextView repair_status_cell_info = (TextView)CellView.findViewById(R.id.repair_status_cell_info);
+					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+					repair_status_cell_info.setText((String)map.get("cell_info"));
+				}
+
+				@Override
+				public View getCell(MyListViewAdapter adapter, final int position) {
+					System.out.println("getCell index = " + position);
+					View CellView = inflater.inflate(R.layout.repair_status_cell, null);
+					TextView repair_status_cell_info = (TextView)CellView.findViewById(R.id.repair_status_cell_info);
+					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+					repair_status_cell_info.setText((String)map.get("cell_info"));
+					return CellView;
+				}
+			});
+			listView.setAdapter(infoAdapter);		
+			break;
+		}
+		case 4:
+			view = inflater.inflate(R.layout.repair_evaluation, null);
+			view.findViewById(R.id.repair_evaluation_submit_button).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					if(dialog.isShowing()){
+						dialog.dismiss();
+					}
+				}
+			});
+			break;
+		default:
+			return;
+		}
+		dialog.setContentView(view);
+		dialog.show();
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -298,11 +434,11 @@ public class TeacherActivity extends MainActivity {
 		}*/
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	private void getIntentValues(){
 		Bundle bundle = getIntent().getExtras();  
 		SerializableMap serializableJson = (SerializableMap) bundle  
-                .get("map"); 
-        System.out.println("map = " + serializableJson + "tag = " + getIntent().getStringExtra("tag"));
+				.get("map"); 
+		System.out.println("map = " + serializableJson + "tag = " + getIntent().getStringExtra("tag"));
 	}
 }

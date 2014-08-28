@@ -64,8 +64,9 @@ import com.liuym.nssyniassisent.R;
 	}
 	
 	private void initReapirListView(){
-		order_view = inflater.inflate(R.layout.my_listview, null);
+		order_view = inflater.inflate(R.layout.my_worker_listview, null);
 		ListView listView = (ListView)order_view.findViewById(R.id.myListView);
+		//listView.setBackgroundColor(0x00000000);
 		final MyListViewAdapter infoAdapter = new MyListViewAdapter(this, getOrderList(),  
 				new ListViewInterface(){	
 			@Override

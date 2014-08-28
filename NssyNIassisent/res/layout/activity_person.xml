@@ -70,7 +70,7 @@
                 android:gravity="center_horizontal|center_vertical"
                 android:singleLine="true"
                 android:background="@drawable/text_field_bg_241x40"
-                />
+                />"
         </LinearLayout>
         
         <LinearLayout

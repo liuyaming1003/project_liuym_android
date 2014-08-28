@@ -32,7 +32,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:background="#FFFFFF"
                 android:orientation="horizontal" >
@@ -112,7 +112,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal" >
 
@@ -196,10 +196,11 @@
             
             <LinearLayout 
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
                 <EditText 
+                    android:id="@+id/order_name_edittext"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -207,6 +208,7 @@
                     android:gravity="center_horizontal|center_vertical"
                     android:singleLine="true"/>
                 <Button 
+                    android:id="@+id/order_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -235,7 +237,7 @@
             
             <LinearLayout 
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
