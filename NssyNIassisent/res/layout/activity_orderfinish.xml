@@ -20,6 +20,335 @@
         navigation:tv_title="结案本单" >
     </com.liuym.nssyniassisent.Navigation>
 
-    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/navigationView" >
+
+        <LinearLayout
+            android:id="@+id/fault_type"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="#A7A7A7"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="故障类型" />
+
+            <Button
+                android:id="@+id/software_fault_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/order_to_send_btn_bg"
+                android:text="软件故障" />
+
+            <Button
+                android:id="@+id/hardware_fault_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/order_to_send_btn_bg"
+                android:text="硬件故障" />
+
+            <Button
+                android:id="@+id/hardware_replace_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/order_to_send_btn_bg"
+                android:text="硬件更换" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/hardware_replace"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/fault_remark"
+            android:layout_below="@+id/fault_type"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="#A7A7A7"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/hardware_replase_linearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="资\n产\n录\n入"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:id="@+id/LinearLayout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/Asset_center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="#A7A7A7"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/device_type_textview"
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:text="设备类型" />
+
+                            <EditText
+                                android:id="@+id/device_type_edittext"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_toRightOf="@+id/device_type_textview"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:singleLine="true" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/assets_input_select" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/username_textview"
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:text="使用人" />
+
+                            <EditText
+                                android:id="@+id/username_edittext"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_toRightOf="@+id/username_textview"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:singleLine="true" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/assets_input_handle" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/address_ip_textview"
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:text="IP地址" />
+
+                            <EditText
+                                android:id="@+id/address_ip_edittext"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_toRightOf="@+id/address_ip_textview"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:singleLine="true" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/assets_input_handle" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/address_mac_textview"
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:text="MAC地址" />
+
+                            <EditText
+                                android:id="@+id/address_mac_edittext"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_toRightOf="@+id/address_mac_textview"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:singleLine="true" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/assets_input_handle" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/address_port_textview"
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:text="端口信息" />
+
+                            <EditText
+                                android:id="@+id/address_port_edittext"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_toRightOf="@+id/address_port_textview"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:singleLine="true" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/assets_input_handle" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/school_textview"
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:text="所属分校" />
+
+                            <EditText
+                                android:id="@+id/school_edittext"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_toRightOf="@+id/school_textview"
+                                android:background="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:singleLine="true" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/assets_input_select" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fault_remark"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:text="备注"
+                android:textSize="16sp" />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/remark_mult_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="#A7A7A7"
+                android:gravity="top" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

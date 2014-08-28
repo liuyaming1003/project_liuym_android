@@ -20,6 +20,242 @@
         navigation:tv_title="接单明细" >
     </com.liuym.nssyniassisent.Navigation>
 
-    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/navigationView" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <TextView
+                        android:id="@+id/code_title_textview"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="编号"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/code_info_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/code_title_textview"
+                        android:gravity="center_vertical"
+                        android:text="20140609001"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <TextView
+                        android:id="@+id/repair_title_textview"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="报修人"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/repair_username_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/repair_title_textview"
+                        android:gravity="center_vertical"
+                        android:text="李丽霞"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <TextView
+                        android:id="@+id/repair_date_title_textview"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="报修日期"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/repair_date_info_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/repair_date_title_textview"
+                        android:gravity="center_vertical"
+                        android:text="2014.06.09"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF" >
+
+                    <TextView
+                        android:id="@+id/phont_title_textview"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="编号"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/phone_info_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/phont_title_textview"
+                        android:gravity="center_vertical"
+                        android:text="18603036536"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="#FFFFFF" >
+
+                    <Button
+                        android:id="@+id/phone_call_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/phone_btn_bg" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF" >
+
+                    <TextView
+                        android:id="@+id/short_number_title_textview"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="集团短号"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/short_number_info_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/short_number_title_textview"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="610606"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="#FFFFFF" >
+
+                    <Button
+                        android:id="@+id/short_number_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/phone_btn_bg" />
+                </RelativeLayout>
+            </LinearLayout>
+            
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <EditText 
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:singleLine="true"/>
+                <Button 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/order_to_btn_bg"/>
+            </LinearLayout>
+            
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:background="#00000000"
+                    android:gravity="center_vertical"
+                    android:text="接单状态反馈"/>
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:background="#FFFFFF" />
+            </LinearLayout>
+            
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+                <EditText 
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:background="#FFFFFF"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:singleLine="true"/>
+                <Button 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="发送"
+                    android:background="@drawable/order_to_send_btn_bg"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
