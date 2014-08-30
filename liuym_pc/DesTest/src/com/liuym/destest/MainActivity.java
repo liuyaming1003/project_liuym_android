@@ -28,8 +28,8 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
 	private EditText username;
 	private EditText password;
-	private EditText deskey;
-	private EditText hostip;
+	//private EditText deskey;
+	//private EditText hostip;
 	private Button logon;
 	private String wifiIp;
 	private TextView resultView;
@@ -45,8 +45,8 @@ public class MainActivity extends ActionBarActivity {
         
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
-        deskey = (EditText)findViewById(R.id.deskey);
-        hostip = (EditText)findViewById(R.id.hostip);
+        //deskey = (EditText)findViewById(R.id.deskey);
+        //hostip = (EditText)findViewById(R.id.hostip);
         resultView = (TextView)findViewById(R.id.result);
         
         wifiIp = getWifiAddress();
@@ -69,8 +69,8 @@ public class MainActivity extends ActionBarActivity {
 				resultView.setText("");
 				String usernameText = username.getText().toString();
 				String passwordText = password.getText().toString();
-				String deskeyText = deskey.getText().toString();
-				final String hostipText = hostip.getText().toString();
+				String deskeyText = "nssy2014";//deskey.getText().toString();
+				final String hostipText = "172.16.88.64";//hostip.getText().toString();
 				if(usernameText != null && passwordText != null 
 						&& deskeyText != null && hostipText != null){
 					
@@ -203,7 +203,7 @@ public class MainActivity extends ActionBarActivity {
 		SharedPreferences sharedPreferences = getSharedPreferences("httpUrl", Context.MODE_PRIVATE);
 		Editor editor = sharedPreferences.edit();
 		editor.putString("url", url);
-		editor.putString("hostAddr", hostip.getText().toString());
+		editor.putString("hostAddr", /*hostip.getText().toString()*/"172.16.88.64");
 		//±£´æÊý¾Ý
 		editor.commit();
 	}
