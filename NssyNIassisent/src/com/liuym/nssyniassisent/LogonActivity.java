@@ -32,7 +32,7 @@ public class LogonActivity extends MainActivity {
 			public void onClick(View v) {					  
 				map.put("username", username.getText().toString());
 				map.put("password", password.getText().toString());
-				final Soap soap = Soap.getSoap();
+				/*final Soap soap = Soap.getSoap();
 				soap.setHostUrl("http://systeminfo.nssy.com.cn/di.asmx");
 				soap.setNamespace("http://tempuri.org/");
 				soap.putSoapParam("userName", username.getText().toString());
@@ -49,7 +49,8 @@ public class LogonActivity extends MainActivity {
 							}
 						});
 					}
-				});
+				});*/
+				
 				if(username.getText().toString().equals("1")){
 					push(TeacherActivity.class, "LogonActivity", map);
 				}else{

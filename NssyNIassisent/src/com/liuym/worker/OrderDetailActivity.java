@@ -1,6 +1,8 @@
 package com.liuym.worker;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,8 @@ import com.liuym.nssyniassisent.R;
 public class OrderDetailActivity extends MainActivity{
 	private Navigation navi = null;
 	private EditText order_name_edittext = null;
+	private TextView phone_info_textview = null;
+	private TextView short_number_info_textview = null;
 	private LayoutInflater inflater = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +42,33 @@ public class OrderDetailActivity extends MainActivity{
 			}
 		});
 		
-		order_name_edittext = (EditText)findViewById(R.id.order_name_edittext);
+		order_name_edittext = (EditText)findViewById(R.id.order_name_edittext);		
 		findViewById(R.id.order_button).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
 				showHistoryDialog(1);
+			}
+		});
+		
+		phone_info_textview = (TextView)findViewById(R.id.phone_info_textview);
+		findViewById(R.id.phone_call_button).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View arg0) {
+				 //传入服务， parse（）解析号码
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +phone_info_textview.getText().toString()));
+                //通知activtity处理传入的call服务
+                startActivity(intent);
+			}
+		});
+		
+		short_number_info_textview = (TextView)findViewById(R.id.short_number_info_textview);
+		findViewById(R.id.short_number_button).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View arg0) {
+				 //传入服务， parse（）解析号码
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +short_number_info_textview.getText().toString()));
+                //通知activtity处理传入的call服务
+                startActivity(intent);
 			}
 		});
 	}
