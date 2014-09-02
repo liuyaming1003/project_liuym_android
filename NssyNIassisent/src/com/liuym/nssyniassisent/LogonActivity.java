@@ -3,6 +3,8 @@ package com.liuym.nssyniassisent;
 import java.util.HashMap;
 import java.util.Map;
 import com.liuym.nssyniassisent.R;
+import com.liuym.soap.Soap;
+import com.liuym.soap.Soap.SoapInterface;
 import com.liuym.teacher.TeacherActivity;
 import com.liuym.worker.WorkerActivity;
 
@@ -30,6 +32,24 @@ public class LogonActivity extends MainActivity {
 			public void onClick(View v) {					  
 				map.put("username", username.getText().toString());
 				map.put("password", password.getText().toString());
+				final Soap soap = Soap.getSoap();
+				soap.setHostUrl("http://systeminfo.nssy.com.cn/di.asmx");
+				soap.setNamespace("http://tempuri.org/");
+				soap.putSoapParam("userName", username.getText().toString());
+				soap.putSoapParam("password", password.getText().toString());
+				soap.soapRequest("impersonateValidUser", 10000, new SoapInterface() {					
+					@Override
+					public void soapResult(boolean flag, String data) {
+						System.out.println("impersonateValidUser = flag:" + flag + " data:" + data);
+						soap.putSoapParam("userName", username.getText().toString());
+						soap.soapRequest("Power_Judge", 10000, new SoapInterface() {					
+							@Override
+							public void soapResult(boolean flag, String data) {
+								System.out.println("Power_Judge = flag:" + flag + " data:" + data);
+							}
+						});
+					}
+				});
 				if(username.getText().toString().equals("1")){
 					push(TeacherActivity.class, "LogonActivity", map);
 				}else{
