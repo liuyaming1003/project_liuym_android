@@ -61,7 +61,8 @@
                 android:maxLength="@string/edittext_maxlength_username"
                 android:gravity="center"
                 android:hint="@string/edittext_hint_username"
-                android:singleLine="true">
+                android:singleLine="true"
+                android:text="h12">
             </EditText>
 
             <EditText
@@ -77,7 +78,8 @@
                 android:gravity="center"
                 android:hint="@string/edittext_hint_password"
                 android:inputType="textPassword"
-                android:singleLine="true" >
+                android:singleLine="true" 
+                android:text="nssy-2012">
             </EditText>
         </RelativeLayout>
     </RelativeLayout>

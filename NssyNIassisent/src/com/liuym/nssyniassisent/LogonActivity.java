@@ -1,5 +1,6 @@
 package com.liuym.nssyniassisent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import com.liuym.nssyniassisent.R;
@@ -32,25 +33,47 @@ public class LogonActivity extends MainActivity {
 			public void onClick(View v) {					  
 				map.put("username", username.getText().toString());
 				map.put("password", password.getText().toString());
-				/*final Soap soap = Soap.getSoap();
+				final Soap soap = Soap.getSoap();
 				soap.setHostUrl("http://systeminfo.nssy.com.cn/di.asmx");
 				soap.setNamespace("http://tempuri.org/");
 				soap.putSoapParam("userName", username.getText().toString());
 				soap.putSoapParam("password", password.getText().toString());
-				soap.soapRequest("impersonateValidUser", 10000, new SoapInterface() {					
+				soap.soapRequest("impersonateValidUser", 10000, new SoapInterface() {		
 					@Override
-					public void soapResult(boolean flag, String data) {
-						System.out.println("impersonateValidUser = flag:" + flag + " data:" + data);
+					public void soapResult(ArrayList<Object> arrayList) {
+						Object object = arrayList.get(0);
+						if(object instanceof Boolean){
+							boolean logon_flag = ((Boolean) object).booleanValue();
+							if(logon_flag == true){
+								System.out.println("登入成功");
+							}else{
+								System.out.println("登入失败");
+							}
+						}
+
 						soap.putSoapParam("userName", username.getText().toString());
-						soap.soapRequest("Power_Judge", 10000, new SoapInterface() {					
+						soap.soapRequest("Power_Judge", 10000, new SoapInterface() {	
 							@Override
-							public void soapResult(boolean flag, String data) {
-								System.out.println("Power_Judge = flag:" + flag + " data:" + data);
+							public void soapResult(ArrayList<Object> arrayList) {
+								// TODO Auto-generated method stub
+								Object object = arrayList.get(0);
+								System.out.println("Power_Judge result = " + object);
+							}
+
+							@Override
+							public void soapError(String error) {
+								// TODO Auto-generated method stub
+
 							}
 						});
 					}
-				});*/
-				
+
+					@Override
+					public void soapError(String error) {
+						System.out.println("soap error = " + error);
+					}
+				});
+
 				if(username.getText().toString().equals("1")){
 					push(TeacherActivity.class, "LogonActivity", map);
 				}else{
