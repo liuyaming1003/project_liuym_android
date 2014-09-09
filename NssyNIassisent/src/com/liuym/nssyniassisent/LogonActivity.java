@@ -7,6 +7,7 @@ import com.liuym.nssyniassisent.R;
 import com.liuym.soap.Soap;
 import com.liuym.soap.Soap.SoapInterface;
 import com.liuym.teacher.TeacherActivity;
+import com.liuym.teacher.TeacherData;
 import com.liuym.worker.WorkerActivity;
 
 import android.os.Bundle;
@@ -27,6 +28,8 @@ public class LogonActivity extends MainActivity {
 		setContentView(R.layout.activity_logon);
 
 		map=new HashMap<String, Object>();
+		username = (EditText)findViewById(R.id.username);
+		password = (EditText)findViewById(R.id.password);
 
 		findViewById(R.id.Logon).setOnClickListener(new Button.OnClickListener() {			
 			@Override
@@ -42,48 +45,45 @@ public class LogonActivity extends MainActivity {
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
 						Object object = arrayList.get(0);
-						if(object instanceof Boolean){
-							boolean logon_flag = ((Boolean) object).booleanValue();
-							if(logon_flag == true){
-								System.out.println("登入成功");
-							}else{
-								System.out.println("登入失败");
-							}
+						String logon_info = object.toString();
+						if(logon_info.equals("true")){
+							showMessage("登入成功");
+						}else{
+							showMessage("登入失败");
+							return ;
 						}
 
-						soap.putSoapParam("userName", username.getText().toString());
+						soap.putSoapParam("UserName", username.getText().toString());
 						soap.soapRequest("Power_Judge", 10000, new SoapInterface() {	
 							@Override
 							public void soapResult(ArrayList<Object> arrayList) {
-								// TODO Auto-generated method stub
 								Object object = arrayList.get(0);
-								System.out.println("Power_Judge result = " + object);
+								String user_role = object.toString();
+								if(user_role.equals("Teacher")){
+									push(TeacherActivity.class, "LogonActivity", map);
+								}else if(user_role.equals("TeamLead") || user_role.equals("Worker")){
+									push(WorkerActivity.class, "LogonActivity", map);
+								}else{
+									showMessage("用户角色 = " + user_role);
+									return;
+								}
+								TeacherData.getDefault().setUserName(username.getText().toString());
 							}
 
 							@Override
 							public void soapError(String error) {
-								// TODO Auto-generated method stub
-
+								showMessage("访问错误 : " + error);
 							}
 						});
 					}
 
 					@Override
 					public void soapError(String error) {
-						System.out.println("soap error = " + error);
+						showMessage("访问错误 : " + error);
 					}
 				});
-
-				if(username.getText().toString().equals("1")){
-					push(TeacherActivity.class, "LogonActivity", map);
-				}else{
-					push(WorkerActivity.class, "LogonActivity", map);
-				}
 			}
 		});
-
-		username = (EditText)findViewById(R.id.username);
-		password = (EditText)findViewById(R.id.password);
 	}
 
 	@Override

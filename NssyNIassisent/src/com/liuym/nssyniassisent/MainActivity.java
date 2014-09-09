@@ -1,14 +1,19 @@
 package com.liuym.nssyniassisent;
 
 import java.util.Map;
+
+import com.liuym.teacher.TeacherData;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	protected TeacherData teacherData = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +26,8 @@ public class MainActivity extends Activity {
 		
 		
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		
+		teacherData = TeacherData.getDefault();		
     }
     
     protected void push(Class<?> inClass){
@@ -68,5 +75,13 @@ public class MainActivity extends Activity {
 			return true;   
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+    
+    /**
+     * œ‘ æ–≈œ¢
+     * @param msg
+     */
+    protected void showMessage(String msg){
+		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 	}
 }

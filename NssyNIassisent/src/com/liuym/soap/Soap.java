@@ -13,6 +13,9 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
+import android.os.Handler;
+import android.os.Message;
+
 public class Soap{
 	static Soap soap = null;
 	private String namespace = null;	
@@ -22,6 +25,7 @@ public class Soap{
 	private Map<String, Object> map = null;
 	private ArrayList<Object> arrayList = null;
 	private SoapInterface soapInterface = null;
+	private Handler handler = null;
 
 	public interface SoapInterface{
 		/**
@@ -47,6 +51,27 @@ public class Soap{
 	private Soap(){
 		map = new HashMap<String, Object>();
 		arrayList = new ArrayList<Object>();
+		
+		handler = new Handler(){
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handleMessage(Message msg) {
+				if(soapInterface == null){
+					return;
+				}
+				switch(msg.what){
+				case 0:
+					if(msg.obj instanceof ArrayList){
+						soapInterface.soapResult((ArrayList<Object>)msg.obj);
+					}
+					break;
+				case 1:
+					soapInterface.soapError((String)msg.obj);
+					break;
+				}
+				super.handleMessage(msg);
+			}
+		};
 	}
 
 	/**
@@ -125,8 +150,9 @@ public class Soap{
 		arrayList.clear();
 
 		//获得序列化的Envelope
-		final SoapSerializationEnvelope envelope=new SoapSerializationEnvelope(SoapEnvelope.VER12);
+		final SoapSerializationEnvelope envelope=new SoapSerializationEnvelope(SoapEnvelope.VER11);
 		envelope.bodyOut=request;
+		envelope.dotNet = true;
 		(new MarshalBase64()).register(envelope);
 
 		final HttpTransportSE transport=new HttpTransportSE(hostUrl, timeout);
@@ -135,6 +161,7 @@ public class Soap{
 		new Thread(new Runnable() {		
 			@Override
 			public void run() {
+				 Message message = new Message();
 				try {
 					transport.call(namespace+methodName, envelope);
 					// 获取返回的数据  
@@ -143,12 +170,18 @@ public class Soap{
 					for(int i = 0; i < object.getPropertyCount(); i++){
 						arrayList.add(object.getProperty(0));
 					}
-					soapInterface.soapResult(arrayList);
+					message.what = 0;
+					message.obj = arrayList;
+					handler.sendMessage(message);
 				} catch (IOException e) {
-					soapInterface.soapError(e.getMessage());
+					message.what = 1;
+					message.obj = e.getMessage();
+					handler.sendMessage(message);
 					e.printStackTrace();
 				} catch (XmlPullParserException e) {
-					soapInterface.soapError(e.getMessage());					
+					message.what = 1;
+					message.obj = e.getMessage();
+					handler.sendMessage(message);					
 					e.printStackTrace();
 				}				
 			}

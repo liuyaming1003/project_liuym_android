@@ -9,10 +9,12 @@ import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.adapter.MyViewPagerAdapter;
 import com.liuym.nssyniassisent.*;
+import com.liuym.soap.Soap;
+import com.liuym.soap.Soap.SoapInterface;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 public class TeacherActivity extends MainActivity {
 	private LayoutInflater inflater = null;
 	private View teackerView = null;
+	private TextView teacher_info_TextView = null;
 	private View ibeactonView = null;
 	private boolean ibViewIsFirst = true;
 
@@ -45,10 +48,37 @@ public class TeacherActivity extends MainActivity {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_teacher);
 
-		getIntentValues();
+		//getIntentValues();
+		
+		new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				Soap soap = Soap.getSoap();	
+				soap.putSoapParam("UserName", TeacherData.getDefault().getUserName());
+				soap.soapRequest("Teacher_InfoList", 1000, new SoapInterface() {					
+					@Override
+					public void soapResult(ArrayList<Object> arrayList) {
+						String info_list = arrayList.get(0).toString();	
+						if(teacherData.setInfoList(info_list) == true){
+							String realName = teacherData.getInfoListJson("RealName");
+							teacher_info_TextView.setText(realName + ",你的校园网无线网络已连接: 00:30:25");
+							showMessage("老师信息 :" + info_list);
+						}else{
+							showMessage("老师信息 错误");
+						}						
+					}
+					
+					@Override
+					public void soapError(String error) {
+						showMessage("错误信息 :" + error);						
+					}
+				});
+			}
+		}).start();
 
 		inflater = LayoutInflater.from(this); 
 		teackerView = inflater.inflate(R.layout.activity_teacher, null);
+		teacher_info_TextView = (TextView)teackerView.findViewById(R.id.teacher_info);
 		setContentView(teackerView);
 		ibeactonView = inflater.inflate(R.layout.activity_ibeacon, null);
 
