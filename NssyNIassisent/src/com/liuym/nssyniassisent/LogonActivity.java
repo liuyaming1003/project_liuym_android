@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import com.liuym.nssyniassisent.R;
-import com.liuym.soap.Soap;
 import com.liuym.soap.Soap.SoapInterface;
 import com.liuym.teacher.TeacherActivity;
-import com.liuym.teacher.TeacherData;
 import com.liuym.worker.WorkerActivity;
 
 import android.os.Bundle;
@@ -36,12 +34,7 @@ public class LogonActivity extends MainActivity {
 			public void onClick(View v) {					  
 				map.put("username", username.getText().toString());
 				map.put("password", password.getText().toString());
-				final Soap soap = Soap.getSoap();
-				soap.setHostUrl("http://systeminfo.nssy.com.cn/di.asmx");
-				soap.setNamespace("http://tempuri.org/");
-				soap.putSoapParam("userName", username.getText().toString());
-				soap.putSoapParam("password", password.getText().toString());
-				soap.soapRequest("impersonateValidUser", 10000, new SoapInterface() {		
+				nssySoap.impersonateValidUser(username.getText().toString(), password.getText().toString(), 10000, new SoapInterface() {		
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
 						Object object = arrayList.get(0);
@@ -52,9 +45,7 @@ public class LogonActivity extends MainActivity {
 							showMessage("登入失败");
 							return ;
 						}
-
-						soap.putSoapParam("UserName", username.getText().toString());
-						soap.soapRequest("Power_Judge", 10000, new SoapInterface() {	
+						nssySoap.Power_Judge(username.getText().toString(), 10000, new SoapInterface() {	
 							@Override
 							public void soapResult(ArrayList<Object> arrayList) {
 								Object object = arrayList.get(0);
@@ -67,7 +58,7 @@ public class LogonActivity extends MainActivity {
 									showMessage("用户角色 = " + user_role);
 									return;
 								}
-								TeacherData.getDefault().setUserName(username.getText().toString());
+								mainData.setUserName(username.getText().toString());
 							}
 
 							@Override

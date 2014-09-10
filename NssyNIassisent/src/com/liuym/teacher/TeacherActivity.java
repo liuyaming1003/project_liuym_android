@@ -9,7 +9,6 @@ import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.adapter.MyViewPagerAdapter;
 import com.liuym.nssyniassisent.*;
-import com.liuym.soap.Soap;
 import com.liuym.soap.Soap.SoapInterface;
 
 import android.annotation.SuppressLint;
@@ -49,25 +48,38 @@ public class TeacherActivity extends MainActivity {
 		//setContentView(R.layout.activity_teacher);
 
 		//getIntentValues();
-		
+
 		new Thread(new Runnable() {			
 			@Override
 			public void run() {
-				Soap soap = Soap.getSoap();	
-				soap.putSoapParam("UserName", TeacherData.getDefault().getUserName());
-				soap.soapRequest("Teacher_InfoList", 1000, new SoapInterface() {					
+				nssySoap.Teacher_InfoList(mainData.getUserName(), 10000, new SoapInterface() {					
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
 						String info_list = arrayList.get(0).toString();	
-						if(teacherData.setInfoList(info_list) == true){
-							String realName = teacherData.getInfoListJson("RealName");
+						if(mainData.setUserInfoList(info_list) == true){
+							String realName = mainData.getUserInfo().RealName;
 							teacher_info_TextView.setText(realName + ",你的校园网无线网络已连接: 00:30:25");
 							showMessage("老师信息 :" + info_list);
+							nssySoap.Deaprt_Room_list(mainData.getUserInfo().DepartID, 10000, new SoapInterface() {
+
+								@Override
+								public void soapResult(ArrayList<Object> arrayList) {
+									String room_list = arrayList.get(0).toString();	
+									if(mainData.setRoomList(room_list) == true){
+										showMessage("房间信息" + room_list);
+									}
+								}
+
+								@Override
+								public void soapError(String error) {
+									showMessage("错误信息:" + error);	
+								}
+							});
 						}else{
 							showMessage("老师信息 错误");
 						}						
 					}
-					
+
 					@Override
 					public void soapError(String error) {
 						showMessage("错误信息 :" + error);						

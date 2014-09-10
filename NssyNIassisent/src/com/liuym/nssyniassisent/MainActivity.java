@@ -2,7 +2,7 @@ package com.liuym.nssyniassisent;
 
 import java.util.Map;
 
-import com.liuym.teacher.TeacherData;
+import com.liuym.soap.NssySoapMethod;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +13,8 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	protected TeacherData teacherData = null;
+	protected MainData mainData = null;
+	protected NssySoapMethod nssySoap = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +28,8 @@ public class MainActivity extends Activity {
 		
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
-		teacherData = TeacherData.getDefault();		
+		mainData = MainData.GetDefault();
+		nssySoap = NssySoapMethod.getDefault();
     }
     
     protected void push(Class<?> inClass){

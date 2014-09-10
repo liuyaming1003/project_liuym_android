@@ -71,7 +71,7 @@
                 android:text="年级">                
             </TextView>          
             <EditText 
-                android:id="@+id/grage_info"
+                android:id="@+id/grage_info_editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
@@ -99,7 +99,7 @@
                 android:text="班级">                
             </TextView>          
             <EditText 
-                android:id="@+id/class_info"
+                android:id="@+id/class_info_editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
@@ -127,7 +127,7 @@
                 android:text="电话">                
             </TextView>          
             <EditText 
-                android:id="@+id/phone_info"
+                android:id="@+id/phone_info_editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
