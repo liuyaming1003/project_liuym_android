@@ -328,10 +328,6 @@ public class TeacherActivity extends MainActivity {
 		});
 	}
 
-	private void toastShow(String showMessage){
-		Toast.makeText(this, showMessage, Toast.LENGTH_SHORT).show();
-	}
-
 	private List<Map<String, Object>> getOrderList(){  
 		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();  
 		for (int i = 0; i < 30; i++) {  

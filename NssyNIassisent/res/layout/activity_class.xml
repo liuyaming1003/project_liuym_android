@@ -71,7 +71,7 @@
                 android:text="年级">                
             </TextView>          
             <EditText 
-                android:id="@+id/grage_info_editText"
+                android:id="@+id/grade_info_editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
