@@ -13,7 +13,6 @@
         android:layout_height="44dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        navigation:backgroundAlpha="180"
         navigation:backgroundColor="#22292C"
         navigation:tv_title="首页" >
     </com.liuym.nssyniassisent.Navigation>
@@ -37,7 +36,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="110dp"
             android:layout_below="@+id/teacher_info"
             android:layout_marginTop="15dp"
             android:orientation="horizontal" >
@@ -48,19 +47,21 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/report_personal_btn_bg_153x79" 
-                android:paddingTop="60dp"
+                android:background="#FFFFFF"
+                android:drawableTop="@drawable/person_button_bg"
+                android:paddingTop="10dp"
                 android:text="个人电脑报修"/>
 
             <Button
                 android:id="@+id/classBtn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/report_class_btn_bg_153x79"
-                android:paddingTop="60dp"
+                android:background="#FFFFFF"
+                android:drawableTop="@drawable/class_button_bg"
+                android:paddingTop="10dp"
                 android:text="班级电脑报修" />
             
         </LinearLayout>

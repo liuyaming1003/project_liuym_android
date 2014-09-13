@@ -14,7 +14,6 @@
         android:layout_height="@dimen/navigation_height"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        navigation:backgroundAlpha="180"
         navigation:backgroundColor="#22292C"
         navigation:tv_title="南山实验网络助手" >
     </com.liuym.nssyniassisent.Navigation>
@@ -28,59 +27,107 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true" >
+            android:layout_height="210dp"
+            android:layout_centerVertical="true"
+            android:background="#FFFFFF" >
 
             <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="match_parent"
+                android:id="@+id/logon_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/login_bg_cn"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/logon_title"
                 android:scaleType="fitCenter" />
 
             <Button
-                android:id="@+id/Logon"
-                android:layout_width="@dimen/logon_btn_width"
-                android:layout_height="@dimen/logon_btn_height"
+                android:id="@+id/logon_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="@dimen/logon_btn_marginRight"
-                android:layout_marginTop="@dimen/logon_btn_marginTop"
-                android:background="@drawable/login_btn_cn"
-                android:text="@string/button_text_logon" />
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/logon_button" />
 
-            <EditText
-                android:id="@+id/username"
-                android:layout_width="@dimen/text_username_width"
-                android:layout_height="@dimen/text_username_height"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="@dimen/text_username_marginLeft"
-                android:layout_marginTop="@dimen/text_username_marginTop"
-                android:background="@color/edittext_bgcolor_username"
-                android:maxLength="@string/edittext_maxlength_username"
-                android:gravity="center"
-                android:hint="@string/edittext_hint_username"
-                android:singleLine="true"
-                android:text="h12">
-            </EditText>
+            <LinearLayout
+                android:id="@+id/user_linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/logon_button"
+                android:layout_alignTop="@+id/logon_button"
+                android:layout_below="@+id/logon_title"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/logon_button"
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="@dimen/text_password_width"
-                android:layout_height="@dimen/text_password_height"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="@dimen/text_password_marginLeft"
-                android:layout_marginTop="@dimen/text_password_marginTop"
-                android:background="@color/edittext_bgcolor_password"
-                android:maxLength="@string/edittext_maxlength_password"
-                android:gravity="center"
-                android:hint="@string/edittext_hint_password"
-                android:inputType="textPassword"
-                android:singleLine="true" 
-                android:text="nssy-2012">
-            </EditText>
+                <RelativeLayout
+                    android:id="@+id/user_relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" 
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/logon_user_png"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/logon_user_png"
+                        android:scaleType="fitCenter" />
+
+                    <EditText
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/logon_user_png"
+                        android:background="#E0E0E0"
+                        android:gravity="center"
+                        android:hint="用户名  USERNAME"
+                        android:maxLength="16"
+                        android:singleLine="true"
+                        android:text="h12" >
+                    </EditText>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/pswd_relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/logon_pswd_png"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/logon_pswd_png"
+                        android:scaleType="fitCenter" />
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/logon_pswd_png"
+                        android:background="#E0E0E0"
+                        android:gravity="center"
+                        android:hint="密  码  PASSWORD"
+                        android:inputType="textPassword"
+                        android:maxLength="10"
+                        android:singleLine="true"
+                        android:text="nssy-2012" >
+                    </EditText>
+                </RelativeLayout>
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 

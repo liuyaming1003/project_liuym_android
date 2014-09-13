@@ -29,7 +29,7 @@ public class LogonActivity extends MainActivity {
 		username = (EditText)findViewById(R.id.username);
 		password = (EditText)findViewById(R.id.password);
 
-		findViewById(R.id.Logon).setOnClickListener(new Button.OnClickListener() {			
+		findViewById(R.id.logon_button).setOnClickListener(new Button.OnClickListener() {			
 			@Override
 			public void onClick(View v) {					  
 				map.put("username", username.getText().toString());
