@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import com.liuym.adapter.MyViewPagerAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.R;
+import com.liuym.nssyniassisent.SerializableMap;
+import com.liuym.zxing.CaptureActivity;
 
 @SuppressLint("InflateParams") public class WorkerActivity extends MainActivity{
 	private LayoutInflater inflater = null;
@@ -51,6 +54,13 @@ import com.liuym.nssyniassisent.R;
 			@Override
 			public void onClick(View v) {
 				setSecondView();
+			}
+		});
+		
+		findViewById(R.id.barcode).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				push(CaptureActivity.class, 100);
 			}
 		});
 
@@ -157,4 +167,21 @@ import com.liuym.nssyniassisent.R;
 			});
 		}
 	}
+	
+	@Override  
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)  
+    {  
+        //可以根据多个请求代码来作相应的操作  
+        if(requestCode == 100){  
+        		if(resultCode == 0){
+        			Bundle bundle = data.getExtras();  
+        			SerializableMap serializableMap = (SerializableMap) bundle  
+        					.get("map");
+        			showMessage(serializableMap.getMap().get("zxingCode").toString());
+        		}else{
+        			
+        		} 
+        }  
+        super.onActivityResult(requestCode, resultCode, data);  
+    } 
 }

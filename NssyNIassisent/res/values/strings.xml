@@ -9,5 +9,6 @@
     <string name="edittext_maxlength_username">16</string>
     <string name="edittext_hint_password">密  码  PASSWORD</string>
     <string name="edittext_maxlength_password">10</string>
+    <string name="scan_text">将二维码/条码放入框内扫描</string>
 
 </resources>

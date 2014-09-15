@@ -17,7 +17,8 @@ public class MainData{
 	private Device_Info device_Info = null;
 	private String userName = null;
     private ArrayList<Depart_Class> roomArrayList = null;
-    /**
+
+	/**
      * 获取 分校房间列表信息
      * @return
      */
