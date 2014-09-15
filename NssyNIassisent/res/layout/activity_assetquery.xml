@@ -13,7 +13,6 @@
         android:layout_height="44dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        navigation:backgroundAlpha="180"
         navigation:backgroundColor="#22292C"
         navigation:btn_leftText="返回"
         navigation:tv_title="资产查询" >
@@ -58,9 +57,10 @@
                     />
                 <Button 
                     android:id="@+id/input_query_button"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/asset_query_btn_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/asset_query_button"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="5dp"/>
             </RelativeLayout>
@@ -84,9 +84,8 @@
                     android:id="@+id/scan_query_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/scan_query_textview"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/asset_query_code_btn_bg"/>
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/barcode_button"/>
             </RelativeLayout>
             
             <RelativeLayout

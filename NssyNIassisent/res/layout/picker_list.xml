@@ -13,15 +13,15 @@
         android:layout_height="160dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="#FFFFFF" >
+        android:background="@drawable/pop_process" >
 
         <TextView
             android:id="@+id/picker_title"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:gravity="center_vertical|center_horizontal"
             android:text="班级"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <ListView
             android:id="@+id/myListView"

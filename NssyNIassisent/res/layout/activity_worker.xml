@@ -13,7 +13,6 @@
         android:layout_height="44dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        navigation:backgroundAlpha="180"
         navigation:backgroundColor="#22292C"
         navigation:tv_title="首页" >
     </com.liuym.nssyniassisent.Navigation>
@@ -21,66 +20,107 @@
     <RelativeLayout
         android:id="@+id/Center"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/navigationView" >
+        android:layout_height="200dp"
+        android:layout_below="@+id/navigationView"
+        android:layout_marginTop="5dp" >
 
         <LinearLayout
             android:id="@+id/Button_id"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/qurey_info"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/info_query" />
+                android:layout_marginRight="3dp" >
 
-            <Button
-                android:id="@+id/barcode"
+                <Button
+                    android:id="@+id/qurey_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:drawableTop="@drawable/query_button"
+                    android:paddingTop="35dp" />
+
+                <TextView
+                    android:id="@+id/asset_left_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/query_top_bg"
+                    android:gravity="center_vertical"
+                    android:text="  信息查询"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/code_query" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1" 
+                android:layout_marginLeft="3dp">
+
+                <Button
+                    android:id="@+id/barcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:drawableTop="@drawable/barcode_button"
+                    android:paddingTop="35dp" />
+
+                <TextView
+                    android:id="@+id/asset_left_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/barcode_top_bg"
+                    android:gravity="center_vertical"
+                    android:text="  条码扫描"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
         </LinearLayout>
-        <TextView 
+
+        <TextView
             android:id="@+id/work_name"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_below="@+id/Button_id"
             android:layout_above="@+id/metting"
+            android:layout_below="@+id/Button_id"
             android:layout_marginLeft="5dp"
-            android:textSize="16sp"
             android:gravity="center_vertical"
-            android:text="聂超宇" />
-        
-        <TextView 
+            android:text="聂超宇"
+            android:textSize="16sp" />
+
+        <TextView
             android:id="@+id/work_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignTop="@+id/work_name"
             android:layout_alignBottom="@+id/work_name"
-            android:layout_toRightOf="@+id/work_name"
+            android:layout_alignTop="@+id/work_name"
             android:layout_marginRight="5dp"
-            android:textSize="12sp"
+            android:layout_toRightOf="@+id/work_name"
             android:gravity="center_vertical"
-            android:text="ncy@nssyxx.com.cn\n15814606237  610643" />
-        
-        <TextView 
+            android:text="ncy@nssyxx.com.cn\n15814606237  610643"
+            android:textSize="12sp" />
+
+        <TextView
             android:id="@+id/metting"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_alignParentBottom="true"
-            android:singleLine="true"
             android:gravity="center_vertical"
-            android:textSize="13sp"
-            android:text="信息中心通知: 周三中午负责人会议,请与会人员准时参加会议"/>"
+            android:singleLine="true"
+            android:text="信息中心通知: 周三中午负责人会议,请与会人员准时参加会议"
+            android:textSize="13sp" />
+"
     </RelativeLayout>
 
     <RelativeLayout
@@ -102,8 +142,8 @@
         android:layout_height="53dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/tool_bar_bg"
-        android:orientation="horizontal"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/first"

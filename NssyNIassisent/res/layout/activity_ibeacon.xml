@@ -12,7 +12,6 @@
         android:layout_height="44dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        navigation:backgroundAlpha="180"
         navigation:backgroundColor="#22292C"
         navigation:tv_title="IBEACON" >
     </com.liuym.nssyniassisent.Navigation>
