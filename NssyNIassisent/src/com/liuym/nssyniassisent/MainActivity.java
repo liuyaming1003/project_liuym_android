@@ -15,6 +15,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	protected MainData mainData = null;
 	protected NssySoapMethod nssySoap = null;
+	protected WaittingDialog waittingDialog = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,7 +28,7 @@ public class MainActivity extends Activity {
 
 
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+		waittingDialog = WaittingDialog.getDefault();
 		mainData = MainData.GetDefault();
 		nssySoap = NssySoapMethod.getDefault();
 	}

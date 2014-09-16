@@ -34,20 +34,24 @@ public class LogonActivity extends MainActivity {
 			public void onClick(View v) {					  
 				map.put("username", username.getText().toString());
 				map.put("password", password.getText().toString());
+				
+				waittingDialog.show(LogonActivity.this, "", "登入中...");
 				nssySoap.impersonateValidUser(username.getText().toString(), password.getText().toString(), 10000, new SoapInterface() {		
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
 						Object object = arrayList.get(0);
 						String logon_info = object.toString();
 						if(logon_info.equals("true")){
-							showMessage("登入成功");
+							//showMessage("登入成功");
 						}else{
 							showMessage("登入失败");
+							waittingDialog.dismiss();
 							return ;
 						}
 						nssySoap.Power_Judge(username.getText().toString(), 10000, new SoapInterface() {	
 							@Override
 							public void soapResult(ArrayList<Object> arrayList) {
+								waittingDialog.dismiss();
 								Object object = arrayList.get(0);
 								String user_role = object.toString();
 								if(user_role.equals("Teacher")){
@@ -63,6 +67,7 @@ public class LogonActivity extends MainActivity {
 
 							@Override
 							public void soapError(String error) {
+								waittingDialog.dismiss();
 								showMessage("访问错误 : " + error);
 							}
 						});
@@ -70,6 +75,7 @@ public class LogonActivity extends MainActivity {
 
 					@Override
 					public void soapError(String error) {
+						waittingDialog.dismiss();
 						showMessage("访问错误 : " + error);
 					}
 				});

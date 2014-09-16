@@ -14,7 +14,9 @@ import com.liuym.soap.Soap.SoapInterface;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.view.ViewPager;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +34,7 @@ public class TeacherActivity extends MainActivity {
 	private TextView teacher_info_TextView = null;
 	private View ibeactonView = null;
 	private boolean ibViewIsFirst = true;
-
+	private boolean isFirstLaunch;
 	//tableview
 	private ViewPager viewPager = null;
 	private View viewPager_title_img = null;
@@ -49,45 +51,7 @@ public class TeacherActivity extends MainActivity {
 
 		//getIntentValues();
 
-		new Thread(new Runnable() {			
-			@Override
-			public void run() {
-				nssySoap.Teacher_InfoList(mainData.getUserName(), 10000, new SoapInterface() {					
-					@Override
-					public void soapResult(ArrayList<Object> arrayList) {
-						String info_list = arrayList.get(0).toString();	
-						if(mainData.setUserInfoList(info_list) == true){
-							String realName = mainData.getUserInfo().RealName;
-							teacher_info_TextView.setText(realName + ",你的校园网无线网络已连接: 00:30:25");
-							showMessage("老师信息 :" + info_list);
-							nssySoap.Deaprt_Room_list(mainData.getUserInfo().DepartID, 10000, new SoapInterface() {
-
-								@Override
-								public void soapResult(ArrayList<Object> arrayList) {
-									String room_list = arrayList.get(0).toString();	
-									if(mainData.setRoomList(room_list) == true){
-										showMessage("房间信息" + room_list);
-									}
-								}
-
-								@Override
-								public void soapError(String error) {
-									showMessage("错误信息:" + error);	
-								}
-							});
-						}else{
-							showMessage("老师信息 错误");
-						}						
-					}
-
-					@Override
-					public void soapError(String error) {
-						showMessage("错误信息 :" + error);						
-					}
-				});
-			}
-		}).start();
-
+		isFirstLaunch = true;
 		inflater = LayoutInflater.from(this); 
 		teackerView = inflater.inflate(R.layout.activity_teacher, null);
 		teacher_info_TextView = (TextView)teackerView.findViewById(R.id.teacher_info);
@@ -473,10 +437,58 @@ public class TeacherActivity extends MainActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void getIntentValues(){
-		Bundle bundle = getIntent().getExtras();  
-		SerializableMap serializableJson = (SerializableMap) bundle  
-				.get("map"); 
-		System.out.println("map = " + serializableJson + "tag = " + getIntent().getStringExtra("tag"));
-	}
+	@Override  
+	public void onWindowFocusChanged(boolean hasFocus){  
+		super.onWindowFocusChanged(hasFocus);
+		System.out.println("onWindowFocusChanged**************************");
+		if (hasFocus){  
+			if(isFirstLaunch){
+				isFirstLaunch = false;
+				new Thread(new Runnable() {			
+					@Override
+					public void run() {
+						Looper.prepare(); 
+						waittingDialog.show(TeacherActivity.this, "", "获取用户信息，请等待...");
+						nssySoap.Teacher_InfoList(mainData.getUserName(), 10000, new SoapInterface() {					
+							@Override
+							public void soapResult(ArrayList<Object> arrayList) {
+								String info_list = arrayList.get(0).toString();	
+								if(mainData.setUserInfoList(info_list) == true){
+									String realName = mainData.getUserInfo().RealName;
+									teacher_info_TextView.setText(realName + ",你的校园网无线网络已连接: 00:30:25");
+									//showMessage("老师信息 :" + info_list);
+									nssySoap.Deaprt_Room_list(mainData.getUserInfo().DepartID, 10000, new SoapInterface() {
+
+										@Override
+										public void soapResult(ArrayList<Object> arrayList) {
+											String room_list = arrayList.get(0).toString();	
+											if(mainData.setRoomList(room_list) == true){
+												waittingDialog.dismiss();//showMessage("房间信息" + room_list);
+											}
+										}
+
+										@Override
+										public void soapError(String error) {
+											waittingDialog.dismiss();
+											showMessage("错误信息:" + error);	
+										}
+									});
+								}else{
+									waittingDialog.dismiss();
+									showMessage("用户信息 错误");
+								}						
+							}
+
+							@Override
+							public void soapError(String error) {
+								showMessage("错误信息 :" + error);						
+							}
+						});
+						Looper.loop(); 
+					}
+				}).start();
+			}
+			
+		}
+	}  
 }

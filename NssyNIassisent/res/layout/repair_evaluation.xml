@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/pop_appraise" >
@@ -182,11 +182,22 @@
             android:id="@+id/repair_evaluation_submit_button"
             android:layout_width="match_parent"
             android:layout_height="37dp"
+            android:layout_marginBottom="40dp"
             android:layout_alignParentBottom="true"
             android:background="#00000000"
             android:text="点击提交评价"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="22dp"
+            android:rating="5"
+            android:stepSize="1.0" />
     </RelativeLayout>
 
 </RelativeLayout>
