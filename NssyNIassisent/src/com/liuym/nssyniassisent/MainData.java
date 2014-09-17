@@ -108,6 +108,7 @@ public class MainData{
 	 */
 	public boolean setRoomList(String str){
 		boolean flag = true;
+		roomArrayList.clear();
 		if(str == null){
 			flag = false;
 		}
@@ -138,9 +139,12 @@ public class MainData{
 	 */
 	public boolean setSystemInfoList(String str){
 		boolean flag = true;
+		systemInfoArrayList.clear();
 		if(str == null){
 			flag = false;
 		} 
+		
+		
 		try {
 			//JSONArray array = new JSONArray(str);
 			//for(int i = 0; i < array.length(); i++){
