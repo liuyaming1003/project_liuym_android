@@ -94,8 +94,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_BACK){  
-			finish();
-			overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
+			pop();
 			return true;   
 		}
 		return super.onKeyDown(keyCode, event);

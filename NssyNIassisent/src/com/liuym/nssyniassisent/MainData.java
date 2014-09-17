@@ -17,6 +17,15 @@ public class MainData{
 	private Device_Info device_Info = null;
 	private String userName = null;
     private ArrayList<Depart_Class> roomArrayList = null;
+    private ArrayList<System_Infomation> systemInfoArrayList = null;
+
+    /***
+     * 获取系统消息列表
+     * @return
+     */
+	public ArrayList<System_Infomation> getSystemInfoArrayList() {
+		return systemInfoArrayList;
+	}
 
 	/**
      * 获取 分校房间列表信息
@@ -36,6 +45,7 @@ public class MainData{
 
 	private MainData(){
 		roomArrayList = new ArrayList<MainData.Depart_Class>();
+		systemInfoArrayList = new ArrayList<MainData.System_Infomation>();
 	}
 
 	public static MainData GetDefault(){
@@ -112,6 +122,37 @@ public class MainData{
 				depart.Room_Type = room_json.getString("Room_Type");
 				depart.Room_Num = room_json.getString("Room_Num");
 				roomArrayList.add(depart);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			flag = false;
+		}
+		
+		return flag;
+	}
+	
+	/**
+	 * 设置系统消息列表
+	 * @param str
+	 * @return
+	 */
+	public boolean setSystemInfoList(String str){
+		boolean flag = true;
+		if(str == null){
+			flag = false;
+		} 
+		try {
+			//JSONArray array = new JSONArray(str);
+			//for(int i = 0; i < array.length(); i++){
+			for(int i = 0; i < 20; i++){				
+				JSONObject system_info_json = new JSONObject("{\"SI_ID\":123, \"System_Information_Title\":\"南实集团: 举行《践行群众路线，做好群众工作》专题讲座\", \"System_Information_Content\": \"南实校园讯（通讯员 陈一芹）4月29日下午，南山实验教育集团特邀人民大学博士、市委党校王连喜教授，举行了主题为《践行群众路线，做好群众工作》专题辅导讲座。讲座由南实集团党总支书记、总校长程显栋同志主持，集团全体党员干部180余人聆听讲座\", \"System_Information_Type\":\"1\", \"System_Information_Addtime\":\"2014.06.16 10:25:53\"}");//array.getJSONObject(i);
+				System_Infomation systemInfo = new System_Infomation();
+				systemInfo.SI_ID = system_info_json.getInt("SI_ID");
+				systemInfo.System_Information_Title = system_info_json.getString("System_Information_Title");
+				systemInfo.System_Information_Content = system_info_json.getString("System_Information_Content");
+				systemInfo.System_Information_Type = system_info_json.getString("System_Information_Type");
+				systemInfo.System_Information_Addtime = system_info_json.getString("System_Information_Addtime");
+				systemInfoArrayList.add(systemInfo);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();

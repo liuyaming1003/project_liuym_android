@@ -68,7 +68,7 @@ public class CaptureActivity extends MainActivity implements Callback
 		navi.getBtn_left().setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				pop();
+				pop(1, null);
 			}
 		});
 		
@@ -299,7 +299,6 @@ public class CaptureActivity extends MainActivity implements Callback
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_BACK){  
 			pop(1, null);
-			overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
 			return true;   
 		}
 		return super.onKeyDown(keyCode, event);

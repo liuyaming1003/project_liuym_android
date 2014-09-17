@@ -9,6 +9,8 @@ import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.adapter.MyViewPagerAdapter;
 import com.liuym.nssyniassisent.*;
+import com.liuym.nssyniassisent.MainData.Depart_Class;
+import com.liuym.nssyniassisent.MainData.System_Infomation;
 import com.liuym.soap.Soap.SoapInterface;
 
 import android.annotation.SuppressLint;
@@ -24,6 +26,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +43,8 @@ public class TeacherActivity extends MainActivity {
 	private ViewPager viewPager = null;
 	private View viewPager_title_img = null;
 	private View order_view = null;
+	MyListViewAdapter infoAdapter = null;
+	List<Map<String, Object>> systemInfo_list = null;
 	private int order_select_index = -1;
 	private View order_select_view = null;
 	private View history_view = null;
@@ -146,14 +152,15 @@ public class TeacherActivity extends MainActivity {
 		//init Order ListView
 		order_view = inflater.inflate(R.layout.my_listview, null);
 		ListView listView = (ListView)order_view.findViewById(R.id.myListView);
-		final MyListViewAdapter infoAdapter = new MyListViewAdapter(this, getOrderList(),  
+		systemInfo_list = new ArrayList<Map<String,Object>>();
+		infoAdapter = new MyListViewAdapter(this, systemInfo_list,  
 				new ListViewInterface(){	
+			@SuppressWarnings("unchecked")
 			@Override
 			public void setCell(MyListViewAdapter adapter, View CellView, int position) {
 				TextView info_time = (TextView)CellView.findViewById(R.id.info_time);
 				TextView info_title = (TextView)CellView.findViewById(R.id.info_title);
 				TextView info_detail = (TextView)CellView.findViewById(R.id.info_detail);
-				info_time.setText("2014.06.16 10:25:53");				
 				if(order_select_index == position){
 					System.out.println("setCell ==");
 					info_detail.setVisibility(View.VISIBLE);
@@ -161,10 +168,11 @@ public class TeacherActivity extends MainActivity {
 					System.out.println("setCell !=");
 					info_detail.setVisibility(View.GONE);
 				}
-				info_title.setText("南实集团: 举行《践行群众路线，做好群众工作》专题讲座");
-				info_detail.setText("南实校园讯（通讯员 陈一芹）4月29日下午，南山实验教育集团特邀人民大学博士、市委党校王连喜教授，" +
-						"举行了主题为《践行群众路线，做好群众工作》专题辅导讲座。讲座由南实集团党总支书记、总" +
-						"校长程显栋同志主持，集团全体党员干部180余人聆听讲座");
+				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+				System_Infomation system_info = (System_Infomation)map.get("system_info");
+				info_time.setText(system_info.System_Information_Addtime);
+				info_title.setText(system_info.System_Information_Title);
+				info_detail.setText(system_info.System_Information_Content);
 			}
 
 			@Override
@@ -174,12 +182,12 @@ public class TeacherActivity extends MainActivity {
 				TextView info_time = (TextView)CellView.findViewById(R.id.info_time);
 				TextView info_title = (TextView)CellView.findViewById(R.id.info_title);
 				TextView info_detail = (TextView)CellView.findViewById(R.id.info_detail);
-				info_time.setText("2014.06.16 10:25:53");
-				info_title.setText("南实集团: 举行《践行群众路线，做好群众工作》专题讲座");
+				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+				System_Infomation system_info = (System_Infomation)map.get("system_info");
+				info_time.setText(system_info.System_Information_Addtime);
+				info_title.setText(system_info.System_Information_Title);
 				info_detail.setVisibility(View.GONE); 
-				info_detail.setText("南实校园讯（通讯员 陈一芹）4月29日下午，南山实验教育集团特邀人民大学博士、市委党校王连喜教授，" +
-						"举行了主题为《践行群众路线，做好群众工作》专题辅导讲座。讲座由南实集团党总支书记、总" +
-						"校长程显栋同志主持，集团全体党员干部180余人聆听讲座");
+				info_detail.setText(system_info.System_Information_Content);
 				return CellView;
 			}
 		});
@@ -295,6 +303,7 @@ public class TeacherActivity extends MainActivity {
 	private List<Map<String, Object>> getOrderList(){  
 		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();  
 		for (int i = 0; i < 30; i++) {  
+
 			Map<String, Object> map=new HashMap<String, Object>();
 			map.put("title", "这是一个标题"+i);  
 			map.put("info", "这是一个详细信息"+i);  
@@ -402,6 +411,27 @@ public class TeacherActivity extends MainActivity {
 		}
 		case 4:
 			view = inflater.inflate(R.layout.repair_evaluation, null);
+			final RatingBar rating1 = (RatingBar)view.findViewById(R.id.ratingBar_1);
+			rating1.setOnRatingBarChangeListener(new OnRatingBarChangeListener(){ 
+				@Override 
+				public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) { 
+					showMessage("star1 is " + rating);
+				} 
+			});
+			final RatingBar rating2 = (RatingBar)view.findViewById(R.id.ratingBar_2);
+			rating2.setOnRatingBarChangeListener(new OnRatingBarChangeListener(){ 
+				@Override 
+				public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) { 
+					showMessage("star2 is " + rating);
+				} 
+			});
+			final RatingBar rating3 = (RatingBar)view.findViewById(R.id.ratingBar_3);
+			rating3.setOnRatingBarChangeListener(new OnRatingBarChangeListener(){ 
+				@Override 
+				public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) { 
+					showMessage("star3 is " + rating);
+				} 
+			});
 			view.findViewById(R.id.repair_evaluation_submit_button).setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -465,6 +495,30 @@ public class TeacherActivity extends MainActivity {
 											if(mainData.setRoomList(room_list) == true){
 												waittingDialog.dismiss();//showMessage("房间信息" + room_list);
 											}
+
+											nssySoap.System_Information_List(2, 0, 10000, new SoapInterface() {
+
+												@Override
+												public void soapResult(ArrayList<Object> arrayList) {
+													String info_list = arrayList.get(0).toString();
+													if(mainData.setSystemInfoList(info_list)){
+														for(int i = 0; i < mainData.getSystemInfoArrayList().size(); i++){
+															System_Infomation systemInfo = mainData.getSystemInfoArrayList().get(i);
+															Map<String, Object> map=new HashMap<String, Object>();
+															map.put("system_info", systemInfo);
+															systemInfo_list.add(map);			
+														}
+														infoAdapter.notifyDataSetChanged();
+													}else{
+														showMessage("无系统信息");
+													}
+												}
+
+												@Override
+												public void soapError(String error) {
+
+												}
+											});
 										}
 
 										@Override
@@ -488,7 +542,6 @@ public class TeacherActivity extends MainActivity {
 					}
 				}).start();
 			}
-			
 		}
 	}  
 }
