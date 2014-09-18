@@ -18,8 +18,26 @@ public class MainData{
 	private String userName = null;
     private ArrayList<Depart_Class> roomArrayList = null;
     private ArrayList<System_Infomation> systemInfoArrayList = null;
+    public  int order_select_index;
+    public ArrayList<UserRepairRecode> repairHistoryArrayList = null;
+    
+    public ArrayList<UserRepairRecode> getRepairHistoryArrayList() {
+		return repairHistoryArrayList;
+	}
+
+
+	//工作人员端维修订单
+    private ArrayList<Repair_Recode> repairRecodeArrayList = null;
 
     /***
+     * 获取维修列表
+     * @return
+     */
+    public ArrayList<Repair_Recode> getRepairRecodeArrayList() {
+		return repairRecodeArrayList;
+	}
+
+	/***
      * 获取系统消息列表
      * @return
      */
@@ -46,6 +64,8 @@ public class MainData{
 	private MainData(){
 		roomArrayList = new ArrayList<MainData.Depart_Class>();
 		systemInfoArrayList = new ArrayList<MainData.System_Infomation>();
+		repairHistoryArrayList = new ArrayList<MainData.UserRepairRecode>();
+		repairRecodeArrayList = new ArrayList<MainData.Repair_Recode>();
 	}
 
 	public static MainData GetDefault(){
@@ -165,6 +185,98 @@ public class MainData{
 		
 		return flag;
 	}
+	
+	/**
+	 * 报修记录列表
+	 * @param str
+	 * @return
+	 */
+	public boolean setRepairHistoryList(String str){
+		boolean flag = true;
+		repairHistoryArrayList.clear();
+		if(str == null){
+			flag = false;
+		} 
+		
+		
+		try {
+			JSONArray array = new JSONArray(str);
+			for(int i = 0; i < array.length(); i++){			
+				JSONObject repair_history_json = array.getJSONObject(i);
+				UserRepairRecode userRepair = new UserRepairRecode();
+				userRepair.Repair_Recode_Num = repair_history_json.getInt("Repair_Recode_Num");
+				userRepair.Repair_State = repair_history_json.getInt("Repair_State");
+				userRepair.Repair_time = repair_history_json.getString("Repair_time");
+				repairHistoryArrayList.add(userRepair);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			flag = false;
+		}
+		
+		return flag;
+	}
+	
+	/**
+	 * 设置维修记录列表
+	 * @param str
+	 * @return
+	 */
+	public boolean setRepairRecodeList(String str){
+		boolean flag = true;
+		repairRecodeArrayList.clear();
+		if(str == null){
+			flag = false;
+		} 
+		
+		
+		try {
+			//JSONArray array = new JSONArray(str);
+			//for(int i = 0; i < array.length(); i++){
+			for(int i = 0; i < 5; i++){				
+				JSONObject repair_info_json = new JSONObject();//array.getJSONObject(i);
+				repair_info_json.put("Repair_Recode_Num", 345436565);
+				repair_info_json.put("Device_Barcode", "4433223456");
+				repair_info_json.put("Repair_result", "未完成");
+				repair_info_json.put("Repair_Domain_UserName", "h12");
+				repair_info_json.put("Repair_Information", "二年级办公室");
+				repair_info_json.put("Service_UserName", "");
+				repair_info_json.put("Repair_State", 0);
+				repair_info_json.put("Repair_time", "2014.09.18 10:12:45");
+				repair_info_json.put("Service_time", "");
+				repair_info_json.put("CaseClosed__time", "");
+				repair_info_json.put("DepartID", 3);
+				repair_info_json.put("RepairType", 1);
+				repair_info_json.put("Repair_RealName", "h12");
+				repair_info_json.put("Room_Name", "null");
+				repair_info_json.put("Mobile_Tel", "18603036536");
+				repair_info_json.put("Group_Tel", "754323");
+				Repair_Recode repair = new Repair_Recode();
+				repair.Repair_Recode_Num = repair_info_json.getInt("Repair_Recode_Num");          // 报修单号
+				repair.Device_Barcode = repair_info_json.getString("Device_Barcode");          // 设备条形码
+				repair.Repair_result = repair_info_json.getString("Repair_result");           // 维修结果
+				repair.Repair_Domain_UserName = repair_info_json.getString("Repair_Domain_UserName");  // 报修人域用户名
+				repair.Repair_Information = repair_info_json.getString("Repair_Information");      // 报修信息，当type==2该参数为班级信息
+				repair.Service_UserName = repair_info_json.getString("Service_UserName");        // 接单人员
+				repair.Repair_State = repair_info_json.getInt("Repair_State");               // 维修状态
+				repair.Repair_time = repair_info_json.getString("Repair_time");             // 报修时间
+				repair.Service_time = repair_info_json.getString("Service_time");            // 接单时间
+				repair.CaseClosed__time = repair_info_json.getString("CaseClosed__time");        // 结案时间
+				repair.DepartID = repair_info_json.getInt("DepartID");                   // 分校ID
+				repair.RepairType = repair_info_json.getInt("RepairType");                 // 报修类型
+				repair.Repair_RealName = repair_info_json.getString("Repair_RealName");         // 报修人姓名
+				repair.Room_Name = repair_info_json.getString("Room_Name");               // 房间号
+				repair.Mobile_Tel = repair_info_json.getString("Mobile_Tel");              // 移动号码
+				repair.Group_Tel = repair_info_json.getString("Group_Tel");               // 集团短号
+				repairRecodeArrayList.add(repair);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			flag = false;
+		}
+		
+		return flag;
+	}
 
 	public UserInfoList getUserInfo(){
 		return userInfoList;
@@ -184,6 +296,13 @@ public class MainData{
 		public UserInfoList(){
 
 		}
+	}
+	
+	//报修记录列表
+	public class UserRepairRecode{
+		public String Repair_time;           // 报修时间
+		public int Repair_Recode_Num;        // 报修单号
+		public int Repair_State;             // 维修单状态
 	}
 
 	// 分校房间列表信息

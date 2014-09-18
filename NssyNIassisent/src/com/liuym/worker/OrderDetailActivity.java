@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.liuym.nssyniassisent.MainActivity;
+import com.liuym.nssyniassisent.MainData.Repair_Recode;
 import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
 
@@ -19,6 +20,9 @@ public class OrderDetailActivity extends MainActivity{
 	private EditText order_name_edittext = null;
 	private TextView phone_info_textview = null;
 	private TextView short_number_info_textview = null;
+	private TextView code_info_textview = null;
+	private TextView repair_username_textview = null;
+	private TextView repair_date_info_textview = null;
 	private LayoutInflater inflater = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,8 @@ public class OrderDetailActivity extends MainActivity{
 		
 		setContentView(R.layout.activity_orderdetail);
 		inflater = LayoutInflater.from(this); 
+		
+		Repair_Recode repair = mainData.getRepairRecodeArrayList().get(mainData.order_select_index);
 		
 		navi = (Navigation)findViewById(R.id.navigationView);
 		navi.getBtn_left().setOnClickListener(new OnClickListener() {			
@@ -51,6 +57,7 @@ public class OrderDetailActivity extends MainActivity{
 		});
 		
 		phone_info_textview = (TextView)findViewById(R.id.phone_info_textview);
+		phone_info_textview.setText(repair.Mobile_Tel);
 		findViewById(R.id.phone_call_button).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
@@ -62,6 +69,7 @@ public class OrderDetailActivity extends MainActivity{
 		});
 		
 		short_number_info_textview = (TextView)findViewById(R.id.short_number_info_textview);
+		short_number_info_textview.setText(repair.Group_Tel);
 		findViewById(R.id.short_number_button).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
@@ -71,6 +79,13 @@ public class OrderDetailActivity extends MainActivity{
                 startActivity(intent);
 			}
 		});
+		
+		code_info_textview = (TextView)findViewById(R.id.code_info_textview);
+		code_info_textview.setText("" + repair.Repair_Recode_Num);
+		repair_username_textview = (TextView)findViewById(R.id.repair_username_textview);
+		repair_username_textview.setText(repair.Repair_Domain_UserName);
+		repair_date_info_textview = (TextView)findViewById(R.id.repair_date_info_textview);
+		repair_date_info_textview.setText(repair.Repair_time);
 	}
 	
 	private void showHistoryDialog(int index){

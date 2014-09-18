@@ -9,16 +9,14 @@ import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.adapter.MyViewPagerAdapter;
 import com.liuym.nssyniassisent.*;
-import com.liuym.nssyniassisent.MainData.Depart_Class;
 import com.liuym.nssyniassisent.MainData.System_Infomation;
+import com.liuym.nssyniassisent.MainData.UserRepairRecode;
 import com.liuym.soap.Soap.SoapInterface;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v4.view.ViewPager;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +27,6 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 @SuppressLint("InflateParams") 
 public class TeacherActivity extends MainActivity {
@@ -43,13 +40,15 @@ public class TeacherActivity extends MainActivity {
 	private ViewPager viewPager = null;
 	private View viewPager_title_img = null;
 	private View order_view = null;
-	MyListViewAdapter infoAdapter = null;
-	List<Map<String, Object>> systemInfo_list = null;
+	private MyListViewAdapter infoAdapter = null;
+	private List<Map<String, Object>> systemInfo_list = null;
 	private int order_select_index = -1;
 	private View order_select_view = null;
 	private View history_view = null;
 	private int history_select_index = -1;
 	private View history_select_view = null;
+	private MyListViewAdapter historyAdapter = null;
+	private List<Map<String, Object>> repairHistory_list = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -218,8 +217,8 @@ public class TeacherActivity extends MainActivity {
 		//init Order ListView
 		history_view = inflater.inflate(R.layout.my_listview, null);
 		ListView listView = (ListView)history_view.findViewById(R.id.myListView);
-
-		final MyListViewAdapter historyAdapter = new MyListViewAdapter(this, getOrderList(), 
+		repairHistory_list = new ArrayList<Map<String,Object>>();
+		historyAdapter = new MyListViewAdapter(this, repairHistory_list, 
 				new ListViewInterface() {			
 			@Override
 			public void setCell(MyListViewAdapter adapter, View view, int position) {
@@ -300,23 +299,11 @@ public class TeacherActivity extends MainActivity {
 		});
 	}
 
-	private List<Map<String, Object>> getOrderList(){  
-		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();  
-		for (int i = 0; i < 30; i++) {  
-
-			Map<String, Object> map=new HashMap<String, Object>();
-			map.put("title", "这是一个标题"+i);  
-			map.put("info", "这是一个详细信息"+i);  
-			list.add(map);  
-		}  
-		return list;  
-	}
-
-	private void setTeackerView(){
+	/*private void setTeackerView(){
 		setContentView(teackerView);
-	}
+	}*/
 
-	private void setIbeaconView(){
+	/*private void setIbeaconView(){
 		setContentView(ibeactonView);
 		if(ibViewIsFirst){
 			ibViewIsFirst = false;
@@ -336,7 +323,7 @@ public class TeacherActivity extends MainActivity {
 				}
 			});
 		}		
-	}
+	}*/
 
 	private void showHistoryDialog(int index){
 		final Dialog dialog = new Dialog(this, R.style.MyDialog);
@@ -474,74 +461,90 @@ public class TeacherActivity extends MainActivity {
 		if (hasFocus){  
 			if(isFirstLaunch){
 				isFirstLaunch = false;
-				new Thread(new Runnable() {			
+				waittingDialog.show(TeacherActivity.this, "", "获取教师信息，请等待...");
+				nssySoap.Teacher_InfoList(mainData.getUserName(), 10000, new SoapInterface() {					
 					@Override
-					public void run() {
-						Looper.prepare(); 
-						waittingDialog.show(TeacherActivity.this, "", "获取用户信息，请等待...");
-						nssySoap.Teacher_InfoList(mainData.getUserName(), 10000, new SoapInterface() {					
-							@Override
-							public void soapResult(ArrayList<Object> arrayList) {
-								String info_list = arrayList.get(0).toString();	
-								if(mainData.setUserInfoList(info_list) == true){
-									String realName = mainData.getUserInfo().RealName;
-									teacher_info_TextView.setText(realName + ",你的校园网无线网络已连接: 00:30:25");
-									//showMessage("老师信息 :" + info_list);
-									nssySoap.Deaprt_Room_list(mainData.getUserInfo().DepartID, 10000, new SoapInterface() {
+					public void soapResult(ArrayList<Object> arrayList) {
+						String info_list = arrayList.get(0).toString();	
+						if(mainData.setUserInfoList(info_list) == true){
+							String realName = mainData.getUserInfo().RealName;
+							teacher_info_TextView.setText(realName + ",你的校园网无线网络已连接: 00:30:25");
+							//showMessage("老师信息 :" + info_list);
+							waittingDialog.dismiss();
+							nssySoap.Deaprt_Room_list(mainData.getUserInfo().DepartID, 10000, new SoapInterface() {
 
-										@Override
-										public void soapResult(ArrayList<Object> arrayList) {
-											String room_list = arrayList.get(0).toString();	
-											if(mainData.setRoomList(room_list) == true){
-												waittingDialog.dismiss();//showMessage("房间信息" + room_list);
-											}
-
-											nssySoap.System_Information_List(2, 0, 10000, new SoapInterface() {
-
-												@Override
-												public void soapResult(ArrayList<Object> arrayList) {
-													String info_list = arrayList.get(0).toString();
-													if(mainData.setSystemInfoList(info_list)){
-														for(int i = 0; i < mainData.getSystemInfoArrayList().size(); i++){
-															System_Infomation systemInfo = mainData.getSystemInfoArrayList().get(i);
-															Map<String, Object> map=new HashMap<String, Object>();
-															map.put("system_info", systemInfo);
-															systemInfo_list.add(map);			
-														}
-														infoAdapter.notifyDataSetChanged();
-													}else{
-														showMessage("无系统信息");
-													}
-												}
-
-												@Override
-												public void soapError(String error) {
-
-												}
-											});
-										}
-
-										@Override
-										public void soapError(String error) {
-											waittingDialog.dismiss();
-											showMessage("错误信息:" + error);	
-										}
-									});
-								}else{
-									waittingDialog.dismiss();
-									showMessage("用户信息 错误");
-								}						
-							}
-
-							@Override
-							public void soapError(String error) {
-								showMessage("错误信息 :" + error);						
-							}
-						});
-						Looper.loop(); 
+								@Override
+								public void soapResult(ArrayList<Object> arrayList) {
+									String room_list = arrayList.get(0).toString();	
+									if(mainData.setRoomList(room_list) == true){
+										//showMessage("房间信息" + room_list);
+									}
+								}
+								@Override
+								public void soapError(String error) {
+									showMessage("错误信息:" + error);	
+								}
+							});
+						}else{
+							waittingDialog.dismiss();
+							showMessage("教师信息错误");
+						}						
 					}
-				}).start();
+
+					@Override
+					public void soapError(String error) {
+						showMessage("错误信息 :" + error);						
+					}
+				});
 			}
+
+			nssySoap.System_Information_List(2, 0, 10000, new SoapInterface() {
+
+				@Override
+				public void soapResult(ArrayList<Object> arrayList) {
+					String info_list = arrayList.get(0).toString();
+					if(mainData.setSystemInfoList(info_list)){
+						for(int i = 0; i < mainData.getSystemInfoArrayList().size(); i++){
+							System_Infomation systemInfo = mainData.getSystemInfoArrayList().get(i);
+							Map<String, Object> map=new HashMap<String, Object>();
+							map.put("system_info", systemInfo);
+							systemInfo_list.add(map);			
+						}
+						infoAdapter.notifyDataSetChanged();
+					}else{
+						showMessage("无系统信息");
+					}
+				}
+
+				@Override
+				public void soapError(String error) {
+					showMessage("错误信息 :" + error);
+				}
+			});
+
+			nssySoap.User_Repair_Recode(mainData.getUserName(), 5, 100000, new SoapInterface() {
+
+				@Override
+				public void soapResult(ArrayList<Object> arrayList) {
+					String repair_history = arrayList.get(0).toString();
+					if(mainData.setRepairHistoryList(repair_history)){
+						for(int i = 0; i < mainData.getRepairHistoryArrayList().size(); i++){
+							UserRepairRecode repair = mainData.getRepairHistoryArrayList().get(i);
+							Map<String, Object> map=new HashMap<String, Object>();
+							map.put("repair_history", repair);
+							repairHistory_list.add(map);			
+						}
+						historyAdapter.notifyDataSetChanged();
+					}else{
+						showMessage("无报修记录");
+					}
+				}
+
+				@Override
+				public void soapError(String error) {
+					showMessage("错误信息 :" + error);
+				}
+			});
 		}
 	}  
 }

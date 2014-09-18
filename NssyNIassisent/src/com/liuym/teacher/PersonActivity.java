@@ -36,10 +36,12 @@ public class PersonActivity extends MainActivity {
 			@Override
 			public void onClick(View arg0) {
 				String info = "{name:" + username_info_editText.getText().toString() + ",phone:" + username_phone_editText.getText().toString() + "}";
+				waittingDialog.show(PersonActivity.this, "", "报修提交中, 请等待...");
 				nssySoap.Report_Repair_Recode(mainData.getUserInfo().Domain_UserName, mainData.getUserInfo().DepartID, info, 1, 10000, new SoapInterface() {
 					
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
+						waittingDialog.dismiss();
 						String result = arrayList.get(0).toString();
 						if(result.equals("s")){
 							showMessage("报修成功");

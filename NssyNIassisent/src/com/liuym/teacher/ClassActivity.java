@@ -10,6 +10,7 @@ import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.MainData.Depart_Class;
+import com.liuym.nssyniassisent.LogonActivity;
 import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
 import com.liuym.soap.Soap.SoapInterface;
@@ -50,7 +51,7 @@ public class ClassActivity extends MainActivity {
 			if(!gradeArray.contains(room_name)){
 				gradeArray.add(room_name);
 				Map<String, Object> map=new HashMap<String, Object>();
-				map.put("Room_Name", depart_class.Room_Name);
+				map.put("room_info", depart_class);
 				listGrade.add(map);
 			}			
 		}
@@ -100,17 +101,19 @@ public class ClassActivity extends MainActivity {
 			@Override
 			public void onClick(View arg0) {
 				String info = "{"+ "phone:" +phone_info_editText.getText().toString() +"}";
+				waittingDialog.show(ClassActivity.this, "", "报修提交中, 请等待...");
 				nssySoap.Report_Repair_Recode(mainData.getUserInfo().Domain_UserName, mainData.getUserInfo().DepartID, info, 2, 10000, new SoapInterface() {
 
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
+						waittingDialog.dismiss();
 						String result = arrayList.get(0).toString();
 						if(result.equals("s")){
 							showMessage("班级报修成功");
 							pop();
 						}else{
 							showMessage("班级报修失败" + result);
-						}						
+						}	
 					}
 
 					@Override
@@ -140,7 +143,8 @@ public class ClassActivity extends MainActivity {
 				public void setCell(MyListViewAdapter adapter, View CellView, int position) {
 					TextView picker_cell_textview = (TextView)CellView.findViewById(R.id.picker_cell_textview);
 					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-					picker_cell_textview.setText(map.get("Room_Name").toString());
+					Depart_Class depart_class = (Depart_Class)map.get("room_info");
+					picker_cell_textview.setText(depart_class.Room_Name);
 				}
 
 				@Override
@@ -149,7 +153,8 @@ public class ClassActivity extends MainActivity {
 					View CellView = inflater.inflate(R.layout.picker_cell, null);
 					TextView picker_cell_textview = (TextView)CellView.findViewById(R.id.picker_cell_textview);
 					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-					picker_cell_textview.setText(map.get("Room_Name").toString());
+					Depart_Class depart_class = (Depart_Class)map.get("room_info");
+					picker_cell_textview.setText(depart_class.Room_Name);
 					return CellView;
 				}
 			});
@@ -159,18 +164,16 @@ public class ClassActivity extends MainActivity {
 						long arg3){  
 					@SuppressWarnings("unchecked")
 					Map<String, Object> map = (Map<String, Object>)infoAdapter.getItem(arg2);
-					String roomName = map.get("Room_Name").toString();
+					Depart_Class depart_class = (Depart_Class)map.get("room_info");
+					String roomName = depart_class.Room_Name;
 					grade_info_editText.setText(roomName);
 					dialog.dismiss();	
 					listClass.clear();
 					for(int i = 0; i < mainData.getRoomArrayList().size(); i++){
-						Depart_Class depart_class = mainData.getRoomArrayList().get(i);
-						if(roomName.equals(depart_class.Room_Name)){
+						Depart_Class depart_class1 = mainData.getRoomArrayList().get(i);
+						if(roomName.equals(depart_class1.Room_Name)){
 							Map<String, Object> mapClass=new HashMap<String, Object>();
-							mapClass.put("Room_Name", depart_class.Room_Name);
-							mapClass.put("Room_ID", depart_class.Room_ID);
-							mapClass.put("Room_Num", depart_class.Room_Num);
-							mapClass.put("Room_Type", depart_class.Room_Type);
+							mapClass.put("room_info", depart_class1);
 							listClass.add(mapClass);
 						}
 					}
@@ -189,7 +192,8 @@ public class ClassActivity extends MainActivity {
 				public void setCell(MyListViewAdapter adapter, View CellView, int position) {
 					TextView picker_cell_textview = (TextView)CellView.findViewById(R.id.picker_cell_textview);
 					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-					picker_cell_textview.setText(map.get("Room_Num").toString());
+					Depart_Class depart_class = (Depart_Class)map.get("room_info");
+					picker_cell_textview.setText(depart_class.Room_Num);
 				}
 
 				@Override
@@ -198,7 +202,8 @@ public class ClassActivity extends MainActivity {
 					View CellView = inflater.inflate(R.layout.picker_cell, null);
 					TextView picker_cell_textview = (TextView)CellView.findViewById(R.id.picker_cell_textview);
 					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-					picker_cell_textview.setText(map.get("Room_Num").toString());
+					Depart_Class depart_class = (Depart_Class)map.get("room_info");
+					picker_cell_textview.setText(depart_class.Room_Num);
 					return CellView;
 				}
 			});
@@ -208,8 +213,8 @@ public class ClassActivity extends MainActivity {
 						long arg3){  
 					@SuppressWarnings("unchecked")
 					Map<String, Object> map = (Map<String, Object>)infoAdapter.getItem(arg2);
-					String roomName = map.get("Room_Num").toString();
-					class_info_editText.setText(roomName);
+					Depart_Class depart_class = (Depart_Class)map.get("room_info");
+					class_info_editText.setText(depart_class.Room_Num);
 					dialog.dismiss();
 				}  
 			});

@@ -34,43 +34,42 @@ public class LogonActivity extends MainActivity {
 			public void onClick(View v) {					  
 				map.put("username", username.getText().toString());
 				map.put("password", password.getText().toString());
-				
+
 				waittingDialog.show(LogonActivity.this, "", "登入中...");
 				nssySoap.impersonateValidUser(username.getText().toString(), password.getText().toString(), 10000, new SoapInterface() {		
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
+						waittingDialog.dismiss();
 						Object object = arrayList.get(0);
 						String logon_info = object.toString();
 						if(logon_info.equals("true")){
-							//showMessage("登入成功");
+							waittingDialog.show(LogonActivity.this, "", "识别用户角色, 请等待...");
+							nssySoap.Power_Judge(username.getText().toString(), 10000, new SoapInterface() {	
+								@Override
+								public void soapResult(ArrayList<Object> arrayList) {
+									waittingDialog.dismiss();
+									Object object = arrayList.get(0);
+									String user_role = object.toString();
+									if(user_role.equals("Teacher")){
+										push(TeacherActivity.class, "LogonActivity", map);
+									}else if(user_role.equals("TeamLead") || user_role.equals("Worker")){
+										push(WorkerActivity.class, "LogonActivity", map);
+									}else{
+										showMessage("用户角色 = " + user_role);
+										return;
+									}
+									mainData.setUserName(username.getText().toString());
+								}
+
+								@Override
+								public void soapError(String error) {
+									waittingDialog.dismiss();
+									showMessage("访问错误 : " + error);
+								}
+							});
 						}else{
 							showMessage("登入失败");
-							waittingDialog.dismiss();
-							return ;
 						}
-						nssySoap.Power_Judge(username.getText().toString(), 10000, new SoapInterface() {	
-							@Override
-							public void soapResult(ArrayList<Object> arrayList) {
-								waittingDialog.dismiss();
-								Object object = arrayList.get(0);
-								String user_role = object.toString();
-								if(user_role.equals("Teacher")){
-									push(TeacherActivity.class, "LogonActivity", map);
-								}else if(user_role.equals("TeamLead") || user_role.equals("Worker")){
-									push(WorkerActivity.class, "LogonActivity", map);
-								}else{
-									showMessage("用户角色 = " + user_role);
-									return;
-								}
-								mainData.setUserName(username.getText().toString());
-							}
-
-							@Override
-							public void soapError(String error) {
-								waittingDialog.dismiss();
-								showMessage("访问错误 : " + error);
-							}
-						});
 					}
 
 					@Override
@@ -79,6 +78,8 @@ public class LogonActivity extends MainActivity {
 						showMessage("访问错误 : " + error);
 					}
 				});
+
+
 			}
 		});
 	}
