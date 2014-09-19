@@ -292,13 +292,26 @@ public class NssySoapMethod{
 	}
 
 	/**
-	 * 
+	 * @param Device_Barcode                  设备条码
+	 * @param Device_Location                 存放地点
+	 * @param Device_User_Domain_UserName     域用户名
+	 * @param Device_Mac_Address              设备MAC地址
+	 * @param Device_IP_Address               设备IP地址
+	 * @param Device_Name                     设备名称
+	 * @param Device_Net_UP_Information       设备上联信息
+	 * @param Device_User                     设备使用者
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Update_Device_Info(int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Domain_UserName", null);
-	map.put("Recode_Count", null);
+	public void Update_Device_Info(String Device_Barcode, String Device_Location, String Device_User_Domain_UserName, String Device_Mac_Address, String Device_IP_Address, String Device_Name, String Device_Net_UP_Information, String Device_User, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
+	map.put("Device_Barcode", Device_Barcode);
+	map.put("Device_Location", Device_Location);
+	map.put("Device_User_Domain_UserName", Device_User_Domain_UserName);
+	map.put("Device_Mac_Address", Device_Mac_Address);
+	map.put("Device_IP_Address", Device_IP_Address);
+	map.put("Device_Name", Device_Name);
+	map.put("Device_Net_UP_Information", Device_Net_UP_Information);
+	map.put("Device_User", Device_User);
 	new Soap().soapRequest("Update_Device_Info", timeout, soapInterface, map);
 	}
 

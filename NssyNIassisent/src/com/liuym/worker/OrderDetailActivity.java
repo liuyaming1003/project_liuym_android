@@ -1,5 +1,7 @@
 package com.liuym.worker;
 
+import java.util.ArrayList;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +16,7 @@ import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.MainData.Repair_Recode;
 import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
+import com.liuym.soap.Soap.SoapInterface;
 
 public class OrderDetailActivity extends MainActivity{
 	private Navigation navi = null;
@@ -24,6 +27,7 @@ public class OrderDetailActivity extends MainActivity{
 	private TextView repair_username_textview = null;
 	private TextView repair_date_info_textview = null;
 	private LayoutInflater inflater = null;
+	private Repair_Recode repair = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,7 +35,7 @@ public class OrderDetailActivity extends MainActivity{
 		setContentView(R.layout.activity_orderdetail);
 		inflater = LayoutInflater.from(this); 
 		
-		Repair_Recode repair = mainData.getRepairRecodeArrayList().get(mainData.order_select_index);
+		repair = mainData.getRepairRecodeArrayList().get(mainData.order_select_index);
 		
 		navi = (Navigation)findViewById(R.id.navigationView);
 		navi.getBtn_left().setOnClickListener(new OnClickListener() {			
@@ -109,8 +113,22 @@ public class OrderDetailActivity extends MainActivity{
 				public void onClick(View arg0) {
 					if(dialog.isShowing()){
 						dialog.dismiss();
-					}					
-					push(OrderFinishActivity.class);
+					}	
+					waittingDialog.show(OrderDetailActivity.this, "", "正在转单，请稍等...");
+					nssySoap.Repair_Recode_Transfer(repair.Repair_Recode_Num, mainData.getUserName(), order_name_edittext.getText().toString(), "转单" ,10000, new SoapInterface() {
+						@Override
+						public void soapResult(ArrayList<Object> arrayList) {
+							waittingDialog.dismiss();
+							showMessage("信息" + arrayList.get(0).toString());
+							push(OrderFinishActivity.class);
+						}
+
+						@Override
+						public void soapError(String error) {
+							waittingDialog.dismiss();
+							showMessage("错误信息" + error);
+						}
+					});	
 				}
 			});
 			break;

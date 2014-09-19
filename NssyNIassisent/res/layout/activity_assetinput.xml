@@ -15,6 +15,7 @@
         android:layout_alignParentTop="true"
         navigation:backgroundColor="#22292C"
         navigation:btn_leftText="返回"
+        navigation:btn_rightText="更新"
         navigation:tv_title="资产录入" >
     </com.liuym.nssyniassisent.Navigation>
 

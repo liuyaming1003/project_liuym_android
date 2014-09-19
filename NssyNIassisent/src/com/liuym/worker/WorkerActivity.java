@@ -18,13 +18,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.liuym.adapter.MyListView;
 import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyViewPagerAdapter;
+import com.liuym.adapter.MyListView.OnRefreshListener;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.R;
 import com.liuym.nssyniassisent.SerializableMap;
 import com.liuym.nssyniassisent.MainData.Repair_Recode;
+import com.liuym.nssyniassisent.MainData.UserRepairRecode;
 import com.liuym.soap.Soap.SoapInterface;
 import com.liuym.zxing.CaptureActivity;
 
@@ -75,6 +78,12 @@ import com.liuym.zxing.CaptureActivity;
 
 		work_name_textview = (TextView)findViewById(R.id.work_name_textview);
 		work_info_textview = (TextView)findViewById(R.id.work_info_textview);
+		String realName = mainData.getUserInfo().RealName;
+		String userMail = mainData.getUserInfo().Domain_UserName + "@sznx.com.cn";
+		String phone_info = mainData.getUserInfo().Mobile_Tel + "  " + mainData.getUserInfo().Group_Tel;
+		work_name_textview.setText(realName);
+		work_info_textview.setText(userMail + "\n" + phone_info);
+
 
 		findViewById(R.id.first).setEnabled(false);
 
@@ -87,7 +96,7 @@ import com.liuym.zxing.CaptureActivity;
 
 	private void initReapirListView(){
 		order_view = inflater.inflate(R.layout.my_worker_listview, null);
-		ListView listView = (ListView)order_view.findViewById(R.id.myListView);
+		final MyListView listView = (MyListView)order_view.findViewById(R.id.myListView);
 		repair_list = new ArrayList<Map<String,Object>>();
 		repairAdapter = new MyListViewAdapter(this, repair_list,  
 				new ListViewInterface(){	
@@ -96,7 +105,7 @@ import com.liuym.zxing.CaptureActivity;
 				TextView order_name = (TextView)CellView.findViewById(R.id.order_name);
 				TextView order_info = (TextView)CellView.findViewById(R.id.order_info);
 				final Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-				Repair_Recode repair = (Repair_Recode)map.get("repair_recode");
+				final Repair_Recode repair = (Repair_Recode)map.get("repair_recode");
 				order_name.setText(repair.Repair_RealName);
 				order_info.setText(repair.Repair_time + "\n" + repair.Repair_Information);
 
@@ -105,7 +114,22 @@ import com.liuym.zxing.CaptureActivity;
 					@Override
 					public void onClick(View arg0) {
 						mainData.order_select_index = position;
-						push(OrderDetailActivity.class);				
+						waittingDialog.show(WorkerActivity.this, "", "正在接单，请稍等...");
+						nssySoap.Repair_Recode_Service(repair.Repair_Recode_Num, mainData.getUserName(), 10000, new SoapInterface() {
+
+							@Override
+							public void soapResult(ArrayList<Object> arrayList) {
+								waittingDialog.dismiss();
+								showMessage("信息" + arrayList.get(0).toString());
+								push(OrderDetailActivity.class);	
+							}
+
+							@Override
+							public void soapError(String error) {
+								waittingDialog.dismiss();
+								showMessage("错误信息" + error);
+							}
+						});				
 					}
 				});
 			}
@@ -117,7 +141,7 @@ import com.liuym.zxing.CaptureActivity;
 				TextView order_name = (TextView)CellView.findViewById(R.id.order_name);
 				TextView order_info = (TextView)CellView.findViewById(R.id.order_info);
 				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-				Repair_Recode repair = (Repair_Recode)map.get("repair_recode");
+				final Repair_Recode repair = (Repair_Recode)map.get("repair_recode");
 				order_name.setText(repair.Repair_RealName);
 				order_info.setText(repair.Repair_time + "\n" + repair.Repair_Information);
 				Button order_button = (Button)CellView.findViewById(R.id.order_button);
@@ -125,7 +149,22 @@ import com.liuym.zxing.CaptureActivity;
 					@Override
 					public void onClick(View arg0) {
 						mainData.order_select_index = position;
-						push(OrderDetailActivity.class);				
+						waittingDialog.show(WorkerActivity.this, "", "正在接单，请稍等...");
+						nssySoap.Repair_Recode_Service(repair.Repair_Recode_Num, mainData.getUserName(), 10000, new SoapInterface() {
+
+							@Override
+							public void soapResult(ArrayList<Object> arrayList) {
+								waittingDialog.dismiss();
+								showMessage("信息" + arrayList.get(0).toString());
+								push(OrderDetailActivity.class);	
+							}
+
+							@Override
+							public void soapError(String error) {
+								waittingDialog.dismiss();
+								showMessage("错误信息" + error);
+							}
+						});			
 					}
 				});
 				return CellView;
@@ -136,6 +175,39 @@ import com.liuym.zxing.CaptureActivity;
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
 					long arg3){
 			}  
+		});
+
+		listView.setonRefreshListener(new OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				nssySoap.Worker_Repair_List(mainData.getUserInfo().DepartID, mainData.getUserName(),  10000, new SoapInterface() {					
+					@Override
+					public void soapResult(ArrayList<Object> arrayList) {
+						listView.onRefreshComplete();
+						String repairInfo = arrayList.get(0).toString();	
+						repair_list.clear();
+						if(mainData.setRepairRecodeList(repairInfo)== true){
+							for(int i = 0; i < mainData.getRepairRecodeArrayList().size(); i++){
+								Repair_Recode repair = mainData.getRepairRecodeArrayList().get(i);
+								Map<String, Object> map=new HashMap<String, Object>();
+								map.put("repair_recode", repair);
+								repair_list.add(map);			
+							}
+							showMessage("刷新完成");
+							repairAdapter.notifyDataSetChanged();
+						}else{
+							//waittingDialog.dismiss();
+							showMessage("无维修信息");
+						}						
+					}
+
+					@Override
+					public void soapError(String error) {
+						listView.onRefreshComplete();
+						showMessage("错误信息 :" + error);						
+					}
+				});
+			}
 		});
 	}
 
@@ -203,47 +275,22 @@ import com.liuym.zxing.CaptureActivity;
 		if (hasFocus){  
 			if(isFirstLaunch){
 				isFirstLaunch = false;
-				waittingDialog.show(WorkerActivity .this, "", "获取工作人员信息，请等待...");
-				nssySoap.Teacher_InfoList(mainData.getUserName(), 10000, new SoapInterface() {					
+
+				nssySoap.Worker_Repair_List(mainData.getUserInfo().DepartID, mainData.getUserName(),  10000, new SoapInterface() {					
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
-						String info_list = arrayList.get(0).toString();	
-						if(mainData.setUserInfoList(info_list) == true){
-							String realName = mainData.getUserInfo().RealName;
-							String userMail = mainData.getUserInfo().Domain_UserName + "@sznx.com.cn";
-							String phone_info = mainData.getUserInfo().Mobile_Tel + "  " + mainData.getUserInfo().Group_Tel;
-							work_name_textview.setText(realName);
-							work_info_textview.setText(userMail + "\n" + phone_info);
-							//showMessage("老师信息 :" + info_list);
-							waittingDialog.dismiss();
-
-							nssySoap.Worker_Repair_List(mainData.getUserInfo().DepartID, mainData.getUserName(),  10000, new SoapInterface() {					
-								@Override
-								public void soapResult(ArrayList<Object> arrayList) {
-									String repairInfo = arrayList.get(0).toString();	
-									if(mainData.setRepairRecodeList(repairInfo)== true){
-										for(int i = 0; i < mainData.getRepairRecodeArrayList().size(); i++){
-											Repair_Recode repair = mainData.getRepairRecodeArrayList().get(i);
-											Map<String, Object> map=new HashMap<String, Object>();
-											map.put("repair_recode", repair);
-											repair_list.add(map);			
-										}
-										repairAdapter.notifyDataSetChanged();
-									}else{
-										//waittingDialog.dismiss();
-										showMessage("无维修信息");
-									}						
-								}
-
-								@Override
-								public void soapError(String error) {
-									showMessage("错误信息 :" + error);						
-								}
-							});
-
+						String repairInfo = arrayList.get(0).toString();	
+						if(mainData.setRepairRecodeList(repairInfo)== true){
+							for(int i = 0; i < mainData.getRepairRecodeArrayList().size(); i++){
+								Repair_Recode repair = mainData.getRepairRecodeArrayList().get(i);
+								Map<String, Object> map=new HashMap<String, Object>();
+								map.put("repair_recode", repair);
+								repair_list.add(map);			
+							}
+							repairAdapter.notifyDataSetChanged();
 						}else{
-							waittingDialog.dismiss();
-							showMessage("用户信息 错误");
+							//waittingDialog.dismiss();
+							showMessage("无维修信息");
 						}						
 					}
 

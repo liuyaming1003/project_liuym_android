@@ -8,12 +8,16 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -268,9 +272,36 @@ public class MyListView extends ListView implements OnScrollListener {
 		case DONE:
 			headerView.setPadding(0, -1 * headerContentHeight, 0, 0);
 
+			/*TranslateAnimation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,   
+					0.0f, Animation.RELATIVE_TO_SELF, 0.0f,   
+					Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,   
+					-1.0f);  
+			mHiddenAction.setDuration(500);
+			mHiddenAction.setAnimationListener(new AnimationListener() {
+				
+				@Override
+				public void onAnimationStart(Animation animation) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					// TODO Auto-generated method stub
+					headerView.clearAnimation();
+					headerView.setPadding(0, -1 * headerContentHeight, 0, 0);
+				}
+			});
+			headerView.startAnimation(mHiddenAction);*/
 			lvHeaderProgressBar.setVisibility(View.GONE);
 			lvHeaderArrowIv.clearAnimation();
-			lvHeaderArrowIv.setImageResource(R.drawable.star);
+			lvHeaderArrowIv.setImageResource(R.drawable.pulltorefresh);
 			lvHeaderTipsTv.setText("下拉刷新");
 			lvHeaderLastUpdatedTv.setVisibility(View.VISIBLE);
 			break;
@@ -282,7 +313,7 @@ public class MyListView extends ListView implements OnScrollListener {
 		ViewGroup.LayoutParams params = child.getLayoutParams();
 		if (params == null) {
 			params = new ViewGroup.LayoutParams(
-					ViewGroup.LayoutParams.FILL_PARENT,
+					ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.WRAP_CONTENT);
 		}
 		int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0,
@@ -308,6 +339,7 @@ public class MyListView extends ListView implements OnScrollListener {
 		public void onRefresh();
 	}
 
+	@SuppressWarnings("deprecation")
 	public void onRefreshComplete() {
 		state = DONE;
 		lvHeaderLastUpdatedTv.setText("最近更新:" + new Date().toLocaleString());
@@ -320,7 +352,8 @@ public class MyListView extends ListView implements OnScrollListener {
 		}
 	}
 
-	public void setAdapter(MyListViewAdapter adapter) {
+	@SuppressWarnings("deprecation")
+	public void setAdapter(ListAdapter adapter) {
 		lvHeaderLastUpdatedTv.setText("最近更新:" + new Date().toLocaleString());
 		super.setAdapter(adapter);
 	}

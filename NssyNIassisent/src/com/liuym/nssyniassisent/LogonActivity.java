@@ -1,8 +1,6 @@
 package com.liuym.nssyniassisent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import com.liuym.nssyniassisent.R;
 import com.liuym.soap.Soap.SoapInterface;
 import com.liuym.teacher.TeacherActivity;
@@ -18,22 +16,18 @@ import android.widget.Toast;
 public class LogonActivity extends MainActivity {
 	private EditText username = null;
 	private EditText password = null;
-	private Map<String, Object> map = null;
 	private long mExitTime;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_logon);
-
-		map=new HashMap<String, Object>();
+		
 		username = (EditText)findViewById(R.id.username);
 		password = (EditText)findViewById(R.id.password);
 
 		findViewById(R.id.logon_button).setOnClickListener(new Button.OnClickListener() {			
 			@Override
-			public void onClick(View v) {					  
-				map.put("username", username.getText().toString());
-				map.put("password", password.getText().toString());
+			public void onClick(View v) {	
 
 				waittingDialog.show(LogonActivity.this, "", "登入中...");
 				nssySoap.impersonateValidUser(username.getText().toString(), password.getText().toString(), 10000, new SoapInterface() {		
@@ -50,15 +44,51 @@ public class LogonActivity extends MainActivity {
 									waittingDialog.dismiss();
 									Object object = arrayList.get(0);
 									String user_role = object.toString();
+									mainData.setUserName(username.getText().toString());
 									if(user_role.equals("Teacher")){
-										push(TeacherActivity.class, "LogonActivity", map);
+										waittingDialog.show(LogonActivity.this, "", "获取教师信息，请等待...");
+										nssySoap.Teacher_InfoList(mainData.getUserName(), 10000, new SoapInterface() {					
+											@Override
+											public void soapResult(ArrayList<Object> arrayList) {
+												waittingDialog.dismiss();
+												String info_list = arrayList.get(0).toString();	
+												if(mainData.setUserInfoList(info_list) == true){
+													push(TeacherActivity.class);
+												}else{
+													showMessage("教师信息错误");
+												}						
+											}
+
+											@Override
+											public void soapError(String error) {
+												showMessage("错误信息 :" + error);						
+											}
+										});
 									}else if(user_role.equals("TeamLead") || user_role.equals("Worker")){
-										push(WorkerActivity.class, "LogonActivity", map);
+										waittingDialog.show(LogonActivity .this, "", "获取工作人员信息，请等待...");
+										nssySoap.Teacher_InfoList(mainData.getUserName(), 10000, new SoapInterface() {					
+											@Override
+											public void soapResult(ArrayList<Object> arrayList) {
+												String info_list = arrayList.get(0).toString();	
+												waittingDialog.dismiss();
+												if(mainData.setUserInfoList(info_list) == true){
+													push(WorkerActivity.class);
+												}else{
+													showMessage("工作人员信息 错误");
+												}						
+											}
+
+											@Override
+											public void soapError(String error) {
+												waittingDialog.dismiss();
+												showMessage("错误信息 :" + error);						
+											}
+										});
+
 									}else{
 										showMessage("用户角色 = " + user_role);
 										return;
 									}
-									mainData.setUserName(username.getText().toString());
 								}
 
 								@Override

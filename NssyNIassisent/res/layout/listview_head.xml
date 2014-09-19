@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#000000" >
+    android:background="#E0E0E0" >
 
     <!-- 内容 -->
 
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/star" />
+                android:src="@drawable/pulltorefresh" />
 
             <!-- 进度条 -->
 
@@ -57,8 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="下拉刷新"
-                android:textColor="#432123"
-                android:textSize="20sp" />
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
 
             <!-- 最近更新 -->
 
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="上次更新"
-                android:textColor="#123432"
+                android:textColor="#FFFFFF"
                 android:textSize="10sp" />
         </LinearLayout>
     </RelativeLayout>

@@ -20,8 +20,13 @@ public class MainData{
     private ArrayList<System_Infomation> systemInfoArrayList = null;
     public  int order_select_index;
     public ArrayList<UserRepairRecode> repairHistoryArrayList = null;
+    public ArrayList<Device_Info> deviceInfoArrayList = null;
     
-    public ArrayList<UserRepairRecode> getRepairHistoryArrayList() {
+    public ArrayList<Device_Info> getDeviceInfoArrayList() {
+		return deviceInfoArrayList;
+	}
+
+	public ArrayList<UserRepairRecode> getRepairHistoryArrayList() {
 		return repairHistoryArrayList;
 	}
 
@@ -66,6 +71,7 @@ public class MainData{
 		systemInfoArrayList = new ArrayList<MainData.System_Infomation>();
 		repairHistoryArrayList = new ArrayList<MainData.UserRepairRecode>();
 		repairRecodeArrayList = new ArrayList<MainData.Repair_Recode>();
+		deviceInfoArrayList = new ArrayList<MainData.Device_Info>();
 	}
 
 	public static MainData GetDefault(){
@@ -153,6 +159,45 @@ public class MainData{
 	}
 	
 	/**
+	 * 设置设备信息列表，str是JSON数组格式
+	 * @param str
+	 * @return
+	 */
+	public boolean setDeviceInfoList(String str){
+		boolean flag = true;
+		deviceInfoArrayList.clear();
+		if(str == null){
+			flag = false;
+		}
+		
+		try {
+			JSONArray array = new JSONArray(str);
+			for(int i = 0; i < array.length(); i++){
+				JSONObject device_json = array.getJSONObject(i);
+				Device_Info deviceInfo = new Device_Info();
+				deviceInfo.Detail_ID = device_json.getInt("Detail_ID");                         // 设备记录ID
+				deviceInfo.Model_ID = device_json.getInt("Model_ID");                           // 设备类型ID
+				deviceInfo.Model_Name = device_json.getString("Model_Name");                    // 设备类型名称
+				deviceInfo.Device_Barcode = device_json.getString("Device_Barcode");            // 设备条形码
+				deviceInfo.Device_User = device_json.getString("Device_User");                  // 设备使用人
+				deviceInfo.DepartName = device_json.getString("DepartName");                    // 分校名称
+				deviceInfo.Device_Location = device_json.getString("Device_Location");          // 具体位置信息
+				deviceInfo.Device_Buy_Time = device_json.getString("Device_Buy_Time");          // 购买时间
+				deviceInfo.Device_Name = device_json.getString("Device_Name");                  // 设备名称
+				deviceInfo.Device_MAC_Address = device_json.getString("Device_MAC_Address");    // 设备MAC地址
+				deviceInfo.Device_IP_Address = device_json.getString("Device_IP_Address");      // 设备IP地址
+				deviceInfo.Device_Net_UP_Port = device_json.getString("Device_Net_UP_Port");     // 设备网络上联端口
+				deviceInfoArrayList.add(deviceInfo);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			flag = false;
+		}
+		
+		return flag;
+	}
+	
+	/**
 	 * 设置系统消息列表
 	 * @param str
 	 * @return
@@ -168,7 +213,7 @@ public class MainData{
 		try {
 			//JSONArray array = new JSONArray(str);
 			//for(int i = 0; i < array.length(); i++){
-			for(int i = 0; i < 20; i++){				
+			for(int i = 0; i < 5; i++){				
 				JSONObject system_info_json = new JSONObject("{\"SI_ID\":123, \"System_Information_Title\":\"南实集团: 举行《践行群众路线，做好群众工作》专题讲座\", \"System_Information_Content\": \"南实校园讯（通讯员 陈一芹）4月29日下午，南山实验教育集团特邀人民大学博士、市委党校王连喜教授，举行了主题为《践行群众路线，做好群众工作》专题辅导讲座。讲座由南实集团党总支书记、总校长程显栋同志主持，集团全体党员干部180余人聆听讲座\", \"System_Information_Type\":\"1\", \"System_Information_Addtime\":\"2014.06.16 10:25:53\"}");//array.getJSONObject(i);
 				System_Infomation systemInfo = new System_Infomation();
 				systemInfo.SI_ID = system_info_json.getInt("SI_ID");
