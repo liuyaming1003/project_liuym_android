@@ -1,6 +1,5 @@
 package com.liuym.teacher;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +9,6 @@ import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.MainData.Depart_Class;
-import com.liuym.nssyniassisent.LogonActivity;
 import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
 import com.liuym.soap.Soap.SoapInterface;
@@ -32,7 +30,7 @@ public class ClassActivity extends MainActivity {
 	private EditText grade_info_editText = null;
 	private EditText class_info_editText = null;
 	private EditText phone_info_editText = null;
-
+	private String repari_phone = null;
 	//年级信息
 	List<Map<String, Object>> listGrade = null;	
 	//班级信息
@@ -47,6 +45,7 @@ public class ClassActivity extends MainActivity {
 		ArrayList<String> gradeArray = new ArrayList<String>();
 		for(int i = 0; i < mainData.getRoomArrayList().size(); i++){
 			Depart_Class depart_class = mainData.getRoomArrayList().get(i);
+			//System.out.println("list[" + i + "] = " + depart_class.Room_Name);
 			String room_name = depart_class.Room_Name;
 			if(!gradeArray.contains(room_name)){
 				gradeArray.add(room_name);
@@ -63,7 +62,8 @@ public class ClassActivity extends MainActivity {
 		grade_info_editText = (EditText)findViewById(R.id.grade_info_editText);
 		class_info_editText = (EditText)findViewById(R.id.class_info_editText);
 		phone_info_editText = (EditText)findViewById(R.id.phone_info_editText);
-		phone_info_editText.setText(mainData.getUserInfo().Mobile_Tel);
+		repari_phone = mainData.getUserInfo().Mobile_Tel;
+		phone_info_editText.setText(repari_phone);
 		String realName = mainData.getUserInfo().RealName;
 		teacher_info_TextView = (TextView)findViewById(R.id.teacher_info);
 		teacher_info_TextView.setText(realName + ",你的校园网无线网络已连接: 00:30:25");
@@ -73,6 +73,7 @@ public class ClassActivity extends MainActivity {
 			grade_info_editText.setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View arg0) {
+					class_info_editText.setText("");
 					showClassDialog(1);
 					//grade_info_editText.setText("二年级");
 				}
@@ -82,7 +83,9 @@ public class ClassActivity extends MainActivity {
 			class_info_editText.setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View arg0) {
-					showClassDialog(2);
+					if(listClass.size() > 1){
+						showClassDialog(2);
+					}
 				}
 			});
 		}
@@ -100,9 +103,22 @@ public class ClassActivity extends MainActivity {
 		findViewById(R.id.confirm_btn).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				String info = "{"+ "phone:" +phone_info_editText.getText().toString() +"}";
+				if(grade_info_editText.getText().toString().equals("")){
+					showMessage("请选择年级信息");
+					return;
+				}else if(listClass.size() != 1 && class_info_editText.getText().toString().equals("")){
+					showMessage("请选择班级信息");
+					return;
+				}
+				
+				
+				String info = grade_info_editText.getText().toString() + class_info_editText.getText().toString();
+				String phone = phone_info_editText.getText().toString();
+				if(phone.equals(repari_phone)){
+					phone = "";
+				}
 				waittingDialog.show(ClassActivity.this, "", "报修提交中, 请等待...");
-				nssySoap.Report_Repair_Recode(mainData.getUserInfo().Domain_UserName, mainData.getUserInfo().DepartID, info, 2, 10000, new SoapInterface() {
+				nssySoap.Report_Repair_Recode(mainData.getUserInfo().Domain_UserName, mainData.getUserInfo().DepartID, info, 2, phone,10000, new SoapInterface() {
 
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
@@ -110,6 +126,9 @@ public class ClassActivity extends MainActivity {
 						String result = arrayList.get(0).toString();
 						if(result.equals("s")){
 							showMessage("班级报修成功");
+							if(!repari_phone.equals(phone_info_editText.getText().toString())){
+								mainData.getUserInfo().Mobile_Tel = phone_info_editText.getText().toString();
+							}
 							pop();
 						}else{
 							showMessage("班级报修失败" + result);
@@ -118,6 +137,7 @@ public class ClassActivity extends MainActivity {
 
 					@Override
 					public void soapError(String error) {
+						waittingDialog.dismiss();
 						showMessage("访问错误:" + error);
 					}
 				});

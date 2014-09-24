@@ -19,6 +19,7 @@ public class PersonActivity extends MainActivity {
 	private TextView teacher_info_TextView = null;
 	private EditText username_info_editText = null;
 	private EditText username_phone_editText = null;
+	private String repari_phone = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,9 +36,20 @@ public class PersonActivity extends MainActivity {
 		findViewById(R.id.confirm_btn).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				String info = "{name:" + username_info_editText.getText().toString() + ",phone:" + username_phone_editText.getText().toString() + "}";
+				String info = username_info_editText.getText().toString();
+				String phone = username_phone_editText.getText().toString();
+				if(info.equals("")){
+					showMessage("请输入报修人姓名");
+					return;
+				}else if(phone.equals("")){
+					showMessage("请输入报修人电话");
+					return;
+				}
+				if(phone.equals(repari_phone)){
+					phone = "";
+				}
 				waittingDialog.show(PersonActivity.this, "", "报修提交中, 请等待...");
-				nssySoap.Report_Repair_Recode(mainData.getUserInfo().Domain_UserName, mainData.getUserInfo().DepartID, info, 1, 10000, new SoapInterface() {
+				nssySoap.Report_Repair_Recode(mainData.getUserInfo().Domain_UserName, mainData.getUserInfo().DepartID, info, 1, phone, 10000, new SoapInterface() {
 					
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
@@ -45,6 +57,9 @@ public class PersonActivity extends MainActivity {
 						String result = arrayList.get(0).toString();
 						if(result.equals("s")){
 							showMessage("报修成功");
+							if(!repari_phone.equals(username_phone_editText.getText().toString())){
+								mainData.getUserInfo().Mobile_Tel = username_phone_editText.getText().toString();
+							}
 							pop();
 						}else{
 							showMessage("报修失败" + result);
@@ -53,7 +68,7 @@ public class PersonActivity extends MainActivity {
 					
 					@Override
 					public void soapError(String error) {
-						// TODO Auto-generated method stub
+						waittingDialog.dismiss();
 						showMessage("访问错误:" + error);
 					}
 				});
@@ -66,8 +81,8 @@ public class PersonActivity extends MainActivity {
 		String realName = mainData.getUserInfo().RealName;
 		teacher_info_TextView.setText(realName + ",你的校园网无线网络已连接: 00:30:25");
 		username_info_editText.setText(realName);
-		String phone = mainData.getUserInfo().Mobile_Tel;
-		username_phone_editText.setText(phone);
+		repari_phone = mainData.getUserInfo().Mobile_Tel;
+		username_phone_editText.setText(repari_phone);
 	}
 
 	@Override

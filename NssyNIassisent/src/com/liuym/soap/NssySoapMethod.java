@@ -8,7 +8,8 @@ import com.liuym.soap.Soap.SoapInterface;
 public class NssySoapMethod{
 	private static NssySoapMethod nssySoap = null;
 	private NssySoapMethod(){
-		Soap.hostUrl = "http://systeminfo.nssy.com.cn/di.asmx";
+		//Soap.hostUrl = "http://systeminfo.nssy.com.cn/di.asmx";
+		Soap.hostUrl = "http://172.16.88.132:8008/DI.asmx";
 		Soap.namespace = "http://tempuri.org/";
 	}
 
@@ -82,14 +83,16 @@ public class NssySoapMethod{
 	 * @param DepartID      分校ID
 	 * @param Repair_Information 报修信息，当type==2该参数为班级信息
 	 * @param RepairType    报修类型，type==2,班级；type==1,办公室
+	 * @param telPhone      电话,  当电话改变时传入新的电话，否则传入""
 	 * @param timeout       超时时间
 	 * @param soapInterface 函数回调
 	 */
-	public void Report_Repair_Recode(String Repair_Man, int DepartID, String Repair_Information, int RepairType, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
+	public void Report_Repair_Recode(String Repair_Man, int DepartID, String Repair_Information, int RepairType, String telPhone, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
 	map.put("Repair_Man", Repair_Man);
 	map.put("DepartID", DepartID);
 	map.put("Repair_Information", Repair_Information);
 	map.put("RepairType", RepairType);
+	map.put("Tel_Modify", telPhone);
 	new Soap().soapRequest("Report_Repair_Recode", timeout, soapInterface, map);
 	}
 
@@ -156,6 +159,17 @@ public class NssySoapMethod{
 	map.put("DepartID", DepartID);
 	map.put("UserName", UserName);
 	new Soap().soapRequest("Worker_Repair_List", timeout, soapInterface, map);
+	}
+	
+	/**
+	 * 当前分校工作人员列表
+	 * @param DepartID          当前工作人员所在分校ID
+	 * @param timeout           超时时间
+	 * @param soapInterface     函数回调
+	 */
+	public void Worker_List(int DepartID, int timeout, SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
+	map.put("DepartID", DepartID);
+	new Soap().soapRequest("Worker_List", timeout, soapInterface, map);
 	}
 
 	/**

@@ -27,6 +27,7 @@ import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.R;
 import com.liuym.nssyniassisent.SerializableMap;
 import com.liuym.nssyniassisent.MainData.Repair_Recode;
+import com.liuym.nssyniassisent.MainData.System_Infomation;
 import com.liuym.nssyniassisent.MainData.UserRepairRecode;
 import com.liuym.soap.Soap.SoapInterface;
 import com.liuym.zxing.CaptureActivity;
@@ -38,6 +39,7 @@ import com.liuym.zxing.CaptureActivity;
 	private boolean secondViewIsFirst = true;
 	private boolean isFirstLaunch = true;
 
+	private TextView metting_textview = null;
 	private TextView work_name_textview = null;
 	private TextView work_info_textview = null;
 	//tableview
@@ -83,7 +85,8 @@ import com.liuym.zxing.CaptureActivity;
 		String phone_info = mainData.getUserInfo().Mobile_Tel + "  " + mainData.getUserInfo().Group_Tel;
 		work_name_textview.setText(realName);
 		work_info_textview.setText(userMail + "\n" + phone_info);
-
+		
+		metting_textview = (TextView)findViewById(R.id.metting_textview);
 
 		findViewById(R.id.first).setEnabled(false);
 
@@ -101,27 +104,38 @@ import com.liuym.zxing.CaptureActivity;
 		repairAdapter = new MyListViewAdapter(this, repair_list,  
 				new ListViewInterface(){	
 			@Override
-			public void setCell(MyListViewAdapter adapter, View CellView, final int position) {
+			public void setCell(final MyListViewAdapter adapter, View CellView, final int position) {
 				TextView order_name = (TextView)CellView.findViewById(R.id.order_name);
 				TextView order_info = (TextView)CellView.findViewById(R.id.order_info);
 				final Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 				final Repair_Recode repair = (Repair_Recode)map.get("repair_recode");
 				order_name.setText(repair.Repair_RealName);
-				order_info.setText(repair.Repair_time + "\n" + repair.Repair_Information);
+				order_info.setText(repair.Repair_time + "\n" + repair.Room_Name);
 
 				Button order_button = (Button)CellView.findViewById(R.id.order_button);
+				if(repair.Repair_State == 1){
+					order_button.setText("立即接单");
+				}else if(repair.Repair_State == 2){
+					order_button.setText("处理该单");
+				}
 				order_button.setOnClickListener(new OnClickListener() {					
 					@Override
 					public void onClick(View arg0) {
 						mainData.order_select_index = position;
 						waittingDialog.show(WorkerActivity.this, "", "正在接单，请稍等...");
-						nssySoap.Repair_Recode_Service(repair.Repair_Recode_Num, mainData.getUserName(), 10000, new SoapInterface() {
+						nssySoap.Repair_Recode_Service(repair.Repair_Recode_Num, mainData.getUserInfo().Domain_UserName, 10000, new SoapInterface() {
 
 							@Override
 							public void soapResult(ArrayList<Object> arrayList) {
 								waittingDialog.dismiss();
-								showMessage("信息" + arrayList.get(0).toString());
-								push(OrderDetailActivity.class);	
+								String result = arrayList.get(0).toString();
+								if(result.equals("s")){
+									push(OrderDetailActivity.class);
+									repair_list.remove(position);
+									adapter.notifyDataSetChanged();
+								}else{
+									showMessage("接单失败" + result);
+								}
 							}
 
 							@Override
@@ -135,7 +149,7 @@ import com.liuym.zxing.CaptureActivity;
 			}
 
 			@Override
-			public View getCell(MyListViewAdapter adapter, final int position) {
+			public View getCell(final MyListViewAdapter adapter, final int position) {
 				System.out.println("getCell index = " + position);
 				View CellView = inflater.inflate(R.layout.order_cell, null);
 				TextView order_name = (TextView)CellView.findViewById(R.id.order_name);
@@ -143,8 +157,13 @@ import com.liuym.zxing.CaptureActivity;
 				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 				final Repair_Recode repair = (Repair_Recode)map.get("repair_recode");
 				order_name.setText(repair.Repair_RealName);
-				order_info.setText(repair.Repair_time + "\n" + repair.Repair_Information);
+				order_info.setText(repair.Repair_time + "\n" + repair.Room_Name);
 				Button order_button = (Button)CellView.findViewById(R.id.order_button);
+				if(repair.Repair_State == 1){
+					order_button.setText("立即接单");
+				}else if(repair.Repair_State == 2){
+					order_button.setText("处理该单");
+				}
 				order_button.setOnClickListener(new OnClickListener() {					
 					@Override
 					public void onClick(View arg0) {
@@ -155,8 +174,14 @@ import com.liuym.zxing.CaptureActivity;
 							@Override
 							public void soapResult(ArrayList<Object> arrayList) {
 								waittingDialog.dismiss();
-								showMessage("信息" + arrayList.get(0).toString());
-								push(OrderDetailActivity.class);	
+								String result = arrayList.get(0).toString();
+								if(result.equals("s")){
+									push(OrderDetailActivity.class);
+									repair_list.remove(position);
+									adapter.notifyDataSetChanged();
+								}else{
+									showMessage("接单失败" + result);
+								}	
 							}
 
 							@Override
@@ -297,6 +322,26 @@ import com.liuym.zxing.CaptureActivity;
 					@Override
 					public void soapError(String error) {
 						showMessage("错误信息 :" + error);						
+					}
+				});
+				
+				
+				nssySoap.System_Information_List(2, 0, 10000, new SoapInterface() {
+
+					@Override
+					public void soapResult(ArrayList<Object> arrayList) {
+						String info_list = arrayList.get(0).toString();
+						if(mainData.setSystemInfoList(info_list)){
+							System_Infomation systemInfo = mainData.getSystemInfoArrayList().get(0);
+							metting_textview.setText(systemInfo.System_Information_Title+":"+systemInfo.System_Information_Content);
+						}else{
+							showMessage("无系统信息");
+						}
+					}
+
+					@Override
+					public void soapError(String error) {
+						showMessage("错误信息 :" + error);
 					}
 				});
 			}

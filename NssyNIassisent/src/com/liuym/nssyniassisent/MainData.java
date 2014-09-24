@@ -1,5 +1,6 @@
 package com.liuym.nssyniassisent;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -9,6 +10,7 @@ import org.json.JSONObject;
 public class MainData{
 	private static MainData mainData = null;
 	private UserInfoList userInfoList = null;
+	private UserInfoList repairInfoList = null;
 	private Repair_Recode repair_Recode = null;
 	private Repair_Feed_Back repair_Feed_Back = null;
 	private Review_Information review_Information = null;
@@ -16,44 +18,54 @@ public class MainData{
 	private IP_List ip_List = null;
 	private Device_Info device_Info = null;
 	private String userName = null;
-    private ArrayList<Depart_Class> roomArrayList = null;
-    private ArrayList<System_Infomation> systemInfoArrayList = null;
-    public  int order_select_index;
-    public ArrayList<UserRepairRecode> repairHistoryArrayList = null;
-    public ArrayList<Device_Info> deviceInfoArrayList = null;
-    
-    public ArrayList<Device_Info> getDeviceInfoArrayList() {
+	private ArrayList<Depart_Class> roomArrayList = null;
+	private ArrayList<System_Infomation> systemInfoArrayList = null;
+	public  int order_select_index;
+	public ArrayList<Repair_Recode> repairHistoryArrayList = null;
+	public ArrayList<Device_Info> deviceInfoArrayList = null;
+	public ArrayList<Repair_Feed_Back> repairFeedArrayList = null;
+	public ArrayList<UserInfoList> workerInfoArrayList = null;
+
+	public ArrayList<UserInfoList> getWorkInfoArrayList() {
+		return workerInfoArrayList;
+	}
+
+	public ArrayList<Repair_Feed_Back> getRepairFeedArrayList() {
+		return repairFeedArrayList;
+	}
+
+	public ArrayList<Device_Info> getDeviceInfoArrayList() {
 		return deviceInfoArrayList;
 	}
 
-	public ArrayList<UserRepairRecode> getRepairHistoryArrayList() {
+	public ArrayList<Repair_Recode> getRepairHistoryArrayList() {
 		return repairHistoryArrayList;
 	}
 
 
 	//工作人员端维修订单
-    private ArrayList<Repair_Recode> repairRecodeArrayList = null;
+	private ArrayList<Repair_Recode> repairRecodeArrayList = null;
 
-    /***
-     * 获取维修列表
-     * @return
-     */
-    public ArrayList<Repair_Recode> getRepairRecodeArrayList() {
+	/***
+	 * 获取维修列表
+	 * @return
+	 */
+	public ArrayList<Repair_Recode> getRepairRecodeArrayList() {
 		return repairRecodeArrayList;
 	}
 
 	/***
-     * 获取系统消息列表
-     * @return
-     */
+	 * 获取系统消息列表
+	 * @return
+	 */
 	public ArrayList<System_Infomation> getSystemInfoArrayList() {
 		return systemInfoArrayList;
 	}
 
 	/**
-     * 获取 分校房间列表信息
-     * @return
-     */
+	 * 获取 分校房间列表信息
+	 * @return
+	 */
 	public ArrayList<Depart_Class> getRoomArrayList() {
 		return roomArrayList;
 	}
@@ -69,9 +81,11 @@ public class MainData{
 	private MainData(){
 		roomArrayList = new ArrayList<MainData.Depart_Class>();
 		systemInfoArrayList = new ArrayList<MainData.System_Infomation>();
-		repairHistoryArrayList = new ArrayList<MainData.UserRepairRecode>();
+		repairHistoryArrayList = new ArrayList<MainData.Repair_Recode>();
 		repairRecodeArrayList = new ArrayList<MainData.Repair_Recode>();
 		deviceInfoArrayList = new ArrayList<MainData.Device_Info>();
+		repairFeedArrayList = new ArrayList<MainData.Repair_Feed_Back>();
+		workerInfoArrayList = new ArrayList<MainData.UserInfoList>();
 	}
 
 	public static MainData GetDefault(){
@@ -80,12 +94,13 @@ public class MainData{
 		}
 		return mainData;
 	}
-	
+
 	/**
 	 * 当注销时需要清楚数据
 	 */
 	public void clearData(){
 		userInfoList = null;
+		repairInfoList = null;
 		roomArrayList = null;
 		repair_Recode = null;
 		repair_Feed_Back = null;
@@ -126,9 +141,80 @@ public class MainData{
 		}		
 		return flag;
 	}
-	
+
 	/**
-	 * 获取用户信息列表，str是JSON数组格式
+	 * 获取维修人员信息列表，str是JSON数组格式
+	 * @param str
+	 * @return
+	 */
+	public boolean setRepairInfoList(String str){
+		boolean flag = true;
+		if(str == null){
+			flag =  false;
+		}
+
+		try {
+			JSONArray array = new JSONArray(str);
+			JSONObject info_list_json = array.getJSONObject(0);
+			if(repairInfoList == null){
+				repairInfoList = new UserInfoList();
+			}
+			repairInfoList.RealName = info_list_json.get("RealName").toString();
+			repairInfoList.DepartID = info_list_json.getInt("DepartID");
+			repairInfoList.Mobile_Tel = info_list_json.get("Mobile_Tel").toString();
+			repairInfoList.Group_Tel = info_list_json.get("Group_Tel").toString();
+			repairInfoList.Domain_UserName = info_list_json.get("Domain_UserName").toString();
+			repairInfoList.Domain_Depart_Idenify = info_list_json.get("Domain_Depart_Idenify").toString();
+			repairInfoList.pic = info_list_json.get("pic").toString();
+			repairInfoList.Score = info_list_json.getInt("Score");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			flag =  false;
+		}		
+		return flag;
+	}
+
+	/**
+	 * 获取回复信息列表，str是JSON数组格式
+	 * @param str
+	 * @return
+	 */
+	public boolean setRepairFeedInfoList(String str){
+		boolean flag = true;
+		if(str == null){
+			flag =  false;
+		}
+
+		repairFeedArrayList.clear();
+		try {
+			JSONArray array = new JSONArray(str);
+			for(int i = 0; i < array.length(); i++){
+				JSONObject json = array.getJSONObject(i);
+				Repair_Feed_Back repair_feed = new Repair_Feed_Back();
+				repair_feed.Feedback_ID = json.getInt("Feedback_ID");                // 回复ID
+				repair_feed.Feedback_Type = json.getInt("Feedback_Type");              // 类型
+				repair_feed.Repair_Recode_Num = json.getInt("Repair_Recode_Num");          // 报修单号
+				repair_feed.Respone_Speed_Score = json.getInt("Respone_Speed_Score");        // 反应速度评分
+				repair_feed.Repair_Service_Score = json.getInt("Repair_Service_Score");       // 服务评分
+				repair_feed.Feed_Content = json.getString("Feed_Content");            // 回复内容
+				repair_feed.Domain_UserName = json.getString("Domain_UserName");         // 回复人用户名
+				repair_feed.Addtime = json.getString("Addtime");                 // 回复时间
+				repair_feed.Feed_Man = json.getString("Feed_Man");                // 回复人姓名
+				repairFeedArrayList.add(repair_feed);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			flag =  false;
+		}		
+
+		if(repairFeedArrayList.size() == 0){
+			flag = false;
+		}
+		return flag;
+	}
+
+	/**
+	 * 获取学校房间信息列表，str是JSON数组格式
 	 * @param str
 	 * @return
 	 */
@@ -138,7 +224,7 @@ public class MainData{
 		if(str == null){
 			flag = false;
 		}
-		
+
 		try {
 			JSONArray array = new JSONArray(str);
 			for(int i = 0; i < array.length(); i++){
@@ -154,10 +240,48 @@ public class MainData{
 			e.printStackTrace();
 			flag = false;
 		}
-		
+
+		if(roomArrayList.size() == 0){
+			flag = false;
+		}
+
+
 		return flag;
 	}
-	
+
+	/**
+	 * 工作人员信息列表，str是JSON数组格式
+	 * @param str
+	 * @return
+	 */
+	public boolean setWorkerInfoList(String str){
+		boolean flag = true;
+		if(str == null){
+			flag =  false;
+		}
+		workerInfoArrayList.clear();
+		try {
+			JSONArray array = new JSONArray(str);
+			for(int i = 0; i < array.length(); i++){
+				JSONObject info_list_json = array.getJSONObject(i);
+				UserInfoList userInfo = new UserInfoList();
+				userInfo.RealName = info_list_json.get("RealName").toString();
+				userInfo.DepartID = info_list_json.getInt("DepartID");
+				userInfo.Mobile_Tel = info_list_json.get("Mobile_Tel").toString();
+				userInfo.Group_Tel = info_list_json.get("Group_Tel").toString();
+				userInfo.Domain_UserName = info_list_json.get("Domain_UserName").toString();
+				userInfo.Domain_Depart_Idenify = info_list_json.get("Domain_Depart_Idenify").toString();
+				userInfo.pic = info_list_json.get("pic").toString();
+				userInfo.Score = info_list_json.getInt("Score");
+				workerInfoArrayList.add(userInfo);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			flag =  false;
+		}		
+		return flag;
+	}
+
 	/**
 	 * 设置设备信息列表，str是JSON数组格式
 	 * @param str
@@ -169,7 +293,7 @@ public class MainData{
 		if(str == null){
 			flag = false;
 		}
-		
+
 		try {
 			JSONArray array = new JSONArray(str);
 			for(int i = 0; i < array.length(); i++){
@@ -193,10 +317,14 @@ public class MainData{
 			e.printStackTrace();
 			flag = false;
 		}
-		
+
+		if(deviceInfoArrayList.size() == 0){
+			flag = false;
+		}
+
 		return flag;
 	}
-	
+
 	/**
 	 * 设置系统消息列表
 	 * @param str
@@ -208,13 +336,12 @@ public class MainData{
 		if(str == null){
 			flag = false;
 		} 
-		
-		
+
+
 		try {
-			//JSONArray array = new JSONArray(str);
-			//for(int i = 0; i < array.length(); i++){
-			for(int i = 0; i < 5; i++){				
-				JSONObject system_info_json = new JSONObject("{\"SI_ID\":123, \"System_Information_Title\":\"南实集团: 举行《践行群众路线，做好群众工作》专题讲座\", \"System_Information_Content\": \"南实校园讯（通讯员 陈一芹）4月29日下午，南山实验教育集团特邀人民大学博士、市委党校王连喜教授，举行了主题为《践行群众路线，做好群众工作》专题辅导讲座。讲座由南实集团党总支书记、总校长程显栋同志主持，集团全体党员干部180余人聆听讲座\", \"System_Information_Type\":\"1\", \"System_Information_Addtime\":\"2014.06.16 10:25:53\"}");//array.getJSONObject(i);
+			JSONArray array = new JSONArray(str);
+			for(int i = 0; i < array.length(); i++){			
+				JSONObject system_info_json = array.getJSONObject(i);
 				System_Infomation systemInfo = new System_Infomation();
 				systemInfo.SI_ID = system_info_json.getInt("SI_ID");
 				systemInfo.System_Information_Title = system_info_json.getString("System_Information_Title");
@@ -227,10 +354,14 @@ public class MainData{
 			e.printStackTrace();
 			flag = false;
 		}
-		
+
+		if(systemInfoArrayList.size() == 0){
+			flag = false;
+		}
+
 		return flag;
 	}
-	
+
 	/**
 	 * 报修记录列表
 	 * @param str
@@ -242,26 +373,43 @@ public class MainData{
 		if(str == null){
 			flag = false;
 		} 
-		
-		
+
+
 		try {
 			JSONArray array = new JSONArray(str);
 			for(int i = 0; i < array.length(); i++){			
 				JSONObject repair_history_json = array.getJSONObject(i);
-				UserRepairRecode userRepair = new UserRepairRecode();
-				userRepair.Repair_Recode_Num = repair_history_json.getInt("Repair_Recode_Num");
-				userRepair.Repair_State = repair_history_json.getInt("Repair_State");
-				userRepair.Repair_time = repair_history_json.getString("Repair_time");
-				repairHistoryArrayList.add(userRepair);
+				Repair_Recode repair = new Repair_Recode();
+				repair.Repair_Recode_Num = repair_history_json.getInt("Repair_Recode_Num");          // 报修单号
+				repair.Device_Barcode = repair_history_json.getString("Device_Barcode");          // 设备条形码
+				repair.Repair_result = repair_history_json.getString("Repair_result");           // 维修结果
+				repair.Repair_Domain_UserName = repair_history_json.getString("Repair_Domain_UserName");  // 报修人域用户名
+				repair.Repair_Information = repair_history_json.getString("Repair_Information");      // 报修信息，当type==2该参数为班级信息
+				repair.Service_UserName = repair_history_json.getString("Service_UserName");        // 接单人员
+				repair.Repair_State = repair_history_json.getInt("Repair_State");               // 维修状态
+				repair.Repair_time = repair_history_json.getString("Repair_time");             // 报修时间
+				repair.Service_time = repair_history_json.getString("Service_time");            // 接单时间
+				repair.CaseClosed__time = repair_history_json.getString("CaseClosed__time");        // 结案时间
+				repair.DepartID = repair_history_json.getInt("DepartID");                   // 分校ID
+				repair.RepairType = repair_history_json.getInt("RepairType");                 // 报修类型
+				repair.Repair_RealName = repair_history_json.getString("Repair_RealName");         // 报修人姓名
+				repair.Room_Name = repair_history_json.getString("Room_Name");               // 房间号
+				repair.Mobile_Tel = repair_history_json.getString("Mobile_Tel");              // 移动号码
+				repair.Group_Tel = repair_history_json.getString("Group_Tel");               // 集团短号
+				repairHistoryArrayList.add(repair);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 			flag = false;
 		}
-		
+
+		if(repairHistoryArrayList.size() == 0){
+			flag = false;
+		}
+
 		return flag;
 	}
-	
+
 	/**
 	 * 设置维修记录列表
 	 * @param str
@@ -273,29 +421,12 @@ public class MainData{
 		if(str == null){
 			flag = false;
 		} 
-		
-		
+
+
 		try {
-			//JSONArray array = new JSONArray(str);
-			//for(int i = 0; i < array.length(); i++){
-			for(int i = 0; i < 5; i++){				
-				JSONObject repair_info_json = new JSONObject();//array.getJSONObject(i);
-				repair_info_json.put("Repair_Recode_Num", 345436565);
-				repair_info_json.put("Device_Barcode", "4433223456");
-				repair_info_json.put("Repair_result", "未完成");
-				repair_info_json.put("Repair_Domain_UserName", "h12");
-				repair_info_json.put("Repair_Information", "二年级办公室");
-				repair_info_json.put("Service_UserName", "");
-				repair_info_json.put("Repair_State", 0);
-				repair_info_json.put("Repair_time", "2014.09.18 10:12:45");
-				repair_info_json.put("Service_time", "");
-				repair_info_json.put("CaseClosed__time", "");
-				repair_info_json.put("DepartID", 3);
-				repair_info_json.put("RepairType", 1);
-				repair_info_json.put("Repair_RealName", "h12");
-				repair_info_json.put("Room_Name", "null");
-				repair_info_json.put("Mobile_Tel", "18603036536");
-				repair_info_json.put("Group_Tel", "754323");
+			JSONArray array = new JSONArray(str);
+			for(int i = 0; i < array.length(); i++){			
+				JSONObject repair_info_json = array.getJSONObject(i);
 				Repair_Recode repair = new Repair_Recode();
 				repair.Repair_Recode_Num = repair_info_json.getInt("Repair_Recode_Num");          // 报修单号
 				repair.Device_Barcode = repair_info_json.getString("Device_Barcode");          // 设备条形码
@@ -319,7 +450,11 @@ public class MainData{
 			e.printStackTrace();
 			flag = false;
 		}
-		
+
+		if(repairRecodeArrayList.size() == 0){
+			flag = false;
+		}
+
 		return flag;
 	}
 
@@ -327,6 +462,9 @@ public class MainData{
 		return userInfoList;
 	}
 
+	public UserInfoList getRepairInfoList(){
+		return repairInfoList;
+	}
 
 	//用户信息
 	public class UserInfoList{
@@ -342,7 +480,7 @@ public class MainData{
 
 		}
 	}
-	
+
 	//报修记录列表
 	public class UserRepairRecode{
 		public String Repair_time;           // 报修时间

@@ -32,6 +32,7 @@
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
             android:text="李丽霞,你的校园网无线网络已连接: 00:30:25"
+            android:textColor="#22292C"
             android:textSize="13sp" />
         
         <TextView
@@ -42,6 +43,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="50dp"
             android:text="教师电脑报修信息确认"
+            android:textColor="#22292C"
             android:textSize="18sp" />
         
         <LinearLayout
@@ -58,6 +60,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
                 android:textSize="20sp"
+                android:textColor="#22292C"
                 android:text="姓名">                
             </TextView>          
             <EditText 
@@ -87,6 +90,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
                 android:textSize="20sp"
+                android:textColor="#22292C"
                 android:text="电话">                
             </TextView>          
             <EditText 
@@ -116,6 +120,7 @@
                 android:layout_height="wrap_content" 
                 android:background="@drawable/confirm_btn_bg_249x48"
                 android:text="报修信息确认"
+                android:textColor="#22292C"
                 android:textSize="20sp"/>
         </LinearLayout>
         

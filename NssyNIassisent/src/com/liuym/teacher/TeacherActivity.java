@@ -11,6 +11,8 @@ import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.adapter.MyViewPagerAdapter;
 import com.liuym.nssyniassisent.*;
+import com.liuym.nssyniassisent.MainData.Repair_Feed_Back;
+import com.liuym.nssyniassisent.MainData.Repair_Recode;
 import com.liuym.nssyniassisent.MainData.System_Infomation;
 import com.liuym.nssyniassisent.MainData.UserRepairRecode;
 import com.liuym.soap.Soap.SoapInterface;
@@ -25,6 +27,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
@@ -49,8 +53,15 @@ public class TeacherActivity extends MainActivity {
 	private View history_view = null;
 	private int history_select_index = -1;
 	private View history_select_view = null;
+	private Button history_select_button = null;
+	private ImageView history_select_imageview = null;
 	private MyListViewAdapter historyAdapter = null;
 	private List<Map<String, Object>> repairHistory_list = null;
+
+	//评分值
+	float ratingSelect1 = (float) 5.0;
+	float ratingSelect2 = (float) 5.0;
+	float ratingSelect3 = (float) 5.0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -261,12 +272,31 @@ public class TeacherActivity extends MainActivity {
 				//设置CellView 里面的数据
 				System.out.println("initHistoryListView setCell index = " + position);
 				View detailView = (View)view.findViewById(R.id.history_info);
+				ImageView imageView = (ImageView)view.findViewById(R.id.history_detail_imageview);
+				Button button = (Button)view.findViewById(R.id.history_detail_button);
+				
 				if(history_select_index == position){
 					detailView.setVisibility(View.VISIBLE);
+					button.setVisibility(View.VISIBLE);
+					imageView.setVisibility(View.INVISIBLE);
 				}else{
+					button.setVisibility(View.INVISIBLE);
+					imageView.setVisibility(View.VISIBLE);
 					detailView.setVisibility(View.GONE);
 				}
-				setHistoryViewOnClick(view, position);
+				
+				view.findViewById(R.id.history_btn_1).setEnabled(false);
+				view.findViewById(R.id.history_btn_2).setEnabled(false);
+				view.findViewById(R.id.history_btn_3).setEnabled(false);
+				view.findViewById(R.id.history_btn_4).setEnabled(false);
+				
+				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+				Repair_Recode repair = (Repair_Recode)map.get("repair_history");
+				TextView history_info_textview = (TextView)view.findViewById(R.id.history_info_textview);
+				String info = "单号: " + repair.Repair_Recode_Num + "  报修人: " + mainData.getUserInfo().Domain_UserName/*repair.Repair_RealName*/ + "  时间: " + repair.Repair_time ;
+				history_info_textview.setText(info);
+				
+				setHistoryViewOnClick(adapter, view, position);
 			}
 
 			@Override
@@ -274,8 +304,22 @@ public class TeacherActivity extends MainActivity {
 				System.out.println("initHistoryListView getCell index = " + position);
 				View CellView = inflater.inflate(R.layout.history_cell, null);
 				View detailView = (View)CellView.findViewById(R.id.history_info);
+				ImageView imageView = (ImageView)CellView.findViewById(R.id.history_detail_imageview);
+				Button button = (Button)CellView.findViewById(R.id.history_detail_button);
+				button.setVisibility(View.INVISIBLE);
+				imageView.setVisibility(View.VISIBLE);
 				detailView.setVisibility(View.GONE);
-				setHistoryViewOnClick(CellView, position);
+				CellView.findViewById(R.id.history_btn_1).setEnabled(false);
+				CellView.findViewById(R.id.history_btn_2).setEnabled(false);
+				CellView.findViewById(R.id.history_btn_3).setEnabled(false);
+				CellView.findViewById(R.id.history_btn_4).setEnabled(false);
+				
+				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+				Repair_Recode repair = (Repair_Recode)map.get("repair_history");
+				TextView history_info_textview = (TextView)CellView.findViewById(R.id.history_info_textview);
+				String info = "单号: " + repair.Repair_Recode_Num + "  报修人: " + mainData.getUserInfo().Domain_UserName/*repair.Repair_RealName*/ + "  时间: " + repair.Repair_time ;
+				history_info_textview.setText(info);
+				setHistoryViewOnClick(adapter, CellView, position);
 				return CellView;
 			}
 		});
@@ -285,19 +329,29 @@ public class TeacherActivity extends MainActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
 					long arg3){
 				View detailView = (View)arg1.findViewById(R.id.history_info);
+				ImageView imageView = (ImageView)arg1.findViewById(R.id.history_detail_imageview);
+				Button button = (Button)arg1.findViewById(R.id.history_detail_button);
 				if(history_select_index != arg2){
 					if(history_select_index != -1){
 						history_select_view.setVisibility(View.GONE);
+						history_select_button.setVisibility(View.INVISIBLE);
+						history_select_imageview.setVisibility(View.VISIBLE);
 					}
 					history_select_index = arg2;	    		  
 				}
 				if(detailView.getVisibility() == View.VISIBLE){
 					detailView.setVisibility(View.GONE);
+					button.setVisibility(View.INVISIBLE);
+					imageView.setVisibility(View.VISIBLE);
 					history_select_index = -1;
 				}else{
 					detailView.setVisibility(View.VISIBLE);
+					button.setVisibility(View.VISIBLE);
+					imageView.setVisibility(View.INVISIBLE);
 				}
 				history_select_view = detailView;
+				history_select_button = button;
+				history_select_imageview = imageView;
 			}  
 		}); 
 
@@ -306,7 +360,9 @@ public class TeacherActivity extends MainActivity {
 			public void onRefresh() {
 				history_select_index = -1;
 				history_select_view = null;
-				nssySoap.User_Repair_Recode(mainData.getUserName(), 5, 10000, new SoapInterface() {
+				history_select_button = null;
+				history_select_imageview = null;
+				nssySoap.User_Repair_Recode(mainData.getUserName(), 0, 10000, new SoapInterface() {
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
 						listView.onRefreshComplete();
@@ -314,7 +370,7 @@ public class TeacherActivity extends MainActivity {
 						if(mainData.setRepairHistoryList(repair_history)){
 							repairHistory_list.clear();
 							for(int i = 0; i < mainData.getRepairHistoryArrayList().size(); i++){
-								UserRepairRecode repair = mainData.getRepairHistoryArrayList().get(i);
+								Repair_Recode repair = mainData.getRepairHistoryArrayList().get(i);
 								Map<String, Object> map=new HashMap<String, Object>();
 								map.put("repair_history", repair);
 								repairHistory_list.add(map);			
@@ -336,35 +392,55 @@ public class TeacherActivity extends MainActivity {
 		});
 	}
 
-	private void setHistoryViewOnClick(View view, final int index){
+	private void setHistoryViewOnClick(MyListViewAdapter adapter, View view, final int index){
 		System.out.println("index = " + index);
-		view.findViewById(R.id.history_btn_1).setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {	
-				showHistoryDialog(1);
-			}
-		});
-
-		view.findViewById(R.id.history_btn_2).setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				showHistoryDialog(2);		
-			}
-		});
-
-		view.findViewById(R.id.history_btn_3).setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				showHistoryDialog(3);
-			}
-		});
-
-		view.findViewById(R.id.history_btn_4).setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				showHistoryDialog(4);	
-			}
-		});
+		Map<String, Object> map = (Map<String, Object>)adapter.getItem(index);
+		final Repair_Recode repair = (Repair_Recode)map.get("repair_history");
+		Button button = null;
+		switch(repair.Repair_State){
+		case 1:
+			button = (Button)view.findViewById(R.id.history_btn_1);
+			button.setEnabled(true);
+			button.setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {	
+					showHistoryDialog(1, repair);
+				}
+			});
+			break;
+		case 2:
+			button = (Button)view.findViewById(R.id.history_btn_2);
+			button.setEnabled(true);
+			button.setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {	
+					showHistoryDialog(2, repair);
+				}
+			});
+			break;
+		case 3:
+			button = (Button)view.findViewById(R.id.history_btn_3);
+			button.setEnabled(true);
+			button.setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {	
+					showHistoryDialog(3, repair);
+				}
+			});
+			break;
+		case 4:
+			break;
+		case 5:
+			button = (Button)view.findViewById(R.id.history_btn_4);
+			button.setEnabled(true);
+			button.setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {	
+					showHistoryDialog(5, repair);
+				}
+			});
+			break;
+		}
 	}
 
 	/*private void setTeackerView(){
@@ -393,113 +469,235 @@ public class TeacherActivity extends MainActivity {
 		}		
 	}*/
 
-	private void showHistoryDialog(int index){
+	private void showHistoryDialog(int index, final Repair_Recode repair){
 		final Dialog dialog = new Dialog(this, R.style.MyDialog);
-		View view = null;
-		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
+		//final View view = null;
+		final List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
 		switch (index) {
 		case 1:			
 		{
-			for (int i = 0; i < 20; i++) {  
-				Map<String, Object> map=new HashMap<String, Object>();
-				map.put("cell_info", "20140601 09:30:00 张晓颖"); 
-				list.add(map);  
-			}  
-			view = inflater.inflate(R.layout.repair_queue, null);
-			TextView repair_queue_textview = (TextView)view.findViewById(R.id.repair_queue_num);
-			repair_queue_textview.setText("您前面还有" + list.size() + "位在等待");
-			ListView listView = (ListView)view.findViewById(R.id.myListView);
-			MyListViewAdapter infoAdapter = new MyListViewAdapter(this, list,  
-					new ListViewInterface(){
+			waittingDialog.show(TeacherActivity.this, "", "获取报修队列中, 请稍等...");
+			nssySoap.No_Finish_Repair_Record(repair.DepartID, 0, 10000, new SoapInterface() {
 				@Override
-				public void setCell(MyListViewAdapter adapter, View CellView, int position) {
-					TextView repair_queue_cell_info = (TextView)CellView.findViewById(R.id.repair_queue_cell_info);
-					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-					repair_queue_cell_info.setText((String)map.get("cell_info"));
+				public void soapResult(ArrayList<Object> arrayList) {
+					waittingDialog.dismiss();
+					String repair_list = arrayList.get(0).toString();
+					if(mainData.setRepairHistoryList(repair_list)){
+						for(int i = 0; i < mainData.getRepairHistoryArrayList().size(); i++){
+							Repair_Recode repair = mainData.getRepairHistoryArrayList().get(i);
+							Map<String, Object> map=new HashMap<String, Object>();
+							map.put("repair_list", repair);
+							list.add(map);			
+						}
+
+						View view = inflater.inflate(R.layout.repair_queue, null);
+						TextView repair_queue_textview = (TextView)view.findViewById(R.id.repair_queue_num);
+						repair_queue_textview.setText("您前面还有" + list.size() + "位在等待");
+						ListView listView = (ListView)view.findViewById(R.id.myListView);
+						MyListViewAdapter infoAdapter = new MyListViewAdapter(TeacherActivity.this, list,  
+								new ListViewInterface(){
+							@Override
+							public void setCell(MyListViewAdapter adapter, View CellView, int position) {
+								TextView repair_queue_cell_info = (TextView)CellView.findViewById(R.id.repair_queue_cell_info);
+								Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+								final Repair_Recode repair = (Repair_Recode)map.get("repair_list");
+								String cell_info = repair.Repair_time + "  " + repair.Repair_RealName;
+								repair_queue_cell_info.setText(cell_info);
+							}
+
+							@Override
+							public View getCell(MyListViewAdapter adapter, final int position) {
+								System.out.println("getCell index = " + position);
+								View CellView = inflater.inflate(R.layout.repair_queue_cell, null);
+								TextView repair_queue_cell_info = (TextView)CellView.findViewById(R.id.repair_queue_cell_info);
+								Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+								final Repair_Recode repair = (Repair_Recode)map.get("repair_list");
+								String cell_info = repair.Repair_time + "  " + repair.Repair_RealName;
+								repair_queue_cell_info.setText(cell_info);
+								return CellView;
+							}
+						});
+						listView.setAdapter(infoAdapter);
+						dialog.setContentView(view);
+					}else{
+						showMessage("无记录");
+					}
 				}
 
 				@Override
-				public View getCell(MyListViewAdapter adapter, final int position) {
-					System.out.println("getCell index = " + position);
-					View CellView = inflater.inflate(R.layout.repair_queue_cell, null);
-					TextView repair_queue_cell_info = (TextView)CellView.findViewById(R.id.repair_queue_cell_info);
-					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-					repair_queue_cell_info.setText((String)map.get("cell_info"));
-					return CellView;
+				public void soapError(String error) {
+					waittingDialog.dismiss();
+					showMessage("信息错误" + error);
 				}
-			});
-			listView.setAdapter(infoAdapter);
+			});  
+
 			break;
 		}
 		case 2:
-			view = inflater.inflate(R.layout.repair_worker_info, null);
-			break;
-		case 3:{
-			for (int i = 0; i < 20; i++) {  
-				Map<String, Object> map=new HashMap<String, Object>();
-				map.put("cell_info", "20140601 09:30:00 故障原因已查明,正在排障,请耐心等待!"); 
-				list.add(map);  
-			}  
-			view = inflater.inflate(R.layout.repair_status, null);
-			ListView listView = (ListView)view.findViewById(R.id.myListView);
-			MyListViewAdapter infoAdapter = new MyListViewAdapter(this, list,  
-					new ListViewInterface(){
+		{
+			System.out.println("*****维修人用户名******" + repair.Repair_Domain_UserName);
+			waittingDialog.show(TeacherActivity.this, "", "获取维修人员信息，请等待...");
+			nssySoap.Teacher_InfoList(repair.Service_UserName, 10000, new SoapInterface() {
 				@Override
-				public void setCell(MyListViewAdapter adapter, View CellView, int position) {
-					TextView repair_status_cell_info = (TextView)CellView.findViewById(R.id.repair_status_cell_info);
-					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-					repair_status_cell_info.setText((String)map.get("cell_info"));
+				public void soapResult(ArrayList<Object> arrayList) {
+					waittingDialog.dismiss();
+					String info_list = arrayList.get(0).toString();	
+					if(mainData.setRepairInfoList(info_list) == true){
+						View view = inflater.inflate(R.layout.repair_worker_info, null);
+						ImageView photoView = (ImageView)view.findViewById(R.id.repair_worker_photo);
+						TextView nameTextView = (TextView)view.findViewById(R.id.repair_worker_name);
+						RatingBar ratingBar = (RatingBar)view.findViewById(R.id.ratingBar);
+ 
+						if(!mainData.getRepairInfoList().pic.equals("null")){
+							//去网络图片然后保存本地
+						}
+						nameTextView.setText(mainData.getRepairInfoList().Domain_UserName);
+						ratingBar.setRating(mainData.getRepairInfoList().Score);
+						dialog.setContentView(view);
+					}else{
+						showMessage("获取信息错误" + info_list);
+					}
 				}
 
 				@Override
-				public View getCell(MyListViewAdapter adapter, final int position) {
-					System.out.println("getCell index = " + position);
-					View CellView = inflater.inflate(R.layout.repair_status_cell, null);
-					TextView repair_status_cell_info = (TextView)CellView.findViewById(R.id.repair_status_cell_info);
-					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-					repair_status_cell_info.setText((String)map.get("cell_info"));
-					return CellView;
+				public void soapError(String error) {
+					waittingDialog.dismiss();
+					showMessage("错误信息" + error);
 				}
 			});
-			listView.setAdapter(infoAdapter);		
+		}
+
+		break;
+		case 3:{
+			waittingDialog.show(TeacherActivity.this, "", "查询维修信息，请等待...");
+			nssySoap.Repair_Feedback_List(repair.Repair_Recode_Num, 1, 0, 10000, new SoapInterface() {
+				@Override
+				public void soapResult(ArrayList<Object> arrayList) {
+					waittingDialog.dismiss();
+					String result = arrayList.get(0).toString();
+					if(mainData.setRepairFeedInfoList(result) == true){
+						for(int i = 0; i < mainData.getRepairFeedArrayList().size(); i++){
+							Repair_Feed_Back repair_feed = mainData.getRepairFeedArrayList().get(i);
+							Map<String, Object> map=new HashMap<String, Object>();
+							map.put("repair_feed", repair_feed);
+							list.add(map);			
+						}
+
+						View view = inflater.inflate(R.layout.repair_status, null);
+						ListView listView = (ListView)view.findViewById(R.id.myListView);
+						MyListViewAdapter infoAdapter = new MyListViewAdapter(TeacherActivity.this, list,  
+								new ListViewInterface(){
+							@Override
+							public void setCell(MyListViewAdapter adapter, View CellView, int position) {
+								TextView repair_status_cell_info = (TextView)CellView.findViewById(R.id.repair_status_cell_info);
+								Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+								Repair_Feed_Back repair_feed = (Repair_Feed_Back)map.get("repair_feed");
+								String str = repair_feed.Addtime + "  " + repair_feed.Feed_Content;
+								repair_status_cell_info.setText(str);
+							}
+
+							@Override
+							public View getCell(MyListViewAdapter adapter, final int position) {
+								System.out.println("getCell index = " + position);
+								View CellView = inflater.inflate(R.layout.repair_status_cell, null);
+								TextView repair_status_cell_info = (TextView)CellView.findViewById(R.id.repair_status_cell_info);
+								Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
+								Repair_Feed_Back repair_feed = (Repair_Feed_Back)map.get("repair_feed");
+								String str = repair_feed.Addtime + "  " + repair_feed.Feed_Content;
+								repair_status_cell_info.setText(str);
+								return CellView;
+							}
+						});
+						listView.setAdapter(infoAdapter);	
+						dialog.setContentView(view);
+					}else{
+						showMessage("无记录");
+					}
+
+				}
+
+				@Override
+				public void soapError(String error) {
+					waittingDialog.dismiss();
+					showMessage("错误信息" + error);
+				}
+			});  
 			break;
 		}
-		case 4:
-			view = inflater.inflate(R.layout.repair_evaluation, null);
+		case 5:
+		{
+
+			View view = inflater.inflate(R.layout.repair_evaluation, null);
 			final RatingBar rating1 = (RatingBar)view.findViewById(R.id.ratingBar_1);
 			rating1.setOnRatingBarChangeListener(new OnRatingBarChangeListener(){ 
 				@Override 
 				public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) { 
-					showMessage("star1 is " + rating);
+					if(rating == 0){
+						ratingBar.setRating(1);
+						rating = 1;
+					}
+					ratingSelect1 = rating;
+					//showMessage("star1 is " + rating);
 				} 
 			});
 			final RatingBar rating2 = (RatingBar)view.findViewById(R.id.ratingBar_2);
 			rating2.setOnRatingBarChangeListener(new OnRatingBarChangeListener(){ 
 				@Override 
 				public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) { 
-					showMessage("star2 is " + rating);
+					if(rating == 0){
+						ratingBar.setRating(1);
+						rating = 2;
+					}
+					ratingSelect2 = rating;
+					//showMessage("star2 is " + rating);
 				} 
 			});
 			final RatingBar rating3 = (RatingBar)view.findViewById(R.id.ratingBar_3);
 			rating3.setOnRatingBarChangeListener(new OnRatingBarChangeListener(){ 
 				@Override 
 				public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) { 
-					showMessage("star3 is " + rating);
+					if(rating == 0){
+						ratingBar.setRating(1);
+						rating = 3;
+					}
+					ratingSelect3 = rating;
+					//showMessage("star3 is " + rating);
 				} 
 			});
 			view.findViewById(R.id.repair_evaluation_submit_button).setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					if(dialog.isShowing()){
-						dialog.dismiss();
-					}
+					waittingDialog.show(TeacherActivity.this, "", "正在评分，请稍等...");
+					nssySoap.Edit_Feedback_info(repair.Repair_Recode_Num, 2, (int)ratingSelect1, (int)ratingSelect2, "", mainData.getUserInfo().Domain_UserName, 1, 10000, new SoapInterface() {
+						@Override
+						public void soapResult(ArrayList<Object> arrayList) {
+							waittingDialog.dismiss();
+							String result = arrayList.get(0).toString();
+							if(result.equals("s")){
+								showMessage("评价完成");
+								if(dialog.isShowing()){
+									dialog.dismiss();
+								}
+							}else{
+								showMessage("评价错误" + result);
+							}
+						}
+
+						@Override
+						public void soapError(String error) {
+							waittingDialog.dismiss();
+							showMessage("错误信息" + error);
+						}
+					});
 				}
 			});
+			dialog.setContentView(view);
 			break;
+		}
 		default:
 			return;
 		}
-		dialog.setContentView(view);
+
 		dialog.show();
 	}
 
@@ -568,7 +766,7 @@ public class TeacherActivity extends MainActivity {
 					}
 				});
 
-				nssySoap.User_Repair_Recode(mainData.getUserName(), 5, 10000, new SoapInterface() {
+				nssySoap.User_Repair_Recode(mainData.getUserName(), 0, 10000, new SoapInterface() {
 
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
@@ -576,7 +774,7 @@ public class TeacherActivity extends MainActivity {
 						if(mainData.setRepairHistoryList(repair_history)){
 							repairHistory_list.clear();
 							for(int i = 0; i < mainData.getRepairHistoryArrayList().size(); i++){
-								UserRepairRecode repair = mainData.getRepairHistoryArrayList().get(i);
+								Repair_Recode repair = mainData.getRepairHistoryArrayList().get(i);
 								Map<String, Object> map=new HashMap<String, Object>();
 								map.put("repair_history", repair);
 								repairHistory_list.add(map);			

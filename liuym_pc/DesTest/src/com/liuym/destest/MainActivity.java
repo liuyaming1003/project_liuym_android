@@ -23,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -71,9 +72,7 @@ public class MainActivity extends ActionBarActivity {
 				String passwordText = password.getText().toString();
 				String deskeyText = "nssy2014";//deskey.getText().toString();
 				final String hostipText = "172.16.88.64";//hostip.getText().toString();
-				if(usernameText != null && passwordText != null 
-						&& deskeyText != null && hostipText != null){
-					
+				if(!usernameText.equals("") && !passwordText.equals("")){
 					if(MyDes.shareMyDes().setDesKey(deskeyText) == true){
 						try {
 							String data = MyDes.shareMyDes().encDes("username="+ new String(Base64.encodeBase64(usernameText.getBytes())) +",password="+ new String(Base64.encodeBase64(passwordText.getBytes())));
@@ -110,7 +109,7 @@ public class MainActivity extends ActionBarActivity {
 						
 					}
 				}else{
-					
+					Toast.makeText(MainActivity.this, "用户名或密码为空", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -204,6 +203,7 @@ public class MainActivity extends ActionBarActivity {
 		Editor editor = sharedPreferences.edit();
 		editor.putString("url", url);
 		editor.putString("hostAddr", /*hostip.getText().toString()*/"172.16.88.64");
+		editor.putString("username", username.getText().toString());
 		//保存数据
 		editor.commit();
 	}

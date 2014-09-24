@@ -36,7 +36,7 @@ public class LogonActivity extends MainActivity {
 						waittingDialog.dismiss();
 						Object object = arrayList.get(0);
 						String logon_info = object.toString();
-						if(logon_info.equals("true")){
+						if(logon_info.equals("1")){
 							waittingDialog.show(LogonActivity.this, "", "识别用户角色, 请等待...");
 							nssySoap.Power_Judge(username.getText().toString(), 10000, new SoapInterface() {	
 								@Override
@@ -61,6 +61,7 @@ public class LogonActivity extends MainActivity {
 
 											@Override
 											public void soapError(String error) {
+												waittingDialog.dismiss();
 												showMessage("错误信息 :" + error);						
 											}
 										});
@@ -97,8 +98,12 @@ public class LogonActivity extends MainActivity {
 									showMessage("访问错误 : " + error);
 								}
 							});
+						}else if(logon_info.equals("2")){
+							showMessage("用户不存在");
+						}else if(logon_info.equals("3")){
+							showMessage("密码错误");
 						}else{
-							showMessage("登入失败");
+							showMessage("其他错误");
 						}
 					}
 

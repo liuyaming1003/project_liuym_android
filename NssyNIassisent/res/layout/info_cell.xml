@@ -16,7 +16,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
             android:text="2014.06.16 10:25:53"
-            android:textColor="#543423"
+            android:textColor="#22292C"
             android:textSize="12sp" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:text="南实集团: 举行《践行群众路线，做好群众工作》专题讲座"
-            android:textColor="#543423"
+            android:textColor="#22292C"
             android:textSize="15sp" />
 
         <TextView
@@ -42,8 +42,8 @@
             android:layout_marginRight="15dp"            
             android:scrollbars="vertical"
             android:singleLine="false"
-            android:textColor="#543423"
-            android:maxLines="6"
+            android:textColor="#22292C"
+            android:maxLines="20"
             android:textSize="12sp"
             android:text="南实校园讯（通讯员 陈一芹）4月29日下午，南山实验教育集团特邀人民大学博士、市委党校王连喜教授，举行了主题为《践行群众路线，做好群众工作》专题辅导讲座。讲座由南实集团党总支书记、总校长程显栋同志主持，集团全体党员干部180余人聆听讲座" />
     </RelativeLayout>

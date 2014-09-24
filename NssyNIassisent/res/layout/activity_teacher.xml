@@ -31,6 +31,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
+            android:textColor="#22292C"
             android:text="李丽霞,你的校园网无线网络已连接: 00:30:25"
             android:textSize="13sp" />
 

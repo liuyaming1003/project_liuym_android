@@ -48,6 +48,11 @@ public class AssetQueryActivity extends MainActivity{
 		findViewById(R.id.input_query_button).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
+				if(input_query_edittext.getText().toString().equals("")){
+					showMessage("请输入查询信息");
+					return;
+				}
+				
 				waittingDialog.show(AssetQueryActivity.this, "", "正在查询，请稍等...");
 				nssySoap.Device_Info_List(input_query_edittext.getText().toString(), 2, 10000, new SoapInterface() {
 					@Override

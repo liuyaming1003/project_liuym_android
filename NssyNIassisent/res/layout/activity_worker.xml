@@ -36,8 +36,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="3dp" >
+                android:layout_marginRight="3dp"
+                android:layout_weight="1" >
 
                 <Button
                     android:id="@+id/qurey_info"
@@ -63,8 +63,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" 
-                android:layout_marginLeft="3dp">
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1" >
 
                 <Button
                     android:id="@+id/barcode"
@@ -75,7 +75,7 @@
                     android:paddingTop="35dp" />
 
                 <TextView
-                    android:id="@+id/asset_left_textview"
+                    android:id="@+id/asset_right_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -96,6 +96,8 @@
             android:layout_below="@+id/Button_id"
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
+            android:textColor="#22292C"
+            android:textStyle="bold"
             android:text="聂超宇"
             android:textSize="16sp" />
 
@@ -109,18 +111,24 @@
             android:layout_toRightOf="@+id/work_name_textview"
             android:gravity="center_vertical"
             android:text="ncy@nssyxx.com.cn\n15814606237  610643"
+            android:textColor="#22292C"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/metting"
+            android:id="@+id/metting_textview"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_alignParentBottom="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
             android:singleLine="true"
+            android:textColor="#22292C"
             android:text="信息中心通知: 周三中午负责人会议,请与会人员准时参加会议"
             android:textSize="13sp" />
-"
     </RelativeLayout>
 
     <RelativeLayout

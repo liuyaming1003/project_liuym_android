@@ -24,6 +24,8 @@
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:textColor="#22292C"
+                android:textStyle="bold"
                 android:textSize="15sp"
                 android:text="李丽霞" />
             <TextView
@@ -32,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/order_name"                
                 android:gravity="center"
-                android:textColor="#543423"
+                android:textColor="#22292C"
                 android:textSize="10sp"
                 android:text="2014.06.21 15:24:00\n二年级办公室" />
             
@@ -48,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@drawable/cancel_link_btn"
+            android:background="#2C81BA"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:text="处理该单" />
