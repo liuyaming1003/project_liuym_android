@@ -269,23 +269,15 @@ public class OrderDetailActivity extends MainActivity{
 						final MyListViewAdapter infoAdapter = new MyListViewAdapter(OrderDetailActivity.this, list,  
 								new ListViewInterface(){
 							@Override
-							public void setCell(MyListViewAdapter adapter, View CellView, int position) {
-								TextView picker_cell_textview = (TextView)CellView.findViewById(R.id.picker_cell_textview);
+							public View Cell(MyListViewAdapter adapter, View cellView, int position) {
+								if(cellView == null){
+									cellView = inflater.inflate(R.layout.picker_cell, null);
+								}
+								TextView picker_cell_textview = (TextView)cellView.findViewById(R.id.picker_cell_textview);
 								Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 								UserInfoList userInfo = (UserInfoList)map.get("work_info");
 								picker_cell_textview.setText(userInfo.RealName);
-							}
-
-							@Override
-							public View getCell(MyListViewAdapter adapter, final int position) {
-								System.out.println("getCell index = " + position);
-								View CellView = inflater.inflate(R.layout.picker_cell, null);
-								TextView picker_cell_textview = (TextView)CellView.findViewById(R.id.picker_cell_textview);
-								Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-								UserInfoList userInfo = (UserInfoList)map.get("work_info");
-								picker_cell_textview.setText(userInfo.RealName);
-								toWorkInfo = userInfo;
-								return CellView;
+								return cellView;
 							}
 						});
 						listView.setAdapter(infoAdapter);

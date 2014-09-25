@@ -18,8 +18,7 @@ public class MyListViewAdapter extends BaseAdapter {
 	}
 
 	public interface ListViewInterface{
-		public View getCell(MyListViewAdapter adapter, int position);
-		public void setCell(MyListViewAdapter adapter,View view, int position);
+		public View Cell(MyListViewAdapter adapter, View cellView, int position);
 	}
 
 	@Override
@@ -51,9 +50,9 @@ public class MyListViewAdapter extends BaseAdapter {
 			return null;
 		}
 		if(convertView == null){
-			convertView  = listViewInterface.getCell(this, position);
+			convertView  = listViewInterface.Cell(this, null, position);
 		}else{
-			listViewInterface.setCell(this, convertView, position);
+			listViewInterface.Cell(this, convertView, position);
 		}
 		return convertView;
 	}

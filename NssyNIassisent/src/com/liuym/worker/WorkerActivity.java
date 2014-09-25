@@ -104,15 +104,18 @@ import com.liuym.zxing.CaptureActivity;
 		repairAdapter = new MyListViewAdapter(this, repair_list,  
 				new ListViewInterface(){	
 			@Override
-			public void setCell(final MyListViewAdapter adapter, View CellView, final int position) {
-				TextView order_name = (TextView)CellView.findViewById(R.id.order_name);
-				TextView order_info = (TextView)CellView.findViewById(R.id.order_info);
+			public View Cell(final MyListViewAdapter adapter, View cellView, final int position) {
+				if(cellView == null){
+					cellView = inflater.inflate(R.layout.order_cell, null);
+				}
+				TextView order_name = (TextView)cellView.findViewById(R.id.order_name);
+				TextView order_info = (TextView)cellView.findViewById(R.id.order_info);
 				final Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 				final Repair_Recode repair = (Repair_Recode)map.get("repair_recode");
 				order_name.setText(repair.Repair_RealName);
 				order_info.setText(repair.Repair_time + "\n" + repair.Room_Name);
 
-				Button order_button = (Button)CellView.findViewById(R.id.order_button);
+				Button order_button = (Button)cellView.findViewById(R.id.order_button);
 				if(repair.Repair_State == 1){
 					order_button.setText("立即接单");
 				}else if(repair.Repair_State == 2){
@@ -146,53 +149,7 @@ import com.liuym.zxing.CaptureActivity;
 						});				
 					}
 				});
-			}
-
-			@Override
-			public View getCell(final MyListViewAdapter adapter, final int position) {
-				System.out.println("getCell index = " + position);
-				View CellView = inflater.inflate(R.layout.order_cell, null);
-				TextView order_name = (TextView)CellView.findViewById(R.id.order_name);
-				TextView order_info = (TextView)CellView.findViewById(R.id.order_info);
-				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-				final Repair_Recode repair = (Repair_Recode)map.get("repair_recode");
-				order_name.setText(repair.Repair_RealName);
-				order_info.setText(repair.Repair_time + "\n" + repair.Room_Name);
-				Button order_button = (Button)CellView.findViewById(R.id.order_button);
-				if(repair.Repair_State == 1){
-					order_button.setText("立即接单");
-				}else if(repair.Repair_State == 2){
-					order_button.setText("处理该单");
-				}
-				order_button.setOnClickListener(new OnClickListener() {					
-					@Override
-					public void onClick(View arg0) {
-						mainData.order_select_index = position;
-						waittingDialog.show(WorkerActivity.this, "", "正在接单，请稍等...");
-						nssySoap.Repair_Recode_Service(repair.Repair_Recode_Num, mainData.getUserName(), 10000, new SoapInterface() {
-
-							@Override
-							public void soapResult(ArrayList<Object> arrayList) {
-								waittingDialog.dismiss();
-								String result = arrayList.get(0).toString();
-								if(result.equals("s")){
-									push(OrderDetailActivity.class);
-									repair_list.remove(position);
-									adapter.notifyDataSetChanged();
-								}else{
-									showMessage("接单失败" + result);
-								}	
-							}
-
-							@Override
-							public void soapError(String error) {
-								waittingDialog.dismiss();
-								showMessage("错误信息" + error);
-							}
-						});			
-					}
-				});
-				return CellView;
+				return cellView;
 			}
 		});
 		listView.setAdapter(repairAdapter);

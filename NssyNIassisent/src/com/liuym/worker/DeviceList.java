@@ -74,16 +74,19 @@ public class DeviceList extends MainActivity{
 		deviceAdapter = new MyListViewAdapter(this, device_list,  
 				new ListViewInterface(){	
 			@Override
-			public void setCell(final MyListViewAdapter adapter, View CellView, final int position) {
-				TextView device_name = (TextView)CellView.findViewById(R.id.device_name);
-				TextView device_info = (TextView)CellView.findViewById(R.id.device_info);
+			public View Cell(final MyListViewAdapter adapter, View cellView, final int position) {
+				if(cellView == null){
+					cellView = inflater.inflate(R.layout.device_cell, null);
+				}
+				TextView device_name = (TextView)cellView.findViewById(R.id.device_name);
+				TextView device_info = (TextView)cellView.findViewById(R.id.device_info);
 				
 				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 				final Device_Info device = (Device_Info)map.get("device");
 				device_name.setText(device.Model_Name);
 				String info = "单号:" + device.Device_Barcode + "    " + "购买时间:" + device.Device_Buy_Time;
 				device_info.setText(info);
-				CellView.findViewById(R.id.device_button).setOnClickListener(new OnClickListener() {
+				cellView.findViewById(R.id.device_button).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
 						mainData.device_Info = device;
@@ -91,31 +94,7 @@ public class DeviceList extends MainActivity{
 						push(AssetInputActivity.class, 101);
 					}
 				});
-			}
-
-			@Override
-			public View getCell(final MyListViewAdapter adapter, final int position) {
-				System.out.println("getCell index = " + position);
-				View CellView = inflater.inflate(R.layout.device_cell, null);
-				TextView device_name = (TextView)CellView.findViewById(R.id.device_name);
-				TextView device_info = (TextView)CellView.findViewById(R.id.device_info);
-				
-				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-				final Device_Info device = (Device_Info)map.get("device");
-				device_name.setText(device.Model_Name);
-				String info = "单号:" + device.Device_Barcode + "    " + "购买时间:" + device.Device_Buy_Time;
-				device_info.setText(info);
-				
-				CellView.findViewById(R.id.device_button).setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						select_cell_index = position;
-						mainData.device_Info = device;
-						push(AssetInputActivity.class);
-					}
-				});
-				
-				return CellView;
+				return cellView;
 			}
 		});
 		listView.setAdapter(deviceAdapter);

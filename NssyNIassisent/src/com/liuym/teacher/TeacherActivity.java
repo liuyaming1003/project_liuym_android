@@ -172,15 +172,16 @@ public class TeacherActivity extends MainActivity {
 				new ListViewInterface(){	
 			@SuppressWarnings("unchecked")
 			@Override
-			public void setCell(MyListViewAdapter adapter, View CellView, int position) {
-				TextView info_time = (TextView)CellView.findViewById(R.id.info_time);
-				TextView info_title = (TextView)CellView.findViewById(R.id.info_title);
-				TextView info_detail = (TextView)CellView.findViewById(R.id.info_detail);
+			public View Cell(MyListViewAdapter adapter, View cellView, int position) {
+				if(cellView == null){
+					cellView = inflater.inflate(R.layout.info_cell, null);
+				}
+				TextView info_time = (TextView)cellView.findViewById(R.id.info_time);
+				TextView info_title = (TextView)cellView.findViewById(R.id.info_title);
+				TextView info_detail = (TextView)cellView.findViewById(R.id.info_detail);
 				if(order_select_index  == position){
-					System.out.println("setCell ==");
 					info_detail.setVisibility(View.VISIBLE);
 				}else{
-					System.out.println("setCell !=");
 					info_detail.setVisibility(View.GONE);
 				}
 				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
@@ -188,22 +189,8 @@ public class TeacherActivity extends MainActivity {
 				info_time.setText(system_info.System_Information_Addtime);
 				info_title.setText(system_info.System_Information_Title);
 				info_detail.setText(system_info.System_Information_Content);
-			}
-
-			@Override
-			public View getCell(MyListViewAdapter adapter, final int position) {
-				System.out.println("getCell index = " + position);
-				View CellView = inflater.inflate(R.layout.info_cell, null);
-				TextView info_time = (TextView)CellView.findViewById(R.id.info_time);
-				TextView info_title = (TextView)CellView.findViewById(R.id.info_title);
-				TextView info_detail = (TextView)CellView.findViewById(R.id.info_detail);
-				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-				System_Infomation system_info = (System_Infomation)map.get("system_info");
-				info_time.setText(system_info.System_Information_Addtime);
-				info_title.setText(system_info.System_Information_Title);
-				info_detail.setVisibility(View.GONE); 
-				info_detail.setText(system_info.System_Information_Content);
-				return CellView;
+				
+				return cellView;
 			}
 		});
 		listView.setAdapter(infoAdapter);
@@ -273,12 +260,14 @@ public class TeacherActivity extends MainActivity {
 		historyAdapter = new MyListViewAdapter(this, repairHistory_list, 
 				new ListViewInterface() {			
 			@Override
-			public void setCell(MyListViewAdapter adapter, View view, final int position) {
+			public View Cell(MyListViewAdapter adapter, View cellView, final int position) {
 				//设置CellView 里面的数据
-				System.out.println("initHistoryListView setCell index = " + position);
-				View detailView = (View)view.findViewById(R.id.history_info);
-				ImageView imageView = (ImageView)view.findViewById(R.id.history_detail_imageview);
-				Button button = (Button)view.findViewById(R.id.history_detail_button);
+				if(cellView == null){
+					cellView = inflater.inflate(R.layout.history_cell, null);
+				}
+				View detailView = (View)cellView.findViewById(R.id.history_info);
+				ImageView imageView = (ImageView)cellView.findViewById(R.id.history_detail_imageview);
+				Button button = (Button)cellView.findViewById(R.id.history_detail_button);
 
 				if(history_select_index == position){
 					detailView.setVisibility(View.VISIBLE);
@@ -290,14 +279,14 @@ public class TeacherActivity extends MainActivity {
 					detailView.setVisibility(View.GONE);
 				}
 
-				view.findViewById(R.id.history_btn_1).setEnabled(false);
-				view.findViewById(R.id.history_btn_2).setEnabled(false);
-				view.findViewById(R.id.history_btn_3).setEnabled(false);
-				view.findViewById(R.id.history_btn_4).setEnabled(false);
+				cellView.findViewById(R.id.history_btn_1).setEnabled(false);
+				cellView.findViewById(R.id.history_btn_2).setEnabled(false);
+				cellView.findViewById(R.id.history_btn_3).setEnabled(false);
+				cellView.findViewById(R.id.history_btn_4).setEnabled(false);
 
 				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 				final Repair_Recode repair = (Repair_Recode)map.get("repair_history");
-				TextView history_info_textview = (TextView)view.findViewById(R.id.history_info_textview);
+				TextView history_info_textview = (TextView)cellView.findViewById(R.id.history_info_textview);
 				String info = "单号: " + repair.Repair_Recode_Num + "  报修人: " + mainData.getUserInfo().Domain_UserName/*repair.Repair_RealName*/ + "  时间: " + repair.Repair_time + " " + repair.Repair_State;
 				history_info_textview.setText(info);
 				
@@ -348,78 +337,8 @@ public class TeacherActivity extends MainActivity {
 					});
 				}
 
-				setHistoryViewOnClick(adapter, view, position);
-			}
-
-			@Override
-			public View getCell(MyListViewAdapter adapter, final int position) {
-				System.out.println("initHistoryListView getCell index = " + position);
-				View CellView = inflater.inflate(R.layout.history_cell, null);
-				View detailView = (View)CellView.findViewById(R.id.history_info);
-				ImageView imageView = (ImageView)CellView.findViewById(R.id.history_detail_imageview);
-				Button button = (Button)CellView.findViewById(R.id.history_detail_button);
-				button.setVisibility(View.INVISIBLE);
-				imageView.setVisibility(View.VISIBLE);
-				detailView.setVisibility(View.GONE);
-				CellView.findViewById(R.id.history_btn_1).setEnabled(false);
-				CellView.findViewById(R.id.history_btn_2).setEnabled(false);
-				CellView.findViewById(R.id.history_btn_3).setEnabled(false);
-				CellView.findViewById(R.id.history_btn_4).setEnabled(false);
-
-				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-				final Repair_Recode repair = (Repair_Recode)map.get("repair_history");
-				TextView history_info_textview = (TextView)CellView.findViewById(R.id.history_info_textview);
-				String info = "单号: " + repair.Repair_Recode_Num + "  报修人: " + mainData.getUserInfo().Domain_UserName/*repair.Repair_RealName*/ + "  时间: " + repair.Repair_time ;
-				history_info_textview.setText(info);
-
-				if(repair.Repair_State == 1){
-					button.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View arg0) {
-							AlertDialog.Builder builder = new AlertDialog.Builder(TeacherActivity.this);
-							builder.setMessage("是否撤销此单？");
-							builder.setTitle("撤销确认");
-							builder.setPositiveButton("确定", new AlertDialog.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int arg1) {
-									waittingDialog.show(TeacherActivity.this, "", "正在撤销中...");
-									nssySoap.Cancel_Repair_Recode(repair.Repair_Recode_Num, 10000, new SoapInterface() {
-										@Override
-										public void soapResult(ArrayList<Object> arrayList) {
-											waittingDialog.dismiss();
-											String result = arrayList.get(0).toString();
-											if(result.equals("s")){
-												history_select_index = -1;
-												repairHistory_list.remove(position);
-												historyAdapter.notifyDataSetChanged();
-												listView.invalidate();
-												showMessage("撤销完成");
-											}else{
-												showMessage("撤销失败" + result);
-											}
-										}
-										
-										@Override
-										public void soapError(String error) {
-											waittingDialog.dismiss();
-											showMessage("错误信息" + error);
-										}
-									});
-								}
-							});
-							builder.setNegativeButton("取消", new AlertDialog.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
-								}
-							});
-							builder.create().show();							
-						}
-					});
-				}
-
-				setHistoryViewOnClick(adapter, CellView, position);
-				return CellView;
+				setHistoryViewOnClick(adapter, cellView, position);
+				return cellView;
 			}
 		});
 		listView.setAdapter(historyAdapter);
@@ -604,24 +523,16 @@ public class TeacherActivity extends MainActivity {
 						MyListViewAdapter infoAdapter = new MyListViewAdapter(TeacherActivity.this, list,  
 								new ListViewInterface(){
 							@Override
-							public void setCell(MyListViewAdapter adapter, View CellView, int position) {
-								TextView repair_queue_cell_info = (TextView)CellView.findViewById(R.id.repair_queue_cell_info);
+							public View Cell(MyListViewAdapter adapter, View cellView, int position) {
+								if(cellView == null){
+									cellView = inflater.inflate(R.layout.repair_queue_cell, null);
+								}
+								TextView repair_queue_cell_info = (TextView)cellView.findViewById(R.id.repair_queue_cell_info);
 								Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 								final Repair_Recode repair = (Repair_Recode)map.get("repair_list");
 								String cell_info = repair.Repair_time + "  " + repair.Repair_RealName;
 								repair_queue_cell_info.setText(cell_info);
-							}
-
-							@Override
-							public View getCell(MyListViewAdapter adapter, final int position) {
-								System.out.println("getCell index = " + position);
-								View CellView = inflater.inflate(R.layout.repair_queue_cell, null);
-								TextView repair_queue_cell_info = (TextView)CellView.findViewById(R.id.repair_queue_cell_info);
-								Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-								final Repair_Recode repair = (Repair_Recode)map.get("repair_list");
-								String cell_info = repair.Repair_time + "  " + repair.Repair_RealName;
-								repair_queue_cell_info.setText(cell_info);
-								return CellView;
+								return cellView;
 							}
 						});
 						listView.setAdapter(infoAdapter);
@@ -697,24 +608,16 @@ public class TeacherActivity extends MainActivity {
 						MyListViewAdapter infoAdapter = new MyListViewAdapter(TeacherActivity.this, list,  
 								new ListViewInterface(){
 							@Override
-							public void setCell(MyListViewAdapter adapter, View CellView, int position) {
-								TextView repair_status_cell_info = (TextView)CellView.findViewById(R.id.repair_status_cell_info);
+							public View Cell(MyListViewAdapter adapter, View cellView, int position) {
+								if(cellView == null){
+									cellView = inflater.inflate(R.layout.repair_status_cell, null);
+								}
+								TextView repair_status_cell_info = (TextView)cellView.findViewById(R.id.repair_status_cell_info);
 								Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 								Repair_Feed_Back repair_feed = (Repair_Feed_Back)map.get("repair_feed");
 								String str = repair_feed.Addtime + "  " + repair_feed.Feed_Content;
 								repair_status_cell_info.setText(str);
-							}
-
-							@Override
-							public View getCell(MyListViewAdapter adapter, final int position) {
-								System.out.println("getCell index = " + position);
-								View CellView = inflater.inflate(R.layout.repair_status_cell, null);
-								TextView repair_status_cell_info = (TextView)CellView.findViewById(R.id.repair_status_cell_info);
-								Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-								Repair_Feed_Back repair_feed = (Repair_Feed_Back)map.get("repair_feed");
-								String str = repair_feed.Addtime + "  " + repair_feed.Feed_Content;
-								repair_status_cell_info.setText(str);
-								return CellView;
+								return cellView;
 							}
 						});
 						listView.setAdapter(infoAdapter);	

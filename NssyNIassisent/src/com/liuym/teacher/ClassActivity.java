@@ -160,22 +160,15 @@ public class ClassActivity extends MainActivity {
 			final MyListViewAdapter infoAdapter = new MyListViewAdapter(this, listGrade,  
 					new ListViewInterface(){
 				@Override
-				public void setCell(MyListViewAdapter adapter, View CellView, int position) {
-					TextView picker_cell_textview = (TextView)CellView.findViewById(R.id.picker_cell_textview);
+				public View Cell(MyListViewAdapter adapter, View cellView, int position) {
+					if(cellView == null){
+						cellView = inflater.inflate(R.layout.picker_cell, null);
+					}
+					TextView picker_cell_textview = (TextView)cellView.findViewById(R.id.picker_cell_textview);
 					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 					Depart_Class depart_class = (Depart_Class)map.get("room_info");
 					picker_cell_textview.setText(depart_class.Room_Name);
-				}
-
-				@Override
-				public View getCell(MyListViewAdapter adapter, final int position) {
-					System.out.println("getCell index = " + position);
-					View CellView = inflater.inflate(R.layout.picker_cell, null);
-					TextView picker_cell_textview = (TextView)CellView.findViewById(R.id.picker_cell_textview);
-					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-					Depart_Class depart_class = (Depart_Class)map.get("room_info");
-					picker_cell_textview.setText(depart_class.Room_Name);
-					return CellView;
+					return cellView;
 				}
 			});
 			listView.setAdapter(infoAdapter);
@@ -209,22 +202,15 @@ public class ClassActivity extends MainActivity {
 			final MyListViewAdapter infoAdapter = new MyListViewAdapter(this, listClass,  
 					new ListViewInterface(){
 				@Override
-				public void setCell(MyListViewAdapter adapter, View CellView, int position) {
-					TextView picker_cell_textview = (TextView)CellView.findViewById(R.id.picker_cell_textview);
+				public View Cell(MyListViewAdapter adapter, View cellView, int position) {
+					if(cellView == null){
+						cellView = inflater.inflate(R.layout.picker_cell, null);
+					}
+					TextView picker_cell_textview = (TextView)cellView.findViewById(R.id.picker_cell_textview);
 					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 					Depart_Class depart_class = (Depart_Class)map.get("room_info");
 					picker_cell_textview.setText(depart_class.Room_Num);
-				}
-
-				@Override
-				public View getCell(MyListViewAdapter adapter, final int position) {
-					System.out.println("getCell index = " + position);
-					View CellView = inflater.inflate(R.layout.picker_cell, null);
-					TextView picker_cell_textview = (TextView)CellView.findViewById(R.id.picker_cell_textview);
-					Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-					Depart_Class depart_class = (Depart_Class)map.get("room_info");
-					picker_cell_textview.setText(depart_class.Room_Num);
-					return CellView;
+					return cellView;
 				}
 			});
 			listView.setAdapter(infoAdapter);
