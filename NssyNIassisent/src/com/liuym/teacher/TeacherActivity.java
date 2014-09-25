@@ -16,9 +16,13 @@ import com.liuym.nssyniassisent.MainData.Repair_Recode;
 import com.liuym.nssyniassisent.MainData.System_Infomation;
 import com.liuym.nssyniassisent.MainData.UserRepairRecode;
 import com.liuym.soap.Soap.SoapInterface;
+import com.liuym.worker.OrderDetailActivity;
 
+import android.R.array;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -172,7 +176,7 @@ public class TeacherActivity extends MainActivity {
 				TextView info_time = (TextView)CellView.findViewById(R.id.info_time);
 				TextView info_title = (TextView)CellView.findViewById(R.id.info_title);
 				TextView info_detail = (TextView)CellView.findViewById(R.id.info_detail);
-				if(order_select_index == position){
+				if(order_select_index  == position){
 					System.out.println("setCell ==");
 					info_detail.setVisibility(View.VISIBLE);
 				}else{
@@ -206,6 +210,7 @@ public class TeacherActivity extends MainActivity {
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
 					long arg3){  
+				arg2 = arg2 -1;
 				TextView textView = (TextView)arg1.findViewById(R.id.info_detail);
 				if(order_select_index != arg2){
 					if(order_select_index != -1){
@@ -268,34 +273,81 @@ public class TeacherActivity extends MainActivity {
 		historyAdapter = new MyListViewAdapter(this, repairHistory_list, 
 				new ListViewInterface() {			
 			@Override
-			public void setCell(MyListViewAdapter adapter, View view, int position) {
+			public void setCell(MyListViewAdapter adapter, View view, final int position) {
 				//设置CellView 里面的数据
 				System.out.println("initHistoryListView setCell index = " + position);
 				View detailView = (View)view.findViewById(R.id.history_info);
 				ImageView imageView = (ImageView)view.findViewById(R.id.history_detail_imageview);
 				Button button = (Button)view.findViewById(R.id.history_detail_button);
-				
+
 				if(history_select_index == position){
 					detailView.setVisibility(View.VISIBLE);
-					button.setVisibility(View.VISIBLE);
-					imageView.setVisibility(View.INVISIBLE);
+					//button.setVisibility(View.VISIBLE);
+					//imageView.setVisibility(View.INVISIBLE);
 				}else{
 					button.setVisibility(View.INVISIBLE);
 					imageView.setVisibility(View.VISIBLE);
 					detailView.setVisibility(View.GONE);
 				}
-				
+
 				view.findViewById(R.id.history_btn_1).setEnabled(false);
 				view.findViewById(R.id.history_btn_2).setEnabled(false);
 				view.findViewById(R.id.history_btn_3).setEnabled(false);
 				view.findViewById(R.id.history_btn_4).setEnabled(false);
-				
+
 				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-				Repair_Recode repair = (Repair_Recode)map.get("repair_history");
+				final Repair_Recode repair = (Repair_Recode)map.get("repair_history");
 				TextView history_info_textview = (TextView)view.findViewById(R.id.history_info_textview);
-				String info = "单号: " + repair.Repair_Recode_Num + "  报修人: " + mainData.getUserInfo().Domain_UserName/*repair.Repair_RealName*/ + "  时间: " + repair.Repair_time ;
+				String info = "单号: " + repair.Repair_Recode_Num + "  报修人: " + mainData.getUserInfo().Domain_UserName/*repair.Repair_RealName*/ + "  时间: " + repair.Repair_time + " " + repair.Repair_State;
 				history_info_textview.setText(info);
 				
+				if(repair.Repair_State == 1){
+					button.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View arg0) {
+							AlertDialog.Builder builder = new AlertDialog.Builder(TeacherActivity.this);
+							builder.setMessage("是否撤销此单？");
+							builder.setTitle("撤销确认");
+							builder.setPositiveButton("确定", new AlertDialog.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int arg1) {
+									dialog.dismiss();
+									waittingDialog.show(TeacherActivity.this, "", "正在撤销中...");
+									nssySoap.Cancel_Repair_Recode(repair.Repair_Recode_Num, 10000, new SoapInterface() {
+										@Override
+										public void soapResult(ArrayList<Object> arrayList) {
+											waittingDialog.dismiss();
+											String result = arrayList.get(0).toString();
+											if(result.equals("s")){
+												history_select_index = -1;
+												repairHistory_list.remove(position);
+												historyAdapter.notifyDataSetChanged();
+												listView.invalidate();
+												showMessage("撤销完成");
+											}else{
+												showMessage("撤销失败" + result);
+											}
+										}
+										
+										@Override
+										public void soapError(String error) {
+											waittingDialog.dismiss();
+											showMessage("错误信息" + error);
+										}
+									});
+								}
+							});
+							builder.setNegativeButton("取消", new AlertDialog.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									dialog.dismiss();
+								}
+							});
+							builder.create().show();							
+						}
+					});
+				}
+
 				setHistoryViewOnClick(adapter, view, position);
 			}
 
@@ -313,12 +365,59 @@ public class TeacherActivity extends MainActivity {
 				CellView.findViewById(R.id.history_btn_2).setEnabled(false);
 				CellView.findViewById(R.id.history_btn_3).setEnabled(false);
 				CellView.findViewById(R.id.history_btn_4).setEnabled(false);
-				
+
 				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
-				Repair_Recode repair = (Repair_Recode)map.get("repair_history");
+				final Repair_Recode repair = (Repair_Recode)map.get("repair_history");
 				TextView history_info_textview = (TextView)CellView.findViewById(R.id.history_info_textview);
 				String info = "单号: " + repair.Repair_Recode_Num + "  报修人: " + mainData.getUserInfo().Domain_UserName/*repair.Repair_RealName*/ + "  时间: " + repair.Repair_time ;
 				history_info_textview.setText(info);
+
+				if(repair.Repair_State == 1){
+					button.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View arg0) {
+							AlertDialog.Builder builder = new AlertDialog.Builder(TeacherActivity.this);
+							builder.setMessage("是否撤销此单？");
+							builder.setTitle("撤销确认");
+							builder.setPositiveButton("确定", new AlertDialog.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int arg1) {
+									waittingDialog.show(TeacherActivity.this, "", "正在撤销中...");
+									nssySoap.Cancel_Repair_Recode(repair.Repair_Recode_Num, 10000, new SoapInterface() {
+										@Override
+										public void soapResult(ArrayList<Object> arrayList) {
+											waittingDialog.dismiss();
+											String result = arrayList.get(0).toString();
+											if(result.equals("s")){
+												history_select_index = -1;
+												repairHistory_list.remove(position);
+												historyAdapter.notifyDataSetChanged();
+												listView.invalidate();
+												showMessage("撤销完成");
+											}else{
+												showMessage("撤销失败" + result);
+											}
+										}
+										
+										@Override
+										public void soapError(String error) {
+											waittingDialog.dismiss();
+											showMessage("错误信息" + error);
+										}
+									});
+								}
+							});
+							builder.setNegativeButton("取消", new AlertDialog.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									dialog.dismiss();
+								}
+							});
+							builder.create().show();							
+						}
+					});
+				}
+
 				setHistoryViewOnClick(adapter, CellView, position);
 				return CellView;
 			}
@@ -328,9 +427,15 @@ public class TeacherActivity extends MainActivity {
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
 					long arg3){
+				//由于使用了下拉刷新，arg2多了一个Cell，所有需要减1
+				arg2 = arg2 -1;
 				View detailView = (View)arg1.findViewById(R.id.history_info);
 				ImageView imageView = (ImageView)arg1.findViewById(R.id.history_detail_imageview);
 				Button button = (Button)arg1.findViewById(R.id.history_detail_button);
+
+				Map<String, Object> map = (Map<String, Object>)historyAdapter.getItem(arg2);
+				Repair_Recode repair = (Repair_Recode)map.get("repair_history");
+
 				if(history_select_index != arg2){
 					if(history_select_index != -1){
 						history_select_view.setVisibility(View.GONE);
@@ -346,8 +451,10 @@ public class TeacherActivity extends MainActivity {
 					history_select_index = -1;
 				}else{
 					detailView.setVisibility(View.VISIBLE);
-					button.setVisibility(View.VISIBLE);
-					imageView.setVisibility(View.INVISIBLE);
+					if(repair.Repair_State == 1){
+						button.setVisibility(View.VISIBLE);
+						imageView.setVisibility(View.INVISIBLE);
+					}
 				}
 				history_select_view = detailView;
 				history_select_button = button;
@@ -519,6 +626,7 @@ public class TeacherActivity extends MainActivity {
 						});
 						listView.setAdapter(infoAdapter);
 						dialog.setContentView(view);
+						dialog.show();
 					}else{
 						showMessage("无记录");
 					}
@@ -547,13 +655,14 @@ public class TeacherActivity extends MainActivity {
 						ImageView photoView = (ImageView)view.findViewById(R.id.repair_worker_photo);
 						TextView nameTextView = (TextView)view.findViewById(R.id.repair_worker_name);
 						RatingBar ratingBar = (RatingBar)view.findViewById(R.id.ratingBar);
- 
+
 						if(!mainData.getRepairInfoList().pic.equals("null")){
 							//去网络图片然后保存本地
 						}
 						nameTextView.setText(mainData.getRepairInfoList().Domain_UserName);
 						ratingBar.setRating(mainData.getRepairInfoList().Score);
 						dialog.setContentView(view);
+						dialog.show();
 					}else{
 						showMessage("获取信息错误" + info_list);
 					}
@@ -610,6 +719,7 @@ public class TeacherActivity extends MainActivity {
 						});
 						listView.setAdapter(infoAdapter);	
 						dialog.setContentView(view);
+						dialog.show();
 					}else{
 						showMessage("无记录");
 					}
@@ -692,13 +802,12 @@ public class TeacherActivity extends MainActivity {
 				}
 			});
 			dialog.setContentView(view);
+			dialog.show();
 			break;
 		}
 		default:
 			return;
 		}
-
-		dialog.show();
 	}
 
 	@Override

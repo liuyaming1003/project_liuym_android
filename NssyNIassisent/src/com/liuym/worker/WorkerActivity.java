@@ -250,6 +250,14 @@ import com.liuym.zxing.CaptureActivity;
 					popRoot();
 				}
 			});
+			
+			TextView asset_name = (TextView)findViewById(R.id.asset_name);
+			TextView asset_info = (TextView)findViewById(R.id.asset_info);
+			String realName = mainData.getUserInfo().RealName;
+			String userMail = mainData.getUserInfo().Domain_UserName + "@sznx.com.cn";
+			String phone_info = mainData.getUserInfo().Mobile_Tel + "  " + mainData.getUserInfo().Group_Tel;
+			asset_name.setText(realName);
+			asset_info.setText(userMail + "\n" + phone_info);
 
 			findViewById(R.id.second).setEnabled(false);
 
@@ -263,7 +271,7 @@ import com.liuym.zxing.CaptureActivity;
 			findViewById(R.id.asset_input_btn).setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					push(AssetInputActivity.class);
+					push(DeviceList.class);
 				}
 			});
 

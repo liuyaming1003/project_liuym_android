@@ -395,4 +395,15 @@ public class NssySoapMethod{
 	map.put("Recode_Count", null);
 	new Soap().soapRequest("IP_Exist", timeout, soapInterface, map);
 	}
+	
+	/**
+	 * 撤销报修单
+	 * @param Repair_Recode_Num 单号
+	 * @param timeout           超时时间
+	 * @param soapInterface     函数回调
+	 */
+	public void Cancel_Repair_Recode(int Repair_Recode_Num, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
+	map.put("Repair_Recode_Num", Repair_Recode_Num);
+	new Soap().soapRequest("Cancel_Repair_Recode", timeout, soapInterface, map);
+	}
 }

@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" >
+
+        <RelativeLayout
+            android:id="@+id/info"
+            android:layout_width="220dp"
+            android:layout_height="match_parent"            
+            android:background="@drawable/text_field_bg_241x40"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp" >
+
+            <TextView
+                android:id="@+id/device_name"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:textColor="#22292C"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:text="" />
+            <TextView
+                android:id="@+id/device_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/device_name"  
+                android:gravity="center_vertical" 
+                android:layout_marginLeft="5dp"
+                android:textColor="#22292C"
+                android:textSize="10sp"
+                android:text="" />
+            
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/device_button"
+            android:layout_alignTop="@+id/info"
+            android:layout_alignBottom="@+id/info"
+            android:layout_toRightOf="@+id/info"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#2C81BA"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:text="分配设备" />
+    </RelativeLayout>
+
+</RelativeLayout>
