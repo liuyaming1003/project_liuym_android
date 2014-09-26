@@ -17,83 +17,91 @@
         navigation:btn_leftText="返回"
         navigation:tv_title="资产查询" >
     </com.liuym.nssyniassisent.Navigation>
-    <RelativeLayout 
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/navigationView"
-        >
-        <LinearLayout 
+        android:layout_below="@+id/navigationView" >
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="30dp">
-            <RelativeLayout 
+            android:layout_above="@+id/Bottom"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/input_query_relativelayout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="#FFFFFF"
-                >
-                <TextView 
+                android:background="#FFFFFF" >
+
+                <TextView
                     android:id="@+id/input_query_textview"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="输入查询"/>
-                <EditText 
+                    android:text="输入查询" />
+
+                <EditText
                     android:id="@+id/input_query_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_toLeftOf="@+id/input_query_button"
                     android:layout_toRightOf="@+id/input_query_textview"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="center_vertical|center_horizontal"
                     android:background="#E0E0E0"
-                    android:singleLine="true"
-                    />
-                <Button 
+                    android:gravity="center_vertical|center_horizontal"
+                    android:singleLine="true" />
+
+                <Button
                     android:id="@+id/input_query_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/asset_query_button"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/asset_query_button" />
             </RelativeLayout>
-            
-            <RelativeLayout 
+
+            <RelativeLayout
+                android:id="@+id/zxing_query_relativelayout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="#FFFFFF"
-                >
-                <TextView 
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF" >
+
+                <TextView
                     android:id="@+id/scan_query_textview"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="扫描查询"/>
-                <Button 
+                    android:text="扫描查询" />
+
+                <Button
                     android:id="@+id/scan_query_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/barcode_button"/>
+                    android:background="@drawable/barcode_button" />
             </RelativeLayout>
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" >
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp" >
 
                 <TextView
                     android:id="@+id/code_info_textview"
@@ -109,16 +117,17 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/code_info_textview"
                     android:background="#FFFFFF"
-                    android:singleLine="true"
-                    android:gravity="center_vertical|center_horizontal" />
+                    android:gravity="center_vertical|center_horizontal"
+                    android:singleLine="true" />
             </RelativeLayout>
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp" 
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp" >
 
                 <TextView
                     android:id="@+id/username_info_textview"
@@ -134,22 +143,24 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/username_info_textview"
                     android:background="#FFFFFF"
-                    android:singleLine="true"
-                    android:gravity="center_vertical|center_horizontal" />
-                <ImageView 
+                    android:gravity="center_vertical|center_horizontal"
+                    android:singleLine="true" />
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/asset_query_modify"/>
+                    android:src="@drawable/asset_query_modify" />
             </RelativeLayout>
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp" 
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp" >
 
                 <TextView
                     android:id="@+id/address_ip_textview"
@@ -165,22 +176,24 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/address_ip_textview"
                     android:background="#FFFFFF"
-                    android:singleLine="true"
-                    android:gravity="center_vertical|center_horizontal" />
-                <ImageView 
+                    android:gravity="center_vertical|center_horizontal"
+                    android:singleLine="true" />
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/asset_query_modify"/>
+                    android:src="@drawable/asset_query_modify" />
             </RelativeLayout>
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp" 
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp" >
 
                 <TextView
                     android:id="@+id/address_mac_textview"
@@ -196,22 +209,24 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/address_mac_textview"
                     android:background="#FFFFFF"
-                    android:singleLine="true"
-                    android:gravity="center_vertical|center_horizontal" />
-                <ImageView 
+                    android:gravity="center_vertical|center_horizontal"
+                    android:singleLine="true" />
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/asset_query_modify"/>
+                    android:src="@drawable/asset_query_modify" />
             </RelativeLayout>
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" >
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp" >
 
                 <TextView
                     android:id="@+id/address_port_textview"
@@ -227,43 +242,76 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/address_port_textview"
                     android:background="#FFFFFF"
-                    android:singleLine="true"
-                    android:gravity="center_vertical|center_horizontal" />
-                <ImageView 
+                    android:gravity="center_vertical|center_horizontal"
+                    android:singleLine="true" />
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/asset_query_modify"/>
+                    android:src="@drawable/asset_query_modify" />
             </RelativeLayout>
             
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp" 
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp" >
 
                 <TextView
-                    android:id="@+id/records_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#00000000"
-                    android:textSize="14sp"
-                    android:text="维修记录查询" />
-                <MultiAutoCompleteTextView 
+                    android:id="@+id/address_textview"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="存放地点" />
+
+                <EditText
+                    android:id="@+id/address_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/records_textview"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="top"
-                    android:background="#FFFFFF"/>
+                    android:layout_toRightOf="@+id/address_textview"
+                    android:background="#FFFFFF"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:singleLine="true" />
 
-                
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/asset_query_modify" />
             </RelativeLayout>
         </LinearLayout>
-    </RelativeLayout>
 
-    
+        <RelativeLayout
+            android:id="@+id/Bottom"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+
+            <TextView
+                android:id="@+id/records_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:text="维修记录查询"
+                android:textSize="14sp" />
+
+            <MultiAutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/records_textview"
+                android:layout_marginBottom="5dp"
+                android:background="#FFFFFF"
+                android:gravity="top" />
+        </RelativeLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

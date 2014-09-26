@@ -74,7 +74,16 @@ import com.liuym.zxing.CaptureActivity;
 		findViewById(R.id.barcode).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
+				AssetQueryActivity.asset_query_type = 3;
 				push(CaptureActivity.class, 100);
+			}
+		});
+		
+		findViewById(R.id.qurey_info).setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				AssetQueryActivity.asset_query_type = 2;
+				push(AssetQueryActivity.class);
 			}
 		});
 

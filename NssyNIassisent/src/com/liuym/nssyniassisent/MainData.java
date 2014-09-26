@@ -22,6 +22,12 @@ public class MainData{
 	private ArrayList<System_Infomation> systemInfoArrayList = null;
 	public  int order_select_index;
 	public ArrayList<Repair_Recode> repairHistoryArrayList = null;
+	public ArrayList<UserInfoList> teacherList = null;
+	public ArrayList<UserInfoList> getTeacherList() {
+		return teacherList;
+	}
+
+
 	public ArrayList<Device_Info> deviceInfoArrayList = null;
 	public ArrayList<Repair_Feed_Back> repairFeedArrayList = null;
 	public ArrayList<UserInfoList> workerInfoArrayList = null;
@@ -83,6 +89,7 @@ public class MainData{
 		systemInfoArrayList = new ArrayList<MainData.System_Infomation>();
 		repairHistoryArrayList = new ArrayList<MainData.Repair_Recode>();
 		repairRecodeArrayList = new ArrayList<MainData.Repair_Recode>();
+		teacherList = new ArrayList<MainData.UserInfoList>();
 		deviceInfoArrayList = new ArrayList<MainData.Device_Info>();
 		repairFeedArrayList = new ArrayList<MainData.Repair_Feed_Back>();
 		workerInfoArrayList = new ArrayList<MainData.UserInfoList>();
@@ -135,6 +142,40 @@ public class MainData{
 			userInfoList.Domain_Depart_Idenify = info_list_json.get("Domain_Depart_Idenify").toString();
 			userInfoList.pic = info_list_json.get("pic").toString();
 			userInfoList.Score = info_list_json.getInt("Score");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			flag =  false;
+		}		
+		return flag;
+	}
+
+	/**
+	 * 分校老师列表，str是JSON数组格式
+	 * @param str
+	 * @return
+	 */
+	public boolean setTeacherList(String str){
+		boolean flag = true;
+		if(str == null){
+			flag =  false;
+		}
+
+		teacherList.clear();
+		try {
+			JSONArray array = new JSONArray(str);
+			for(int i = 0; i < array.length(); i++){
+				JSONObject info_list_json = array.getJSONObject(i);
+				UserInfoList teacher = new UserInfoList();
+				teacher.RealName = info_list_json.get("RealName").toString();
+				teacher.DepartID = info_list_json.getInt("DepartID");
+				teacher.Mobile_Tel = info_list_json.get("Mobile_Tel").toString();
+				teacher.Group_Tel = info_list_json.get("Group_Tel").toString();
+				teacher.Domain_UserName = info_list_json.get("Domain_UserName").toString();
+				teacher.Domain_Depart_Idenify = info_list_json.get("Domain_Depart_Idenify").toString();
+				teacher.pic = info_list_json.get("pic").toString();
+				teacher.Score = info_list_json.getInt("Score");
+				teacherList.add(teacher);
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 			flag =  false;

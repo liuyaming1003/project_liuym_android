@@ -72,7 +72,7 @@
         <RelativeLayout
             android:id="@+id/Asset_center"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_below="@+id/Asset_Acount_info" >
         </RelativeLayout>
 
@@ -119,6 +119,12 @@
                     android:background="#FFFFFF"
                     android:singleLine="true"
                     android:gravity="center_vertical|center_horizontal" />
+                <ImageView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/assets_input_select"/>
             </RelativeLayout>
             
             <RelativeLayout
@@ -146,12 +152,6 @@
                     android:background="#FFFFFF"
                     android:singleLine="true"
                     android:gravity="center_vertical|center_horizontal" />
-                <ImageView 
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/assets_input_select"/>
             </RelativeLayout>
             
             <RelativeLayout
@@ -184,7 +184,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/assets_input_handle"/>
+                    android:src="@drawable/assets_input_select"/>
             </RelativeLayout>
             
             <RelativeLayout
@@ -217,7 +217,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/assets_input_handle"/>
+                    android:src="@drawable/assets_input_select"/>
             </RelativeLayout>
             
             <RelativeLayout
@@ -299,7 +299,7 @@
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="所属分校" />
+                    android:text="存放地点" />
 
                 <EditText
                     android:id="@+id/school_edittext"
@@ -322,12 +322,12 @@
             <RelativeLayout 
             android:id="@+id/pc_img_relativelayout"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="10dp"
             android:layout_alignParentBottom="true"
             android:background="#A7A7A7"
             android:gravity="center_horizontal">
             
-            <ImageView 
+            <!-- <ImageView 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -335,7 +335,7 @@
                 android:layout_alignParentBottom="true"
                 android:scaleType="fitCenter"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"/> -->
         </RelativeLayout>
         </LinearLayout>
         

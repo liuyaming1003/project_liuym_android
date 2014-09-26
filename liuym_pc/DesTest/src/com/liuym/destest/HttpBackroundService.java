@@ -75,7 +75,7 @@ public class HttpBackroundService extends Service {
 					String retCode = result.substring(0, 1);
 					String postStr = null;
 					if(retCode.equals("1")){
-						postStr = "1  认证成功";
+						postStr = "1: 认证成功";
 					}else{
 						postStr = result;
 					}
@@ -89,7 +89,7 @@ public class HttpBackroundService extends Service {
 						if(sendIndex++ == 3){
 							sendIndex = 1;
 							result = HttpRequest.postFile("http://172.16.88.138/logtxt/post_Server.aspx", filePath, username);
-							System.out.print("---------------result = " + result);
+							//System.out.print("---------------result = " + result);
 							String resultMsg = result.substring(0, 8);
 							if(resultMsg.equals("success!")){
 								//删除文件

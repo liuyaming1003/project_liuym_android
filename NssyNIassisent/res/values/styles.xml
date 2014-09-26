@@ -14,5 +14,10 @@
         <item name="android:minHeight">20dip</item>    
         <item name="android:maxHeight">20dip</item>
     </style> 
+    
+    <style name="popwin_anim_style">  
+     <item name="android:windowEnterAnimation">@anim/push_down_up</item>  
+     <item name="android:windowExitAnimation">@anim/pop_up_down</item>  
+</style> 
 
 </resources>

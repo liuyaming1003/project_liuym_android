@@ -287,7 +287,7 @@ public class TeacherActivity extends MainActivity {
 				Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 				final Repair_Recode repair = (Repair_Recode)map.get("repair_history");
 				TextView history_info_textview = (TextView)cellView.findViewById(R.id.history_info_textview);
-				String info = "单号: " + repair.Repair_Recode_Num + "  报修人: " + mainData.getUserInfo().Domain_UserName/*repair.Repair_RealName*/ + "  时间: " + repair.Repair_time + " " + repair.Repair_State;
+				String info = "单号: " + repair.Repair_Recode_Num + "  报修人: " + mainData.getUserInfo().Domain_UserName/*repair.Repair_RealName*/ + "  时间: " + repair.Repair_time;
 				history_info_textview.setText(info);
 				
 				if(repair.Repair_State == 1){
@@ -739,7 +739,7 @@ public class TeacherActivity extends MainActivity {
 		if (hasFocus){  
 			if(isFirstLaunch){
 				isFirstLaunch = false;
-				nssySoap.Deaprt_Room_list(mainData.getUserInfo().DepartID, 10000, new SoapInterface() {
+				nssySoap.Deaprt_Room_list(mainData.getUserInfo().DepartID, 1, 10000, new SoapInterface() {
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
 						String room_list = arrayList.get(0).toString();	

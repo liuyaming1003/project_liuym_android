@@ -288,6 +288,7 @@ public class OrderDetailActivity extends MainActivity{
 								Map<String, Object> map = (Map<String, Object>)infoAdapter.getItem(arg2);
 								UserInfoList userInfo = (UserInfoList)map.get("work_info");
 								order_name_edittext.setText(userInfo.RealName);
+								toWorkInfo = userInfo;
 								dialog.dismiss();
 							}  
 						});

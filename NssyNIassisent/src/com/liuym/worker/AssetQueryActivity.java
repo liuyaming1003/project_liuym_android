@@ -17,6 +17,7 @@ import com.liuym.soap.Soap.SoapInterface;
 import com.liuym.zxing.CaptureActivity;
 
 public class AssetQueryActivity extends MainActivity{
+	public static int asset_query_type = 1;  // 1 默认查询  2 输入查询  3条码查询
 	private Navigation navi = null;
 	private EditText input_query_edittext = null;
 	private EditText code_info_edittext = null;
@@ -83,12 +84,24 @@ public class AssetQueryActivity extends MainActivity{
 		});
 		
 		input_query_edittext = (EditText)findViewById(R.id.input_query_edittext);
-		code_info_edittext = (EditText)findViewById(R.id.code_info_edittext);;
-		username_info_edittext = (EditText)findViewById(R.id.username_info_edittext);;
-		address_ip_edittext = (EditText)findViewById(R.id.address_ip_edittext);;
-		address_mac_edittext = (EditText)findViewById(R.id.address_mac_edittext);;
-		address_port_edittext = (EditText)findViewById(R.id.address_port_edittext);;
+		code_info_edittext = (EditText)findViewById(R.id.code_info_edittext);
+		username_info_edittext = (EditText)findViewById(R.id.username_info_edittext);
+		address_ip_edittext = (EditText)findViewById(R.id.address_ip_edittext);
+		address_mac_edittext = (EditText)findViewById(R.id.address_mac_edittext);
+		address_port_edittext = (EditText)findViewById(R.id.address_port_edittext);
 		
+		
+		//
+		if(AssetQueryActivity.asset_query_type == 1){
+			
+		}else if(AssetQueryActivity.asset_query_type == 2){
+			findViewById(R.id.zxing_query_relativelayout).setVisibility(View.GONE);
+		}else if(AssetQueryActivity.asset_query_type == 3){
+			findViewById(R.id.zxing_query_relativelayout).setVisibility(View.GONE);
+			findViewById(R.id.input_query_relativelayout).setVisibility(View.GONE);
+		}else{
+			
+		}
 	}
 	
 	@Override  

@@ -61,7 +61,7 @@ public class NssySoapMethod{
 	 * @param timeout       超时时间
 	 * @param soapInterface 函数回调
 	 */
-	public void Teacher_InfoList_Depart(String DepartID, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
+	public void Teacher_InfoList_Depart(int DepartID, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
 	map.put("DepartID", DepartID);
 	new Soap().soapRequest("Teacher_InfoList_Depart", timeout, soapInterface, map);
 	}
@@ -69,11 +69,13 @@ public class NssySoapMethod{
 	/**
 	 * 返回分校房间信息列表，主要返回班级及功能室
 	 * @param DepartID      分校ID
+	 * @param type          =1 返回班级及功能室  =2 返回办公室
 	 * @param timeout       超时时间
 	 * @param soapInterface 函数回调
 	 */
-	public void Deaprt_Room_list(int DepartID, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
+	public void Deaprt_Room_list(int DepartID, int type, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
 	map.put("DepartID", DepartID);
+	map.put("type", type);
 	new Soap().soapRequest("Deaprt_Room_list", timeout, soapInterface, map);
 	}
 
@@ -160,7 +162,7 @@ public class NssySoapMethod{
 	map.put("UserName", UserName);
 	new Soap().soapRequest("Worker_Repair_List", timeout, soapInterface, map);
 	}
-	
+
 	/**
 	 * 当前分校工作人员列表
 	 * @param DepartID          当前工作人员所在分校ID
@@ -395,7 +397,7 @@ public class NssySoapMethod{
 	map.put("Recode_Count", null);
 	new Soap().soapRequest("IP_Exist", timeout, soapInterface, map);
 	}
-	
+
 	/**
 	 * 撤销报修单
 	 * @param Repair_Recode_Num 单号

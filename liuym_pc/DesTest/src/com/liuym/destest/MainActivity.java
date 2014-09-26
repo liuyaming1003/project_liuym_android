@@ -36,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
 	private TextView resultView;
 	private Handler handler;
 	private String httpUrl;
+	private boolean isSuccess = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,13 @@ public class MainActivity extends ActionBarActivity {
 									try {
 										result = HttpRequest.httpGetRequest(netUrl, hostipText);
 										msg.obj = "访问服务器返回数据 = " + result;
-										httpSendService();
+										String retCode = result.substring(0, 1);
+										if(retCode.equals("1")){
+											isSuccess = true;
+											msg.obj = "访问服务器返回数据 = " + "认证成功";
+										}else{
+											isSuccess = false;
+										}
 										handler.sendMessage(msg);
 									} catch (ClientProtocolException e) {
 										msg.obj = "Client 错误" + e.getMessage();
@@ -192,6 +199,8 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
     
+    
+    
     private void httpSendService(){
     	Intent intent = new Intent(HttpBackroundService.ACTION);
     	saveUrl(httpUrl);
@@ -207,4 +216,33 @@ public class MainActivity extends ActionBarActivity {
 		//保存数据
 		editor.commit();
 	}
+    
+    @Override  
+    protected void onStart() {  
+        super.onStart();  
+        System.out.println("onStart");  
+    }  
+    @Override  
+    protected void onResume() {  
+        super.onResume();  
+        System.out.println("onResume");  
+    }  
+    @Override  
+    protected void onPause() {  
+        super.onPause();  
+        if(isSuccess == true){
+        	httpSendService();
+        }
+        System.out.println("onPause");  
+    }  
+    @Override  
+    protected void onStop() {  
+        super.onStop();  
+        System.out.println("onStop");  
+    }  
+    @Override  
+    protected void onDestroy() {  
+        super.onDestroy();  
+        System.out.println("onDestroy");  
+    }  
 }

@@ -26,6 +26,7 @@ import com.google.zxing.Result;
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
+import com.liuym.worker.AssetQueryActivity;
 import com.liuym.zxing.camera.CameraManager;
 import com.liuym.zxing.decoding.CaptureActivityHandler;
 import com.liuym.zxing.decoding.InactivityTimer;
@@ -44,7 +45,7 @@ public class CaptureActivity extends MainActivity implements Callback
 	private boolean playBeep;
 	private static final float BEEP_VOLUME = 0.10f;
 	private boolean vibrate;
-	
+
 	// ∆¡ƒª∑ΩœÚ
 	public static boolean screenIsLandscape = true; // «∑Ò∫·∆¡ ƒ¨»œ∫·∆¡ false  ˙∆¡
 
@@ -63,12 +64,12 @@ public class CaptureActivity extends MainActivity implements Callback
 				pop(1, null);
 			}
 		});
-		
+
 		Configuration config = getResources().getConfiguration();
 		if(config.orientation == Configuration.ORIENTATION_PORTRAIT){
 			screenIsLandscape = false;
 		}
-		
+
 		// ≥ı ºªØ CameraManager
 		CameraManager.init(getApplication());
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
@@ -189,7 +190,11 @@ public class CaptureActivity extends MainActivity implements Callback
 		playBeepSoundAndVibrate();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("zxingCode", obj.getText());
-		pop(0, map);
+		if(AssetQueryActivity.asset_query_type == 3){
+			push(AssetQueryActivity.class);
+		}else{
+			pop(0, map);
+		}
 		/*
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		if (barcode == null)
@@ -216,8 +221,8 @@ public class CaptureActivity extends MainActivity implements Callback
 				//intent.setData(content_url);
 				//startActivity(intent);
 				//finish();
-				
-				
+
+
 				pop();
 			}
 		});*/
@@ -286,7 +291,7 @@ public class CaptureActivity extends MainActivity implements Callback
 			mediaPlayer.seekTo(0);
 		}
 	};
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_BACK){  
