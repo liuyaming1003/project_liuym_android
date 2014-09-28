@@ -293,7 +293,7 @@
                 android:layout_marginTop="5dp" >
 
                 <TextView
-                    android:id="@+id/school_textview"
+                    android:id="@+id/address_textview"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -302,12 +302,12 @@
                     android:text="存放地点" />
 
                 <EditText
-                    android:id="@+id/school_edittext"
+                    android:id="@+id/address_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_toRightOf="@+id/school_textview"
+                    android:layout_toRightOf="@+id/address_textview"
                     android:background="#FFFFFF"
                     android:singleLine="true"
                     android:gravity="center_vertical|center_horizontal" />

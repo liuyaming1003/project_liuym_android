@@ -8,6 +8,7 @@ import java.util.zip.Inflater;
 import org.apache.http.impl.conn.tsccm.WaitingThread;
 
 import com.liuym.adapter.MyListViewAdapter;
+import com.liuym.adapter.MySearch;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.MainData.UserInfoList;
@@ -15,6 +16,7 @@ import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
 import com.liuym.nssyniassisent.WaittingDialog;
 import com.liuym.soap.Soap.SoapInterface;
+import com.liuym.worker.AssetQueryActivity;
 
 import android.app.ActionBar.LayoutParams;
 import android.os.Bundle;
@@ -135,15 +137,50 @@ public class PersonActivity extends MainActivity {
 			public void soapResult(ArrayList<Object> arrayList) {
 				waittingDialog.dismiss();
 				String result = arrayList.get(0).toString();
-				ArrayList<Map<String, Object>> teacherList = new ArrayList<Map<String,Object>>();
+				ArrayList<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
 				if(mainData.setTeacherList(result)){
 					for(int i = 0; i < mainData.getTeacherList().size(); i++){
 						UserInfoList teacher = mainData.getTeacherList().get(i);
 						Map<String, Object> map=new HashMap<String, Object>();
-						map.put("teacher", teacher);
-						teacherList.add(map);
+						map.put("object", teacher);
+						list.add(map);
 					}
-					showSearch(teacherList);
+					new MySearch().showSearch(PersonActivity.this, rootView, list, new MySearch.SearchInterface() {
+
+						@Override
+						public void selectCell(Object object) {
+							if(object instanceof UserInfoList){
+								UserInfoList userInfo = (UserInfoList)object;
+								Domain_UserName = userInfo.Domain_UserName;
+								username_info_editText.setText(userInfo.RealName);
+								username_phone_editText.setText(userInfo.Mobile_Tel);
+							}
+						}
+
+						@Override
+						public boolean changedText(Object object, String data) {
+							if(object instanceof UserInfoList){
+								UserInfoList userInfo = (UserInfoList) object;
+								if(userInfo.RealName.contains(data)){
+									return true;
+								}
+							}
+							return false;
+						}
+
+						@Override
+						public View Cell(View cellView, Object object) {
+							if(cellView == null){
+								cellView = inflater.inflate(android.R.layout.simple_list_item_1, null);
+							}
+							TextView name = (TextView)cellView.findViewById(android.R.id.text1);
+							if(object instanceof UserInfoList){
+								UserInfoList userInfo = (UserInfoList)object;
+								name.setText(userInfo.RealName);
+							}
+							return cellView;
+						}
+					});
 				}else{
 					showMessage("无老师列表信息");
 				}
@@ -156,122 +193,4 @@ public class PersonActivity extends MainActivity {
 			}
 		});
 	}
-
-	private void showSearch(final ArrayList<Map<String, Object>> arrayList){
-		View view = inflater.inflate(R.layout.search_view, null);
-		final Handler myhandler = new Handler();
-		final EditText search_edittext = (EditText)view.findViewById(R.id.search_edittext);
-		final ImageView delete_imageview = (ImageView)view.findViewById(R.id.delete_imageview);
-
-		final PopupWindow window = new PopupWindow(view,  
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true); // 实例化PopupWindow
-		window.setAnimationStyle(R.style.popwin_anim_style);
-		window.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
-		window.setFocusable(true);
-		window.setOutsideTouchable(true);
-
-		//listView显示数据
-		final ArrayList<Map<String, Object>> listData = arrayList;
-		//查找内容数据
-		final ArrayList<Map<String, Object>> findData = new ArrayList<Map<String,Object>>();
-		final ListView listView = (ListView)view.findViewById(R.id.listView);
-		
-		final MyListViewAdapter myAdapter = new MyListViewAdapter(this, listData, new ListViewInterface() {
-			@Override
-			public View Cell(MyListViewAdapter adapter, View cellView, int position) {
-				if(cellView == null){
-					cellView = inflater.inflate(android.R.layout.simple_list_item_1, null);
-				}
-				Map<String, Object> map = (Map<String, Object>) adapter.getItem(position);
-				UserInfoList teacher = (UserInfoList)map.get("teacher");
-				TextView name = (TextView)cellView.findViewById(android.R.id.text1);
-				name.setText(teacher.RealName);
-				return cellView;
-			}
-		});
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
-					long arg3){
-				Map<String, Object> map = (Map<String, Object>) myAdapter.getItem(arg2);
-				UserInfoList teacher = (UserInfoList)map.get("teacher");
-				Domain_UserName = teacher.Domain_UserName;
-				username_info_editText.setText(teacher.RealName);
-				username_phone_editText.setText(teacher.Mobile_Tel);
-				window.dismiss();
-			}
-		});
-		listView.setAdapter(myAdapter);
-
-
-
-		final Runnable eChanged = new Runnable() {
-
-			@Override
-			public void run() {
-				String data = search_edittext.getText().toString();
-
-				listData.clear();//先要清空，不然会叠加
-				//if(!data.equals("")){
-					for(int i = 0; i < arrayList.size(); i ++){
-						Map<String, Object> tMap = arrayList.get(i);
-						UserInfoList teacher = (UserInfoList) tMap.get("teacher");
-						if(teacher.RealName.contains(data)){
-							Map<String, Object> map=new HashMap<String, Object>();
-							map.put("teacher", teacher);
-							listData.add(map);
-						}
-					}
-				//}
-				myAdapter.notifyDataSetChanged();//更新
-			}
-		};
-
-		search_edittext.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-				//这个应该是在改变的时候会做的动作吧，具体还没用到过。
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-					int arg3) {
-				//这是文本框改变之前会执行的动作
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				/**这是文本框改变之后 会执行的动作
-				 * 因为我们要做的就是，在文本框改变的同时，我们的listview的数据也进行相应的变动，并且如一的显示在界面上。
-				 * 所以这里我们就需要加上数据的修改的动作了。
-				 */
-				if(s.length() == 0){
-					delete_imageview.setVisibility(View.GONE);//当文本框为空时，则叉叉消失
-				}
-				else {
-					delete_imageview.setVisibility(View.VISIBLE);//当文本框不为空时，出现叉叉
-				}
-
-				myhandler.post(eChanged);
-			}
-		});
-
-
-
-		delete_imageview.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				search_edittext.setText("");
-			}
-		});
-
-
-		view.findViewById(R.id.cancel_button).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				window.dismiss();
-			}
-		});
-	}
-
 }

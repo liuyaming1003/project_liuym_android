@@ -1,6 +1,7 @@
 package com.liuym.zxing;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -26,6 +27,8 @@ import com.google.zxing.Result;
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
+import com.liuym.nssyniassisent.MainData.Device_Info;
+import com.liuym.soap.Soap.SoapInterface;
 import com.liuym.worker.AssetQueryActivity;
 import com.liuym.zxing.camera.CameraManager;
 import com.liuym.zxing.decoding.CaptureActivityHandler;
@@ -191,7 +194,28 @@ public class CaptureActivity extends MainActivity implements Callback
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("zxingCode", obj.getText());
 		if(AssetQueryActivity.asset_query_type == 3){
-			push(AssetQueryActivity.class);
+			waittingDialog.show(CaptureActivity.this, "", "正在查询，请稍等...");
+			nssySoap.Device_Info_List(obj.getText(), 1, 10000, new SoapInterface() {
+				@Override
+				public void soapResult(ArrayList<Object> arrayList) {
+					waittingDialog.dismiss();
+					String result = arrayList.get(0).toString();
+					if(mainData.setDeviceInfoList(result)){
+						mainData.device_Info = mainData.getDeviceInfoArrayList().get(0);
+						push(AssetQueryActivity.class);
+					}else{
+						showMessage("错误信息" + result);
+						return;
+					}
+					showMessage("查询完成");
+				}
+
+				@Override
+				public void soapError(String error) {
+					waittingDialog.dismiss();
+					showMessage("错误信息" + error);
+				}
+			});
 		}else{
 			pop(0, map);
 		}

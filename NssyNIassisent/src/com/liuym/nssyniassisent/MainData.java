@@ -16,7 +16,7 @@ public class MainData{
 	private Review_Information review_Information = null;
 	private IP_Section ip_Section = null;
 	private IP_List ip_List = null;
-	public Device_Info device_Info = null;
+	public static Device_Info device_Info = null;
 	private String userName = null;
 	private ArrayList<Depart_Class> roomArrayList = null;
 	private ArrayList<System_Infomation> systemInfoArrayList = null;

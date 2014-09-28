@@ -32,6 +32,9 @@
                 <action android:name="com.liuym.destest.HttpBackroundService"/>
             </intent-filter>
         </service>
+        
+        <service android:name="com.liuym.destest.HttpBindService"/>
+        
     </application>
     
 

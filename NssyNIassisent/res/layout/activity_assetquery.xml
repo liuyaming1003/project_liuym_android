@@ -15,6 +15,7 @@
         android:layout_alignParentTop="true"
         navigation:backgroundColor="#22292C"
         navigation:btn_leftText="返回"
+        navigation:btn_rightText="更新"
         navigation:tv_title="资产查询" >
     </com.liuym.nssyniassisent.Navigation>
 
@@ -27,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/Bottom"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical" >
 
             <RelativeLayout
@@ -94,7 +95,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/barcode_button" />
             </RelativeLayout>
-
+            
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,6 +117,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/code_info_textview"
+                    android:background="#FFFFFF"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:singleLine="true" />
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp" >
+
+                <TextView
+                    android:id="@+id/device_name_textview"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="设备名称" />
+
+                <EditText
+                    android:id="@+id/device_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/device_name_textview"
                     android:background="#FFFFFF"
                     android:gravity="center_vertical|center_horizontal"
                     android:singleLine="true" />
@@ -290,7 +317,7 @@
         <RelativeLayout
             android:id="@+id/Bottom"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"

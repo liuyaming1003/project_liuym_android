@@ -23,11 +23,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.liuym.adapter.MyListViewAdapter;
+import com.liuym.adapter.MySearch;
 import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
 import com.liuym.nssyniassisent.SerializableMap;
+import com.liuym.nssyniassisent.MainData.Depart_Class;
 import com.liuym.nssyniassisent.MainData.Device_Info;
 import com.liuym.nssyniassisent.MainData.Repair_Recode;
 import com.liuym.nssyniassisent.MainData.UserInfoList;
@@ -45,7 +47,7 @@ public class AssetInputActivity extends MainActivity{
 	private EditText address_ip_edittext = null;
 	private EditText address_mac_edittext = null;
 	private EditText address_port_edittext = null;
-	private EditText school_edittext = null;
+	private EditText address_edittext = null;
 	private String Domain_UserName = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class AssetInputActivity extends MainActivity{
 		inflater = LayoutInflater.from(this); 
 		rootView = inflater.inflate(R.layout.activity_assetinput, null);
 		setContentView(rootView);
-		
+
 		TextView asset_input_account_name = (TextView)findViewById(R.id.asset_input_account_name);
 		TextView asset_input_account_info = (TextView)findViewById(R.id.asset_input_account_info);
 		String realName = mainData.getUserInfo().RealName;
@@ -71,16 +73,16 @@ public class AssetInputActivity extends MainActivity{
 				push(CaptureActivity.class, 100);
 			}
 		});
-		
+
 		device_type_edittext = (EditText)findViewById(R.id.device_type_edittext);
 		device_type_edittext.setInputType(InputType.TYPE_NULL);
-		
+
 		username_edittext = (EditText)findViewById(R.id.username_edittext);
 		username_edittext.setInputType(InputType.TYPE_NULL);
 		username_edittext.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				teackerList();
+				searchList(1);
 			}
 		});
 		address_ip_edittext = (EditText)findViewById(R.id.address_ip_edittext);
@@ -93,19 +95,19 @@ public class AssetInputActivity extends MainActivity{
 		});
 		address_mac_edittext = (EditText)findViewById(R.id.address_mac_edittext);
 		address_port_edittext = (EditText)findViewById(R.id.address_port_edittext);
-		school_edittext = (EditText)findViewById(R.id.school_edittext);
-		school_edittext.setInputType(InputType.TYPE_NULL);
-		school_edittext.setOnClickListener(new OnClickListener() {			
+		address_edittext = (EditText)findViewById(R.id.address_edittext);
+		address_edittext.setInputType(InputType.TYPE_NULL);
+		address_edittext.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				//teackerList();
+				searchList(2);
 			}
 		});
-		
-		
-		
-		
-		
+
+
+
+
+
 		if(mainData.device_Info != null){
 			Device_Info device = mainData.device_Info;
 			//code_info_edittext.setText(device.Device_Barcode);
@@ -152,152 +154,149 @@ public class AssetInputActivity extends MainActivity{
 			}
 		});
 	}
-	
-	private void teackerList(){
-		waittingDialog.show(AssetInputActivity.this, "", "获取使用人列表中...");
-		nssySoap.Teacher_InfoList_Depart(mainData.getUserInfo().DepartID, 10000, new SoapInterface() {
-			@Override
-			public void soapResult(ArrayList<Object> arrayList) {
-				waittingDialog.dismiss();
-				String result = arrayList.get(0).toString();
-				ArrayList<Map<String, Object>> teacherList = new ArrayList<Map<String,Object>>();
-				if(mainData.setTeacherList(result)){
-					for(int i = 0; i < mainData.getTeacherList().size(); i++){
-						UserInfoList teacher = mainData.getTeacherList().get(i);
-						Map<String, Object> map=new HashMap<String, Object>();
-						map.put("teacher", teacher);
-						teacherList.add(map);
-					}
-					showSearch(teacherList);
-				}else{
-					showMessage("无老师列表信息");
-				}
-			}
 
-			@Override
-			public void soapError(String error) {
-				waittingDialog.dismiss();
-				showMessage("错误信息" + error);
-			}
-		});
-	}
-
-	private void showSearch(final ArrayList<Map<String, Object>> arrayList){
-		View view = inflater.inflate(R.layout.search_view, null);
-		final Handler myhandler = new Handler();
-		final EditText search_edittext = (EditText)view.findViewById(R.id.search_edittext);
-		final ImageView delete_imageview = (ImageView)view.findViewById(R.id.delete_imageview);
-
-		final PopupWindow window = new PopupWindow(view,  
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true); // 实例化PopupWindow
-		window.setAnimationStyle(R.style.popwin_anim_style);
-		window.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
-		window.setFocusable(true);
-		window.setOutsideTouchable(true);
-
-		//listView显示数据
-		final ArrayList<Map<String, Object>> listData = arrayList;
-		//查找内容数据
-		final ArrayList<Map<String, Object>> findData = new ArrayList<Map<String,Object>>();
-		final ListView listView = (ListView)view.findViewById(R.id.listView);
-		
-		final MyListViewAdapter myAdapter = new MyListViewAdapter(this, listData, new ListViewInterface() {
-			@Override
-			public View Cell(MyListViewAdapter adapter, View cellView, int position) {
-				if(cellView == null){
-					cellView = inflater.inflate(android.R.layout.simple_list_item_1, null);
-				}
-				Map<String, Object> map = (Map<String, Object>) adapter.getItem(position);
-				UserInfoList teacher = (UserInfoList)map.get("teacher");
-				TextView name = (TextView)cellView.findViewById(android.R.id.text1);
-				name.setText(teacher.RealName);
-				return cellView;
-			}
-		});
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
-					long arg3){
-				Map<String, Object> map = (Map<String, Object>) myAdapter.getItem(arg2);
-				UserInfoList teacher = (UserInfoList)map.get("teacher");
-				Domain_UserName = teacher.Domain_UserName;
-				username_edittext.setText(teacher.RealName);
-				window.dismiss();
-			}
-		});
-		listView.setAdapter(myAdapter);
-
-
-
-		final Runnable eChanged = new Runnable() {
-
-			@Override
-			public void run() {
-				String data = search_edittext.getText().toString();
-
-				listData.clear();//先要清空，不然会叠加
-				//if(!data.equals("")){
-					for(int i = 0; i < arrayList.size(); i ++){
-						Map<String, Object> tMap = arrayList.get(i);
-						UserInfoList teacher = (UserInfoList) tMap.get("teacher");
-						if(teacher.RealName.contains(data)){
+	private void searchList(int index){
+		switch(index){
+		case 1:
+			waittingDialog.show(AssetInputActivity.this, "", "获取使用人列表中...");
+			nssySoap.Teacher_InfoList_Depart(mainData.getUserInfo().DepartID, 10000, new SoapInterface() {
+				@Override
+				public void soapResult(ArrayList<Object> arrayList) {
+					waittingDialog.dismiss();
+					String result = arrayList.get(0).toString();
+					ArrayList<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+					if(mainData.setTeacherList(result)){
+						for(int i = 0; i < mainData.getTeacherList().size(); i++){
+							UserInfoList teacher = mainData.getTeacherList().get(i);
 							Map<String, Object> map=new HashMap<String, Object>();
-							map.put("teacher", teacher);
-							listData.add(map);
+							map.put("object", teacher);
+							list.add(map);
 						}
+						new MySearch().showSearch(AssetInputActivity.this, rootView, list, new MySearch.SearchInterface() {
+
+							@Override
+							public void selectCell(Object object) {
+								if(object instanceof UserInfoList){
+									UserInfoList userInfo = (UserInfoList)object;
+									Domain_UserName = userInfo.Domain_UserName;
+									username_edittext.setText(userInfo.RealName);
+								}
+							}
+
+							@Override
+							public boolean changedText(Object object, String data) {
+								if(object instanceof UserInfoList){
+									UserInfoList userInfo = (UserInfoList) object;
+									if(userInfo.RealName.contains(data)){
+										return true;
+									}
+								}
+								return false;
+							}
+
+							@Override
+							public View Cell(View cellView, Object object) {
+								if(cellView == null){
+									cellView = inflater.inflate(android.R.layout.simple_list_item_1, null);
+								}
+								TextView name = (TextView)cellView.findViewById(android.R.id.text1);
+								if(object instanceof UserInfoList){
+									UserInfoList userInfo = (UserInfoList)object;
+									name.setText(userInfo.RealName);
+								}
+								return cellView;
+							}
+						});
+					}else{
+						showMessage("无老师列表信息");
 					}
-				//}
-				myAdapter.notifyDataSetChanged();//更新
-			}
-		};
-
-		search_edittext.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-				//这个应该是在改变的时候会做的动作吧，具体还没用到过。
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-					int arg3) {
-				//这是文本框改变之前会执行的动作
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				/**这是文本框改变之后 会执行的动作
-				 * 因为我们要做的就是，在文本框改变的同时，我们的listview的数据也进行相应的变动，并且如一的显示在界面上。
-				 * 所以这里我们就需要加上数据的修改的动作了。
-				 */
-				if(s.length() == 0){
-					delete_imageview.setVisibility(View.GONE);//当文本框为空时，则叉叉消失
-				}
-				else {
-					delete_imageview.setVisibility(View.VISIBLE);//当文本框不为空时，出现叉叉
 				}
 
-				myhandler.post(eChanged);
-			}
-		});
+				@Override
+				public void soapError(String error) {
+					waittingDialog.dismiss();
+					showMessage("错误信息" + error);
+				}
+			});
+			break;
+		case 2:
+			waittingDialog.show(AssetInputActivity.this, "", "获取存放地点列表中...");
+			nssySoap.Deaprt_Room_list(mainData.getUserInfo().DepartID, 2, 10000, new SoapInterface() {
+				@Override
+				public void soapResult(ArrayList<Object> arrayList) {
+					waittingDialog.dismiss();
+					String result = arrayList.get(0).toString();
+					ArrayList<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+					if(mainData.setRoomList(result)){
+						for(int i = 0; i < mainData.getRoomArrayList().size(); i++){
+							Object object = mainData.getRoomArrayList().get(i);
+							Map<String, Object> map=new HashMap<String, Object>();
+							map.put("object", object);
+							list.add(map);
+						}
+						//showSearch(list);
+						new MySearch().showSearch(AssetInputActivity.this, rootView, list, new MySearch.SearchInterface() {
 
+							@Override
+							public void selectCell(Object object) {
+								if(object instanceof Depart_Class){
+									Depart_Class room = (Depart_Class)object;
+									String text = room.Room_Name;
+									if(!room.Room_Num.equals("null")){
+										text = text + room.Room_Num;
+									}
+									address_edittext.setText(text);
+								}
+							}
 
+							@Override
+							public boolean changedText(Object object, String data) {
+								if(object instanceof Depart_Class){
+									Depart_Class room = (Depart_Class)object;
+									String text = room.Room_Name;
+									if(!room.Room_Num.equals("null")){
+										text = text + room.Room_Num;
+									}
+									if(text.contains(data)){
+										return true;
+									}
+								}
+								return false;
+							}
 
-		delete_imageview.setOnClickListener(new OnClickListener() {
+							@Override
+							public View Cell(View cellView, Object object) {
+								if(cellView == null){
+									cellView = inflater.inflate(android.R.layout.simple_list_item_1, null);
+								}
+								TextView name = (TextView)cellView.findViewById(android.R.id.text1);
+								if(object instanceof Depart_Class){
+									Depart_Class room = (Depart_Class)object;
+									String text = room.Room_Name;
+									if(!room.Room_Num.equals("null")){
+										text = text + room.Room_Num;
+									}
+									name.setText(text);
+								}
+								return cellView;
+							}
+						});
+					}else{
+						showMessage("无存放地点列表信息");
+					}
+				}
 
-			@Override
-			public void onClick(View arg0) {
-				search_edittext.setText("");
-			}
-		});
+				@Override
+				public void soapError(String error) {
+					waittingDialog.dismiss();
+					showMessage("错误信息" + error);
+				}
+			});
+			break;
+		}
 
-
-		view.findViewById(R.id.cancel_button).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				window.dismiss();
-			}
-		});
 	}
-	
+
 	@Override  
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)  
 	{  

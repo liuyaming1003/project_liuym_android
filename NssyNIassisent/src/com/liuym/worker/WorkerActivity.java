@@ -244,6 +244,7 @@ import com.liuym.zxing.CaptureActivity;
 			findViewById(R.id.asset_query_btn).setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
+					AssetQueryActivity.asset_query_type = 1;
 					push(AssetQueryActivity.class);
 				}
 			});

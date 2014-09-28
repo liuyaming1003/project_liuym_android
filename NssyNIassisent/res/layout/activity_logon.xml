@@ -91,7 +91,7 @@
                         android:hint="用户名  USERNAME"
                         android:maxLength="16"
                         android:singleLine="true"
-                        android:text="h12" >
+                        android:text="h13" >
                     </EditText>
                 </RelativeLayout>
 
