@@ -2,8 +2,14 @@ package com.liuym.worker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Dialog;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -49,6 +56,9 @@ public class AssetInputActivity extends MainActivity{
 	private EditText address_port_edittext = null;
 	private EditText address_edittext = null;
 	private String Domain_UserName = null;
+
+	int selectItem = -1;
+	View selectView = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,6 +80,7 @@ public class AssetInputActivity extends MainActivity{
 		code_info_edittext.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
+				AssetQueryActivity.asset_query_type = 1;
 				push(CaptureActivity.class, 100);
 			}
 		});
@@ -90,7 +101,7 @@ public class AssetInputActivity extends MainActivity{
 		address_ip_edittext.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				//teackerList();
+				showIpPicker();
 			}
 		});
 		address_mac_edittext = (EditText)findViewById(R.id.address_mac_edittext);
@@ -103,10 +114,6 @@ public class AssetInputActivity extends MainActivity{
 				searchList(2);
 			}
 		});
-
-
-
-
 
 		if(mainData.device_Info != null){
 			Device_Info device = mainData.device_Info;
@@ -151,6 +158,99 @@ public class AssetInputActivity extends MainActivity{
 						showMessage("错误信息" + error);
 					}
 				});
+			}
+		});
+	}
+
+	private void showIpPicker(){
+		selectItem = -1;
+		selectView = null;
+		final Dialog dialog = new Dialog(AssetInputActivity.this, R.style.MyDialog);
+		waittingDialog.show(AssetInputActivity.this, "", "获取可用ip段...");
+		nssySoap.IP_Section_List(mainData.getUserInfo().DepartID, 10000, new SoapInterface() {
+			@Override
+			public void soapResult(ArrayList<Object> arrayList) {
+				waittingDialog.dismiss();
+				String result = arrayList.get(0).toString();
+				try {
+					JSONArray array = new JSONArray(result);
+					final List<String> ip_section_list = new ArrayList<String>();
+					for(int i = 0; i < array.length(); i++){
+						JSONObject object = array.getJSONObject(i);
+						String IP_Section_D = object.getString("IP_Section_D");
+						ip_section_list.add(IP_Section_D);
+					} 
+					final View view = inflater.inflate(R.layout.ip_picker_list, null);
+					final ListView listView = (ListView)view.findViewById(R.id.ip_listview);
+					listView.setAdapter(new ArrayAdapter<String>(AssetInputActivity.this, android.R.layout.simple_list_item_1,ip_section_list));
+					listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
+						@SuppressWarnings("unused")
+						public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
+								long arg3){
+							if(selectItem != arg2){
+								if(selectItem == -1 ){
+									arg1.setBackgroundColor(0x92c229);
+								}else{
+									arg1.setBackgroundColor(0x92c229);
+									selectView.setBackgroundColor(0xFFFFFF);
+								}
+							}else{
+								return;
+							}
+
+							selectItem = arg2;
+							selectView = arg1;
+
+							String ip_section = ip_section_list.get(arg2);
+							waittingDialog.show(AssetInputActivity.this, "", "获取可用ip地址...");
+							nssySoap.IP_List_Detail(ip_section, 10000, new SoapInterface() {
+								@Override
+								public void soapResult(ArrayList<Object> arrayList) {
+									waittingDialog.dismiss();
+									String result = arrayList.get(0).toString();
+									try {
+										JSONArray array = new JSONArray(result);
+										final List<String> ip_list = new ArrayList<String>();
+										int length = array.length();
+										for(int i = 0; i < (length < 10 ? length : 10); i++){
+											JSONObject object = array.getJSONObject(i);
+											String IP_address = object.getString("IP_address");
+											ip_list.add(IP_address);
+										}
+										final ListView listView_ip = (ListView)view.findViewById(R.id.ip_listview1);
+										listView_ip.setAdapter(new ArrayAdapter<String>(AssetInputActivity.this, android.R.layout.simple_list_item_1,ip_list));
+										listView_ip.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
+											public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
+													long arg3){
+												String ip = ip_list.get(arg2);
+												address_ip_edittext.setText(ip);
+												dialog.dismiss();
+											}
+										});
+									} 
+									catch (JSONException e) {
+										e.printStackTrace();
+									}
+								}
+								@Override
+								public void soapError(String error) {
+									waittingDialog.dismiss();
+									showMessage("错误信息" + error);
+								}
+							});
+						}
+					});
+					dialog.setContentView(view);
+					dialog.show();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void soapError(String error) {
+				waittingDialog.dismiss();
+				showMessage("错误信息" + error);
 			}
 		});
 	}

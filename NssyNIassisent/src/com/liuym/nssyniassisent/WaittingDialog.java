@@ -19,6 +19,9 @@ public class WaittingDialog{
 	
 	public void show(Context context, String title, String message){
 		if(context != null){
+			if(progressDialog != null && progressDialog.isShowing()){
+				return ;
+			}
 			progressDialog = ProgressDialog.show(context, title, message);
 		}
 	}

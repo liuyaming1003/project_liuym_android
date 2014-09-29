@@ -8,8 +8,8 @@ import com.liuym.soap.Soap.SoapInterface;
 public class NssySoapMethod{
 	private static NssySoapMethod nssySoap = null;
 	private NssySoapMethod(){
-		//Soap.hostUrl = "http://systeminfo.nssy.com.cn/di.asmx";
-		Soap.hostUrl = "http://172.16.88.132:8008/DI.asmx";
+		Soap.hostUrl = "http://systeminfo.nssy.com.cn/di.asmx";
+		//Soap.hostUrl = "http://172.16.88.132:8008/DI.asmx";
 		Soap.namespace = "http://tempuri.org/";
 	}
 

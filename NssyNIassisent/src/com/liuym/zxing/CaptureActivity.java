@@ -205,6 +205,7 @@ public class CaptureActivity extends MainActivity implements Callback
 						push(AssetQueryActivity.class);
 					}else{
 						showMessage("错误信息" + result);
+						pop(1, null);
 						return;
 					}
 					showMessage("查询完成");
