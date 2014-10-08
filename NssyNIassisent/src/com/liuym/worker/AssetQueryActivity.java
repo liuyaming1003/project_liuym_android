@@ -2,15 +2,24 @@ package com.liuym.worker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.liuym.adapter.MySearch;
@@ -27,16 +36,22 @@ import com.liuym.zxing.CaptureActivity;
 public class AssetQueryActivity extends MainActivity{
 	private LayoutInflater inflater = null;
 	private View rootView = null;
+	private boolean isQuery = false;
 	public static int asset_query_type = 1;  // 1 默认查询  2 输入查询  3条码查询
 	private Navigation navi = null;
 	private EditText input_query_edittext = null;
 	private EditText code_info_edittext = null;
 	private EditText device_name_edittext = null;
 	private EditText username_info_edittext = null;
+	private String old_Domain_UserName = null;
+	private String new_Domain_UserName = null;
 	private EditText address_ip_edittext = null;
 	private EditText address_mac_edittext = null;
 	private EditText address_port_edittext = null;
 	private EditText address_edittext = null;
+
+	int selectItem = -1;
+	View selectView = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,7 +71,59 @@ public class AssetQueryActivity extends MainActivity{
 		navi.getBtn_right().setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-
+				waittingDialog.show(AssetQueryActivity.this, "", "设备更新中，请稍等...");
+				nssySoap.Update_Device_Info(code_info_edittext.getText().toString(), address_edittext.getText().toString(), old_Domain_UserName, 
+						address_mac_edittext.getText().toString(), address_ip_edittext.getText().toString(), device_name_edittext.getText().toString(),
+						address_port_edittext.getText().toString(), username_info_edittext.getText().toString(), 10000, new SoapInterface() {
+							@Override
+							public void soapResult(ArrayList<Object> arrayList) {
+								waittingDialog.dismiss();
+								String result = arrayList.get(0).toString();
+								if(result.equals("s")){
+									if(new_Domain_UserName != null && !new_Domain_UserName.equals(old_Domain_UserName)){
+										waittingDialog.show(AssetQueryActivity.this, "", "设备重新分配中，请稍等...");
+										nssySoap.Device_Redistribute(code_info_edittext.getText().toString(), username_info_edittext.getText().toString(), 10000, new SoapInterface() {
+											@Override
+											public void soapResult(ArrayList<Object> arrayList) {
+												waittingDialog.dismiss();
+												String result = arrayList.get(0).toString();
+												if(result.equals("s")){
+													showMessage("设备更新成功");
+													if(AssetQueryActivity.asset_query_type == 3){
+														pop(WorkerActivity.class, 2 , null);
+													}else{
+														pop();
+													}
+												}else{
+													showMessage("设备更新失败" + result);
+												}
+											}
+											
+											@Override
+											public void soapError(String error) {
+												waittingDialog.dismiss();
+												showMessage("错误信息" + error);
+											}
+										});
+									}else{
+										showMessage("设备更新成功");
+										if(AssetQueryActivity.asset_query_type == 3){
+											pop(WorkerActivity.class, 2 , null);
+										}else{
+											pop();
+										}
+									}
+								}else{
+									showMessage("更新新错误" + result);
+								}
+							}
+							
+							@Override
+							public void soapError(String error) {
+								waittingDialog.dismiss();
+								showMessage("错误信息" + error);
+							}
+						});
 			}
 		});
 
@@ -86,10 +153,12 @@ public class AssetQueryActivity extends MainActivity{
 							code_info_edittext.setText(device_info.Device_Barcode);
 							device_name_edittext.setText(device_info.Model_Name);
 							username_info_edittext.setText(device_info.Device_User);
+							old_Domain_UserName = device_info.Domain_UserName;
 							address_ip_edittext.setText(device_info.Device_IP_Address);
 							address_mac_edittext.setText(device_info.Device_MAC_Address);
 							address_port_edittext.setText(device_info.Device_Net_UP_Port);
 							address_edittext.setText(device_info.Device_Location);
+							isQuery = true;
 						}else{
 							showMessage("错误信息" + result);
 							return;
@@ -116,10 +185,25 @@ public class AssetQueryActivity extends MainActivity{
 		username_info_edittext.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				searchList(1);
+				if(isQuery){
+					searchList(1);
+				}else{
+					showMessage("没有查询设备信息");
+				}
 			}
 		});
 		address_ip_edittext = (EditText)findViewById(R.id.address_ip_edittext);
+		address_ip_edittext.setInputType(InputType.TYPE_NULL);
+		address_ip_edittext.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View arg0) {
+				if(isQuery){
+					showIpPicker();
+				}else{
+					showMessage("没有查询设备信息");
+				}
+			}
+		});
 		address_mac_edittext = (EditText)findViewById(R.id.address_mac_edittext);
 		address_port_edittext = (EditText)findViewById(R.id.address_port_edittext);
 		address_edittext = (EditText)findViewById(R.id.address_edittext);
@@ -127,7 +211,11 @@ public class AssetQueryActivity extends MainActivity{
 		address_edittext.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				searchList(2);
+				if(isQuery){
+					searchList(2);
+				}else{
+					showMessage("没有查询设备信息");
+				}
 			}
 		});
 
@@ -145,10 +233,12 @@ public class AssetQueryActivity extends MainActivity{
 				code_info_edittext.setText(device_info.Device_Barcode);
 				device_name_edittext.setText(device_info.Model_Name);
 				username_info_edittext.setText(device_info.Device_User);
+				old_Domain_UserName = device_info.Domain_UserName;
 				address_ip_edittext.setText(device_info.Device_IP_Address);
 				address_mac_edittext.setText(device_info.Device_MAC_Address);
 				address_port_edittext.setText(device_info.Device_Net_UP_Port);
 				address_edittext.setText(device_info.Device_Location);
+				isQuery = true;
 			}
 		}else{
 
@@ -174,10 +264,14 @@ public class AssetQueryActivity extends MainActivity{
 						if(mainData.setDeviceInfoList(result)){
 							Device_Info device_info = mainData.getDeviceInfoArrayList().get(0);
 							code_info_edittext.setText(device_info.Device_Barcode);
+							device_name_edittext.setText(device_info.Model_Name);
 							username_info_edittext.setText(device_info.Device_User);
+							old_Domain_UserName = device_info.Domain_UserName;
 							address_ip_edittext.setText(device_info.Device_IP_Address);
 							address_mac_edittext.setText(device_info.Device_MAC_Address);
 							address_port_edittext.setText(device_info.Device_Net_UP_Port);
+							address_edittext.setText(device_info.Device_Location);
+							isQuery = true;
 						}else{
 							showMessage("错误信息" + result);
 							return;
@@ -197,6 +291,99 @@ public class AssetQueryActivity extends MainActivity{
 		}  
 		super.onActivityResult(requestCode, resultCode, data);  
 	} 
+
+	private void showIpPicker(){
+		selectItem = -1;
+		selectView = null;
+		final Dialog dialog = new Dialog(AssetQueryActivity.this, R.style.MyDialog);
+		waittingDialog.show(AssetQueryActivity.this, "", "获取可用ip段...");
+		nssySoap.IP_Section_List(mainData.getUserInfo().DepartID, 10000, new SoapInterface() {
+			@Override
+			public void soapResult(ArrayList<Object> arrayList) {
+				waittingDialog.dismiss();
+				String result = arrayList.get(0).toString();
+				try {
+					JSONArray array = new JSONArray(result);
+					final List<String> ip_section_list = new ArrayList<String>();
+					for(int i = 0; i < array.length(); i++){
+						JSONObject object = array.getJSONObject(i);
+						String IP_Section_D = object.getString("IP_Section_D");
+						ip_section_list.add(IP_Section_D);
+					} 
+					final View view = inflater.inflate(R.layout.ip_picker_list, null);
+					final ListView listView = (ListView)view.findViewById(R.id.ip_listview);
+					listView.setAdapter(new ArrayAdapter<String>(AssetQueryActivity.this, android.R.layout.simple_list_item_1,ip_section_list));
+					listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
+						@SuppressWarnings("unused")
+						public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
+								long arg3){
+							if(selectItem != arg2){
+								if(selectItem == -1 ){
+									arg1.setBackgroundColor(0x92c229);
+								}else{
+									arg1.setBackgroundColor(0x92c229);
+									selectView.setBackgroundColor(0xFFFFFF);
+								}
+							}else{
+								return;
+							}
+
+							selectItem = arg2;
+							selectView = arg1;
+
+							final String ip_section = ip_section_list.get(arg2);
+							waittingDialog.show(AssetQueryActivity.this, "", "获取可用ip地址...");
+							nssySoap.IP_List_Detail(ip_section, 10, 10000, new SoapInterface() {
+								@Override
+								public void soapResult(ArrayList<Object> arrayList) {
+									waittingDialog.dismiss();
+									String result = arrayList.get(0).toString();
+									try {
+										JSONArray array = new JSONArray(result);
+										final List<String> ip_list = new ArrayList<String>();
+										int length = array.length();
+										for(int i = 0; i < (length < 10 ? length : 10); i++){
+											JSONObject object = array.getJSONObject(i);
+											String IP_address = object.getString("IP_address");
+											ip_list.add(IP_address);
+										}
+										final ListView listView_ip = (ListView)view.findViewById(R.id.ip_listview1);
+										listView_ip.setAdapter(new ArrayAdapter<String>(AssetQueryActivity.this, android.R.layout.simple_list_item_1,ip_list));
+										listView_ip.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
+											public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
+													long arg3){
+												String ip = ip_list.get(arg2);
+												address_ip_edittext.setText(ip_section + "." + ip);
+												dialog.dismiss();
+											}
+										});
+									} 
+									catch (JSONException e) {
+										e.printStackTrace();
+									}
+								}
+								@Override
+								public void soapError(String error) {
+									waittingDialog.dismiss();
+									showMessage("错误信息" + error);
+								}
+							});
+						}
+					});
+					dialog.setContentView(view);
+					dialog.show();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void soapError(String error) {
+				waittingDialog.dismiss();
+				showMessage("错误信息" + error);
+			}
+		});
+	}
 
 	private void searchList(int index){
 		switch(index){
@@ -222,7 +409,7 @@ public class AssetQueryActivity extends MainActivity{
 							public void selectCell(Object object) {
 								if(object instanceof UserInfoList){
 									UserInfoList userInfo = (UserInfoList)object;
-									//Domain_UserName = userInfo.Domain_UserName;
+									new_Domain_UserName = userInfo.Domain_UserName;
 									username_info_edittext.setText(userInfo.RealName);
 								}
 							}

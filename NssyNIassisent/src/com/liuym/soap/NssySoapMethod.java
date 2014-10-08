@@ -381,8 +381,9 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void IP_List_Detail(String IP_S, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
+	public void IP_List_Detail(String IP_S, int count, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
 	map.put("IP_S", IP_S);
+	map.put("count", count);
 	new Soap().soapRequest("IP_List_Detail", timeout, soapInterface, map);
 	}
 

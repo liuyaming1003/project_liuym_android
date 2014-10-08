@@ -345,6 +345,7 @@ public class MainData{
 				deviceInfo.Model_Name = device_json.getString("Model_Name");                    // 设备类型名称
 				deviceInfo.Device_Barcode = device_json.getString("Device_Barcode");            // 设备条形码
 				deviceInfo.Device_User = device_json.getString("Device_User");                  // 设备使用人
+				deviceInfo.Domain_UserName = device_json.getString("Domain_UserName");          // 设备使用人域用名
 				deviceInfo.DepartName = device_json.getString("DepartName");                    // 分校名称
 				deviceInfo.Device_Location = device_json.getString("Device_Location");          // 具体位置信息
 				deviceInfo.Device_Buy_Time = device_json.getString("Device_Buy_Time");          // 购买时间
@@ -606,6 +607,7 @@ public class MainData{
 		public String Model_Name;              // 设备类型名称
 		public String Device_Barcode;          // 设备条形码
 		public String Device_User;             // 设备使用人
+		public String Domain_UserName;         // 设备使用人域用名
 		public String DepartName;              // 分校名称
 		public String Device_Location;         // 具体位置信息
 		public String Device_Buy_Time;         // 购买时间

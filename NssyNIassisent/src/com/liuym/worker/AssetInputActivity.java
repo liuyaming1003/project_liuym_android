@@ -139,8 +139,8 @@ public class AssetInputActivity extends MainActivity{
 			public void onClick(View v) {
 				waittingDialog.show(AssetInputActivity.this, "", "正在分配，请稍等...");
 				nssySoap.Update_Device_Info(code_info_edittext.getText().toString(), 
-						"", mainData.getUserInfo().Domain_UserName, address_mac_edittext.getText().toString(),
-						address_ip_edittext.getText().toString(), device_type_edittext.getText().toString(), "", username_edittext.getText().toString(), 10000, new SoapInterface() {
+						address_edittext.getText().toString(), mainData.getUserInfo().Domain_UserName, address_mac_edittext.getText().toString(),
+						address_ip_edittext.getText().toString(), device_type_edittext.getText().toString(), address_port_edittext.getText().toString(), username_edittext.getText().toString(), 10000, new SoapInterface() {
 					@Override
 					public void soapResult(ArrayList<Object> arrayList) {
 						waittingDialog.dismiss();
@@ -201,9 +201,9 @@ public class AssetInputActivity extends MainActivity{
 							selectItem = arg2;
 							selectView = arg1;
 
-							String ip_section = ip_section_list.get(arg2);
+							final String ip_section = ip_section_list.get(arg2);
 							waittingDialog.show(AssetInputActivity.this, "", "获取可用ip地址...");
-							nssySoap.IP_List_Detail(ip_section, 10000, new SoapInterface() {
+							nssySoap.IP_List_Detail(ip_section, 10, 10000, new SoapInterface() {
 								@Override
 								public void soapResult(ArrayList<Object> arrayList) {
 									waittingDialog.dismiss();
@@ -223,7 +223,7 @@ public class AssetInputActivity extends MainActivity{
 											public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
 													long arg3){
 												String ip = ip_list.get(arg2);
-												address_ip_edittext.setText(ip);
+												address_ip_edittext.setText(ip_section + "." + ip);
 												dialog.dismiss();
 											}
 										});

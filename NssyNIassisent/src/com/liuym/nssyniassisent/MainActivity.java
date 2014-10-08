@@ -83,6 +83,22 @@ public class MainActivity extends Activity {
 		finish();
 		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
 	}
+	
+	protected void pop(Class<?> inClass, int resultCode, Map<String, Object> map){
+		Intent intent = new Intent(MainActivity.this, inClass);
+		Bundle bundle = new Bundle();
+		if(map != null){
+			SerializableMap serializableMap = new SerializableMap();
+			serializableMap.setMap(map);
+			bundle.putSerializable("map", serializableMap); 
+			intent.putExtras(bundle);
+		}
+		setResult(resultCode, intent);
+		startActivity(intent);
+		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
+	}
+	
+	
 
 	protected void popRoot(){
 		startActivity(new Intent(MainActivity.this, LogonActivity.class));

@@ -257,6 +257,9 @@ import com.liuym.zxing.CaptureActivity;
 		//可以根据多个请求代码来作相应的操作  
 		if(requestCode == 100){  
 			if(resultCode == 0){
+				if(data == null){
+					return;
+				}
 				Bundle bundle = data.getExtras();  
 				SerializableMap serializableMap = (SerializableMap) bundle  
 						.get("map");
