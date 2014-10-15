@@ -49,6 +49,8 @@
         </activity>
         <activity android:name="com.liuym.worker.OrderDetailActivity" >
         </activity>
+         <activity android:name="com.liuym.worker.OrderHandleActivity" >
+        </activity>
         <activity android:name="com.liuym.worker.OrderFinishActivity" >
         </activity>
         <activity android:name="com.liuym.zxing.CaptureActivity" >
