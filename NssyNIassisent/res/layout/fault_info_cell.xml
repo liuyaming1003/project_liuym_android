@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/fault_title_textview"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="#00000000"
+            android:gravity="center_vertical"
+            android:text="故障一"
+            android:textSize="15sp" />
+
+        <RelativeLayout
+            android:id="@+id/fault_info"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/fault_title_textview"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/fault_cell_bg"
+            android:visibility="gone" >
+            <TextView 
+                android:id="@+id/fault_type_textview"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="故障类型: 软件故障"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/fault_msg_textview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/fault_type_textview"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:gravity="top"
+                android:text="备注信息: "
+                android:textSize="15sp"/>
+            <Button 
+                android:id="@+id/del_fault_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="25dp"
+                android:visibility="gone"
+                android:text="删除" />
+            
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fault_add"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/fault_title_textview"
+            android:layout_marginBottom="5dp"
+            android:visibility="visible" 
+            android:background="@drawable/fault_cell_bg" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="点击添加故障"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

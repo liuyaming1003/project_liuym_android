@@ -15,8 +15,8 @@
         android:layout_alignParentTop="true"
         navigation:backgroundColor="#22292C"
         navigation:btn_leftText="返回"
-        navigation:btn_rightText="结案"
-        navigation:tv_title="结案本单" >
+        navigation:btn_rightText="添加"
+        navigation:tv_title="故障" >
     </com.liuym.nssyniassisent.Navigation>
 
     <RelativeLayout

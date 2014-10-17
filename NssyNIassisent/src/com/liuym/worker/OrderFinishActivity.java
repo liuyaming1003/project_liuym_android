@@ -7,17 +7,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.MainData.Repair_Recode;
 import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
 import com.liuym.soap.Soap.SoapInterface;
+import com.liuym.worker.OrderHandleActivity.FaultObject;
 
 public class OrderFinishActivity extends MainActivity{
 	private Navigation navi = null;
 	private LayoutInflater inflater = null;
 	private View asset_input_view = null;
+	private Button soft_btn;
+	private Button hard_btn;
+	private Button hard_changed_btn;
+	private FaultObject faultObject;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,38 +39,64 @@ public class OrderFinishActivity extends MainActivity{
 		navi.getBtn_left().setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				pop();
+				pop(2, null);
 			}
 		});
 
-		navi.getBtn_right().setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				showMyDialog(1);
-			}
-		});
+		faultObject = OrderHandleActivity.g_faultObject;
+		if(faultObject.faultStatus == 2){
+			//ÐÞ¸Ä
+			navi.getBtn_right().setText("ÐÞ¸Ä");
+			navi.getBtn_right().setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					pop(1, null);
+				}
+			}); 
+		}else{
+			navi.getBtn_right().setText("Ìí¼Ó");
+			faultObject.faultStatus = 2;
+			navi.getBtn_right().setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					pop(0, null);
+				}
+			});
+		}
 
-		findViewById(R.id.software_fault_button).setOnClickListener(new OnClickListener() {
+		soft_btn = (Button)findViewById(R.id.software_fault_button);
+		soft_btn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				asset_input_view.setVisibility(View.INVISIBLE);
+				soft_btn.setBackgroundResource(R.drawable.button_press_bg);
+				hard_btn.setBackgroundResource(R.drawable.order_to_send_btn_bg);
+				hard_changed_btn.setBackgroundResource(R.drawable.order_to_send_btn_bg);
 			}
 		});
 
-		findViewById(R.id.hardware_fault_button).setOnClickListener(new OnClickListener() {
+		hard_btn = (Button)findViewById(R.id.hardware_fault_button);
+		hard_btn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				asset_input_view.setVisibility(View.INVISIBLE);
+				soft_btn.setBackgroundResource(R.drawable.order_to_send_btn_bg);
+				hard_btn.setBackgroundResource(R.drawable.button_press_bg);
+				hard_changed_btn.setBackgroundResource(R.drawable.order_to_send_btn_bg);
 			}
 		});
 
-		findViewById(R.id.hardware_replace_button).setOnClickListener(new OnClickListener() {
+		hard_changed_btn = (Button)findViewById(R.id.hardware_replace_button);
+		hard_changed_btn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				asset_input_view.setVisibility(View.VISIBLE);
+				soft_btn.setBackgroundResource(R.drawable.order_to_send_btn_bg);
+				hard_btn.setBackgroundResource(R.drawable.order_to_send_btn_bg);
+				hard_changed_btn.setBackgroundResource(R.drawable.button_press_bg);
 			}
 		});
 	}

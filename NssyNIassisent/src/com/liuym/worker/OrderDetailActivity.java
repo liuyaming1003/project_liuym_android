@@ -66,7 +66,7 @@ public class OrderDetailActivity extends MainActivity{
 		navi.getBtn_right().setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				push(OrderFinishActivity.class);
+				push(OrderHandleActivity.class);
 			}
 		});
 
