@@ -54,8 +54,24 @@ public class OrderHandleActivity extends MainActivity{
 		navi.getBtn_right().setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				//push(OrderFinishActivity.class);
-				System.out.println("结案中....");
+				AlertDialog.Builder builder = new AlertDialog.Builder(OrderHandleActivity.this);
+				builder.setMessage("此单即将结案，请确认？");
+				builder.setTitle("");
+				builder.setPositiveButton("结案", new AlertDialog.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						waittingDialog.show(OrderHandleActivity.this, "", "正在结案中...");
+						nssySoap.Handle_Repair(str_Json, Repair_Recode_Num, timeout, soapInterface)
+						
+					}
+				});
+				builder.setNegativeButton("取消", new AlertDialog.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+				builder.create().show();
 			}
 		});
 
@@ -84,15 +100,30 @@ public class OrderHandleActivity extends MainActivity{
 				TextView msg = (TextView)cellView.findViewById(R.id.fault_msg_textview);
 				final Map<String, Object> map = (Map<String, Object>)adapter.getItem(position);
 				FaultObject fault = (FaultObject)map.get("fault");
-				msg.setText(fault.faultMsg);
+				msg.setText(fault.Malfunction_Handle);
 				if(fault.faultStatus == 1){
 					title.setText("");
 					add_layout.setVisibility(View.VISIBLE);
 					info_layout.setVisibility(View.GONE);
 				}else{
-					title.setText("故障 " + position + 1);
+					title.setText("故障 " + (position + 1));
 					add_layout.setVisibility(View.GONE);
 					info_layout.setVisibility(View.VISIBLE);
+					
+					TextView fault_type_textview = (TextView)cellView.findViewById(R.id.fault_type_textview);
+					TextView fault_msg_textview = (TextView)cellView.findViewById(R.id.fault_msg_textview);
+					fault_msg_textview.setText("备注信息: " + fault.Malfunction_Handle);
+					switch(fault.Malfunction_type){
+					case 1://软件故障
+						fault_type_textview.setText("故障类型: 软件故障");
+						break;
+					case 2://硬件故障
+						fault_type_textview.setText("故障类型: 硬件故障");
+						break;
+					case 3://硬件更换
+						fault_type_textview.setText("故障类型: 硬件更换");
+						break;
+					}
 				}
 				cellView.findViewById(R.id.del_fault_button).setOnClickListener(new OnClickListener() {
 					@Override
@@ -223,8 +254,12 @@ public class OrderHandleActivity extends MainActivity{
 	}
 	
 	public class FaultObject{
-		public int faultStatus = 1;     //故障添加状态，1 为添加，2 为修改
-		public int faultType;           //故障类型，1 软件故障， 2 硬件故障，3 硬件更换
-		public String faultMsg = "";    //故障维修信息
+		public int faultStatus = 1;          //故障添加状态，1 为添加，2 为修改
+		public String Device_Barcode;        //设备条码
+		public int Malfunction_type;         //故障类型，1 软件故障， 2 硬件故障，3 硬件更换
+		public String Malfunction_Handle;    //处理内容
+		public String Tab_Info;              //相关标签
+		public String Accessory_type;        //配件类型
+		public String Accessory_Con;         //配件内容
 	}
 }

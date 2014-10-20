@@ -46,6 +46,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
                 android:gravity="top"
                 android:text="备注信息: "
                 android:textSize="15sp"/>

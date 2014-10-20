@@ -73,11 +73,39 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/barcode_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_below="@+id/fault_type"
+            android:background="#A7A7A7"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="条码扫描" />
+            <Button 
+                android:id="@+id/barcode_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:background="#00000000"
+                android:drawableTop="@drawable/barcode_button_bg"
+                android:padding="2dp"
+                android:text="点击条码扫描"/>
+            
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/hardware_replace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/fault_remark"
-            android:layout_below="@+id/fault_type"
+            android:layout_below="@+id/barcode_linearlayout"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -324,7 +352,7 @@
         <LinearLayout
             android:id="@+id/fault_remark"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
             android:orientation="vertical" >

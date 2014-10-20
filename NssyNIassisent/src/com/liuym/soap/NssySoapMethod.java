@@ -409,4 +409,16 @@ public class NssySoapMethod{
 	map.put("Repair_Recode_Num", Repair_Recode_Num);
 	new Soap().soapRequest("Cancel_Repair_Recode", timeout, soapInterface, map);
 	}
+
+	/**
+	 * 结案报修单
+	 * @param Repair_Recode_Num 单号
+	 * @param timeout           超时时间
+	 * @param soapInterface     函数回调
+	 */
+	public void Handle_Repair(String str_Json, int Repair_Recode_Num, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
+	map.put("str_Json", str_Json);
+	map.put("Repair_Recode_Num", Repair_Recode_Num);
+	new Soap().soapRequest("handle_repair", timeout, soapInterface, map);
+	}
 }
