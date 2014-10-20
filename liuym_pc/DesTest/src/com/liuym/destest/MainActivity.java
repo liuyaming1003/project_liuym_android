@@ -140,7 +140,7 @@ public class MainActivity extends ActionBarActivity {
 														e.printStackTrace();
 													}
 												}
-											}, 0, 10000);
+											}, 0, 600000);
 										}else{
 											isSuccess = false;
 										}
