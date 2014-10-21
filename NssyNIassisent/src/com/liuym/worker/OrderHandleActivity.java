@@ -26,6 +26,7 @@ import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.Navigation;
 import com.liuym.nssyniassisent.R;
+import com.liuym.soap.Soap;
 
 public class OrderHandleActivity extends MainActivity{
 	private LayoutInflater inflater = null;
@@ -61,7 +62,25 @@ public class OrderHandleActivity extends MainActivity{
 					@Override
 					public void onClick(DialogInterface dialog, int arg1) {
 						waittingDialog.show(OrderHandleActivity.this, "", "正在结案中...");
-						nssySoap.Handle_Repair(str_Json, Repair_Recode_Num, timeout, soapInterface)
+						int repair_num = mainData.getRepairRecodeArrayList().get(mainData.order_select_index).Repair_Recode_Num;
+						nssySoap.Handle_Repair("", repair_num, 10000, new Soap.SoapInterface() {
+							@Override
+							public void soapResult(ArrayList<Object> arrayList) {
+								waittingDialog.dismiss();
+								String result = arrayList.get(0).toString();
+								if(result.equals("s")){
+									
+								}else{
+									showMessage("错误: " + result);
+								}
+							}
+							
+							@Override
+							public void soapError(String error) {
+								waittingDialog.dismiss();
+								showMessage("错误信息: " + error);
+							}
+						});
 						
 					}
 				});
