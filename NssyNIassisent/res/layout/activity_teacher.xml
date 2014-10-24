@@ -21,8 +21,8 @@
         android:id="@+id/Center"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/navigationView" >
+        android:layout_below="@+id/navigationView"
+        android:layout_marginTop="5dp" >
 
         <TextView
             android:id="@+id/teacher_info"
@@ -31,8 +31,8 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
-            android:textColor="#22292C"
             android:text="李丽霞,你的校园网无线网络已连接: 00:30:25"
+            android:textColor="#22292C"
             android:textSize="13sp" />
 
         <LinearLayout
@@ -51,7 +51,7 @@
                 android:background="#FFFFFF"
                 android:drawableTop="@drawable/person_button_bg"
                 android:paddingTop="10dp"
-                android:text="个人电脑报修"/>
+                android:text="个人电脑报修" />
 
             <Button
                 android:id="@+id/classBtn"
@@ -64,33 +64,35 @@
                 android:drawableTop="@drawable/class_button_bg"
                 android:paddingTop="10dp"
                 android:text="班级电脑报修" />
-            
         </LinearLayout>
-        <LinearLayout 
+
+        <LinearLayout
             android:id="@+id/viewpager_title_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@drawable/tab_bar_0_selected"
-            android:orientation="horizontal">
-            <Button 
+            android:orientation="horizontal" >
+
+            <Button
                 android:id="@+id/history_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingLeft="18dp"
                 android:background="#00000000"
-                android:textColor="#FFFFFF"
-                android:text="维修历史"/>
-            <Button 
+                android:paddingLeft="18dp"
+                android:text="维修历史"
+                android:textColor="#FFFFFF" />
+
+            <Button
                 android:id="@+id/message_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingLeft="18dp"
                 android:background="#00000000"
-                android:textColor="#FFFFFF"
-                android:text="消息中心"/>
+                android:paddingLeft="18dp"
+                android:text="消息中心"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -113,38 +115,38 @@
         android:layout_height="53dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/tool_bar_bg"
-        android:orientation="horizontal"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_home_icon"
-            android:text="首页"
-            android:textColor="#FFFFFF" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_ibeacon_icon"
-            android:text="位置"
-            android:textColor="#FFFFFF" />
+            <RadioButton
+                android:id="@+id/first_radiobutton"
+                style="@style/first_page_type"
+                android:drawableTop="@drawable/tool_bar_home_icon"
+                android:checked="true"
+                android:text="首页"
+                android:textColor="#FFFFFF" />
 
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_logout_icon"
-            android:text="注销"
-            android:textColor="#FFFFFF" />
+            <RadioButton
+                android:id="@+id/second_radiobutton"
+                style="@style/first_page_type"
+                android:drawableTop="@drawable/tool_bar_ibeacon_icon"
+                android:enabled="false"
+                android:text="资产管理"
+                android:textColor="#FFFFFF" />
+
+            <RadioButton
+                android:id="@+id/logout_radiobutton"
+                style="@style/first_page_type"
+                android:drawableTop="@drawable/tool_bar_logout_icon"
+                android:text="位置"
+                android:textColor="#FFFFFF" />
+        </RadioGroup>
     </LinearLayout>
 
 </RelativeLayout>

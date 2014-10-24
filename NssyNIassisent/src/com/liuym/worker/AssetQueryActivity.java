@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -22,7 +23,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.liuym.adapter.MyListViewAdapter;
 import com.liuym.adapter.MySearch;
+import com.liuym.adapter.MyListViewAdapter.ListViewInterface;
 import com.liuym.nssyniassisent.MainActivity;
 import com.liuym.nssyniassisent.MainData.Depart_Class;
 import com.liuym.nssyniassisent.MainData.Device_Info;
@@ -75,55 +78,55 @@ public class AssetQueryActivity extends MainActivity{
 				nssySoap.Update_Device_Info(code_info_edittext.getText().toString(), address_edittext.getText().toString(), old_Domain_UserName, 
 						address_mac_edittext.getText().toString(), address_ip_edittext.getText().toString(), device_name_edittext.getText().toString(),
 						address_port_edittext.getText().toString(), username_info_edittext.getText().toString(), 10000, new SoapInterface() {
-							@Override
-							public void soapResult(ArrayList<Object> arrayList) {
-								waittingDialog.dismiss();
-								String result = arrayList.get(0).toString();
-								if(result.equals("s")){
-									if(new_Domain_UserName != null && !new_Domain_UserName.equals(old_Domain_UserName)){
-										waittingDialog.show(AssetQueryActivity.this, "", "设备重新分配中，请稍等...");
-										nssySoap.Device_Redistribute(code_info_edittext.getText().toString(), username_info_edittext.getText().toString(), 10000, new SoapInterface() {
-											@Override
-											public void soapResult(ArrayList<Object> arrayList) {
-												waittingDialog.dismiss();
-												String result = arrayList.get(0).toString();
-												if(result.equals("s")){
-													showMessage("设备更新成功");
-													if(AssetQueryActivity.asset_query_type == 3){
-														pop(WorkerActivity.class, 2 , null);
-													}else{
-														pop();
-													}
-												}else{
-													showMessage("设备更新失败" + result);
-												}
+					@Override
+					public void soapResult(ArrayList<Object> arrayList) {
+						waittingDialog.dismiss();
+						String result = arrayList.get(0).toString();
+						if(result.equals("s")){
+							if(new_Domain_UserName != null && !new_Domain_UserName.equals(old_Domain_UserName)){
+								waittingDialog.show(AssetQueryActivity.this, "", "设备重新分配中，请稍等...");
+								nssySoap.Device_Redistribute(code_info_edittext.getText().toString(), username_info_edittext.getText().toString(), 10000, new SoapInterface() {
+									@Override
+									public void soapResult(ArrayList<Object> arrayList) {
+										waittingDialog.dismiss();
+										String result = arrayList.get(0).toString();
+										if(result.equals("s")){
+											showMessage("设备更新成功");
+											if(AssetQueryActivity.asset_query_type == 3){
+												pop(WorkerActivity.class, 2 , null);
+											}else{
+												pop();
 											}
-											
-											@Override
-											public void soapError(String error) {
-												waittingDialog.dismiss();
-												showMessage("错误信息" + error);
-											}
-										});
-									}else{
-										showMessage("设备更新成功");
-										if(AssetQueryActivity.asset_query_type == 3){
-											pop(WorkerActivity.class, 2 , null);
 										}else{
-											pop();
+											showMessage("设备更新失败" + result);
 										}
 									}
+
+									@Override
+									public void soapError(String error) {
+										waittingDialog.dismiss();
+										showMessage("错误信息" + error);
+									}
+								});
+							}else{
+								showMessage("设备更新成功");
+								if(AssetQueryActivity.asset_query_type == 3){
+									pop(WorkerActivity.class, 2 , null);
 								}else{
-									showMessage("更新新错误" + result);
+									pop();
 								}
 							}
-							
-							@Override
-							public void soapError(String error) {
-								waittingDialog.dismiss();
-								showMessage("错误信息" + error);
-							}
-						});
+						}else{
+							showMessage("更新新错误" + result);
+						}
+					}
+
+					@Override
+					public void soapError(String error) {
+						waittingDialog.dismiss();
+						showMessage("错误信息" + error);
+					}
+				});
 			}
 		});
 
@@ -304,34 +307,47 @@ public class AssetQueryActivity extends MainActivity{
 				String result = arrayList.get(0).toString();
 				try {
 					JSONArray array = new JSONArray(result);
-					final List<String> ip_section_list = new ArrayList<String>();
+					final ArrayList<Map<String, Object>> ip_section_array  = new ArrayList<Map<String,Object>>();
 					for(int i = 0; i < array.length(); i++){
 						JSONObject object = array.getJSONObject(i);
 						String IP_Section_D = object.getString("IP_Section_D");
-						ip_section_list.add(IP_Section_D);
+						Map<String, Object>map = new HashMap<String, Object>();
+						map.put("ip_section", IP_Section_D);
+						ip_section_array.add(map);
 					} 
 					final View view = inflater.inflate(R.layout.ip_picker_list, null);
 					final ListView listView = (ListView)view.findViewById(R.id.ip_listview);
-					listView.setAdapter(new ArrayAdapter<String>(AssetQueryActivity.this, android.R.layout.simple_list_item_1,ip_section_list));
-					listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
-						@SuppressWarnings("unused")
-						public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
-								long arg3){
-							if(selectItem != arg2){
-								if(selectItem == -1 ){
-									arg1.setBackgroundColor(0x92c229);
-								}else{
-									arg1.setBackgroundColor(0x92c229);
-									selectView.setBackgroundColor(0xFFFFFF);
-								}
+					final MyListViewAdapter ip_adapter = new MyListViewAdapter(AssetQueryActivity.this, ip_section_array, new ListViewInterface() {
+						@Override
+						public View Cell(MyListViewAdapter adapter, View cellView, int position) {
+							if(cellView == null){
+								cellView = inflater.inflate(android.R.layout.simple_list_item_1, null);
+							}
+							TextView text = (TextView)cellView.findViewById(android.R.id.text1);
+							Map<String, Object>map = (Map<String, Object>)adapter.getItem(position);
+							text.setText(map.get("ip_section").toString());
+
+							if(position == selectItem){
+								cellView.setBackgroundColor(Color.WHITE);
 							}else{
-								return;
+								cellView.setBackgroundColor(Color.TRANSPARENT);
 							}
 
+							return cellView;
+						}
+					});
+					listView.setAdapter(ip_adapter);
+					listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+					listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
+						public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
+								long arg3){
+							if(selectItem == arg2){
+								return;
+							}
 							selectItem = arg2;
-							selectView = arg1;
-
-							final String ip_section = ip_section_list.get(arg2);
+							ip_adapter.notifyDataSetChanged();
+							Map<String, Object> map = (Map<String, Object>)ip_section_array.get(arg2);
+							final String ip_section = map.get("ip_section").toString();
 							waittingDialog.show(AssetQueryActivity.this, "", "获取可用ip地址...");
 							nssySoap.IP_List_Detail(ip_section, 10, 10000, new SoapInterface() {
 								@Override

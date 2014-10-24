@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import android.app.Dialog;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -174,34 +175,47 @@ public class AssetInputActivity extends MainActivity{
 				String result = arrayList.get(0).toString();
 				try {
 					JSONArray array = new JSONArray(result);
-					final List<String> ip_section_list = new ArrayList<String>();
+					final ArrayList<Map<String, Object>> ip_section_array  = new ArrayList<Map<String,Object>>();
 					for(int i = 0; i < array.length(); i++){
 						JSONObject object = array.getJSONObject(i);
 						String IP_Section_D = object.getString("IP_Section_D");
-						ip_section_list.add(IP_Section_D);
+						Map<String, Object>map = new HashMap<String, Object>();
+						map.put("ip_section", IP_Section_D);
+						ip_section_array.add(map);
 					} 
 					final View view = inflater.inflate(R.layout.ip_picker_list, null);
 					final ListView listView = (ListView)view.findViewById(R.id.ip_listview);
-					listView.setAdapter(new ArrayAdapter<String>(AssetInputActivity.this, android.R.layout.simple_list_item_1,ip_section_list));
+					final MyListViewAdapter ip_adapter = new MyListViewAdapter(AssetInputActivity.this, ip_section_array, new ListViewInterface() {
+						@Override
+						public View Cell(MyListViewAdapter adapter, View cellView, int position) {
+							if(cellView == null){
+								cellView = inflater.inflate(android.R.layout.simple_list_item_1, null);
+							}
+							TextView text = (TextView)cellView.findViewById(android.R.id.text1);
+							Map<String, Object>map = (Map<String, Object>)adapter.getItem(position);
+							text.setText(map.get("ip_section").toString());
+							
+							if(position == selectItem){
+								cellView.setBackgroundColor(Color.WHITE);
+							}else{
+								cellView.setBackgroundColor(Color.TRANSPARENT);
+							}
+							
+							return cellView;
+						}
+					});
+					listView.setAdapter(ip_adapter);
+					listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 					listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 	       
-						@SuppressWarnings("unused")
 						public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
 								long arg3){
-							if(selectItem != arg2){
-								if(selectItem == -1 ){
-									arg1.setBackgroundColor(0x92c229);
-								}else{
-									arg1.setBackgroundColor(0x92c229);
-									selectView.setBackgroundColor(0xFFFFFF);
-								}
-							}else{
+							if(selectItem == arg2){
 								return;
 							}
-
 							selectItem = arg2;
-							selectView = arg1;
-
-							final String ip_section = ip_section_list.get(arg2);
+							ip_adapter.notifyDataSetChanged();
+							Map<String, Object> map = (Map<String, Object>)ip_section_array.get(arg2);
+							final String ip_section = map.get("ip_section").toString();
 							waittingDialog.show(AssetInputActivity.this, "", "获取可用ip地址...");
 							nssySoap.IP_List_Detail(ip_section, 10, 10000, new SoapInterface() {
 								@Override

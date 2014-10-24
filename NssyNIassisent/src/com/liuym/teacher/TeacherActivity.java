@@ -82,14 +82,14 @@ public class TeacherActivity extends MainActivity {
 		setContentView(teackerView);
 		ibeactonView = inflater.inflate(R.layout.activity_ibeacon, null);
 
-		findViewById(R.id.logout).setOnClickListener(new OnClickListener() {			
+		findViewById(R.id.logout_radiobutton).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				popRoot();
 			}
 		});
 
-		findViewById(R.id.first).setEnabled(false);
+		findViewById(R.id.first_radiobutton).setEnabled(false);
 
 		/*findViewById(R.id.second).setOnClickListener(new OnClickListener() {			
 			@Override

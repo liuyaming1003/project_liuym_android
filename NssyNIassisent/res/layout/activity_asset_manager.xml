@@ -38,10 +38,10 @@
                 android:background="@drawable/asset_left_bg"
                 android:drawableLeft="@drawable/asset_left_v_bg"
                 android:gravity="center_vertical"
-                android:textColor="#22292C"
-                android:textStyle="bold"
                 android:text="资产管理"
-                android:textSize="14sp" />
+                android:textColor="#22292C"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -57,8 +57,8 @@
                     android:gravity="center_vertical"
                     android:text="聂超宇"
                     android:textColor="#22292C"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/asset_info"
@@ -101,8 +101,8 @@
                 android:background="@drawable/asset_btn_bg"
                 android:drawableLeft="@drawable/asset_input_btn_left"
                 android:paddingLeft="5dp"
-                android:textColor="#22292C"
                 android:text="资产分配"
+                android:textColor="#22292C"
                 android:textSize="20dp" />
         </LinearLayout>
 
@@ -132,8 +132,8 @@
                 android:background="@drawable/asset_btn_bg"
                 android:drawableLeft="@drawable/asset_query_btn_left"
                 android:paddingLeft="5dp"
-                android:textColor="#22292C"
                 android:text="资产查询"
+                android:textColor="#22292C"
                 android:textSize="20dp" />
         </LinearLayout>
     </RelativeLayout>
@@ -147,35 +147,34 @@
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_home_icon"
-            android:text="首页"
-            android:textColor="#FFFFFF" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_ibeacon_icon"
-            android:text="资产管理"
-            android:textColor="#FFFFFF" />
+            <RadioButton
+                android:id="@+id/first_radiobutton"
+                style="@style/first_page_type"
+                android:drawableTop="@drawable/tool_bar_home_icon"
+                android:text="首页"
+                android:textColor="#FFFFFF" />
 
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_logout_icon"
-            android:text="注销"
-            android:textColor="#FFFFFF" />
+            <RadioButton
+                android:id="@+id/second_radiobutton"
+                style="@style/first_page_type"
+                android:checked="true"
+                android:drawableTop="@drawable/tool_bar_ibeacon_icon"
+                android:text="资产管理"
+                android:textColor="#FFFFFF" />
+
+            <RadioButton
+                android:id="@+id/logout_radiobutton"
+                style="@style/first_page_type"
+                android:drawableTop="@drawable/tool_bar_logout_icon"
+                android:text="注销"
+                android:textColor="#FFFFFF" />
+        </RadioGroup>
     </LinearLayout>
 
 </RelativeLayout>

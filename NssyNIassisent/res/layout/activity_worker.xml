@@ -169,35 +169,34 @@
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_home_icon"
-            android:text="首页"
-            android:textColor="#FFFFFF" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_ibeacon_icon"
-            android:text="资产管理"
-            android:textColor="#FFFFFF" />
+            <RadioButton
+                android:id="@+id/first_radiobutton"
+                style="@style/first_page_type"
+                android:checked="true"
+                android:drawableTop="@drawable/tool_bar_home_icon"
+                android:text="首页"
+                android:textColor="#FFFFFF" />
 
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:drawableTop="@drawable/tool_bar_logout_icon"
-            android:text="注销"
-            android:textColor="#FFFFFF" />
+            <RadioButton
+                android:id="@+id/second_radiobutton"
+                style="@style/first_page_type"
+                android:drawableTop="@drawable/tool_bar_ibeacon_icon"
+                android:text="资产管理"
+                android:textColor="#FFFFFF" />
+
+            <RadioButton
+                android:id="@+id/logout_radiobutton"
+                style="@style/first_page_type"
+                android:drawableTop="@drawable/tool_bar_logout_icon"
+                android:text="注销"
+                android:textColor="#FFFFFF" />
+        </RadioGroup>
     </LinearLayout>
 
 </RelativeLayout>

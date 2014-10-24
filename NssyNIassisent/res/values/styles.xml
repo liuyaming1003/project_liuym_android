@@ -8,16 +8,30 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    
-    <style name="MyRatingBar" parent="@android:style/Widget.RatingBar">    
-        <item name="android:progressDrawable">@drawable/ratingbar_drawable</item>    
-        <item name="android:minHeight">20dip</item>    
+
+    <style name="MyRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_drawable</item>
+        <item name="android:minHeight">20dip</item>
         <item name="android:maxHeight">20dip</item>
-    </style> 
-    
-    <style name="popwin_anim_style">  
-     <item name="android:windowEnterAnimation">@anim/push_down_up</item>  
-     <item name="android:windowExitAnimation">@anim/pop_up_down</item>  
-</style> 
+    </style>
+
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/push_down_up</item>
+        <item name="android:windowExitAnimation">@anim/pop_up_down</item>
+    </style>
+
+    <style name="first_page_type">
+        <item name="android:textSize">15sp</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/radio_select</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
 
 </resources>

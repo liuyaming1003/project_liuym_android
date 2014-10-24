@@ -179,8 +179,9 @@ public class OrderFinishActivity extends MainActivity{
 			navi.getBtn_right().setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					setFault();
-					pop(1, null);
+					if(setFault()){
+						pop(1, null);
+					}
 				}
 			}); 
 		}else{
@@ -191,21 +192,32 @@ public class OrderFinishActivity extends MainActivity{
 			navi.getBtn_right().setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					setFault();
-					pop(0, null);
+					if(setFault()){
+						pop(0, null);
+					}
 				}
 			});
 		}
 	}
 
-	private void setFault(){
+	private boolean setFault(){
 		faultObject.Malfunction_Handle = remark_mult_textview.getText().toString();
 		faultObject.Malfunction_type = buttonSelectIndex;
-		faultObject.Device_Barcode = barcode_textview.getText().toString();
+		String barcode_str = barcode_textview.getText().toString();
+		if(barcode_str.equals("")){
+			showMessage("请扫描条码信息");
+			return false;
+		}
+		faultObject.Device_Barcode = barcode_str;
 		switch(buttonSelectIndex){
 		case 1:{
 			long[] tab = software_listView.getCheckItemIds();
 			String str = "";
+			if(tab.length == 0){
+				showMessage("请选择软件故障信息");
+				return false;
+			}
+			
 			for(int i = 0; i < tab.length; i++){
 				if(i >= 1){
 					str += "|";
@@ -219,6 +231,10 @@ public class OrderFinishActivity extends MainActivity{
 		case 2:{
 			long[] tab = hardware_listView.getCheckItemIds();
 			String str = "";
+			if(tab.length == 0){
+				showMessage("请选择硬件故障信息");
+				return false;
+			}
 			for(int i = 0; i < tab.length; i++){
 				if(i >= 1){
 					str += "|";
@@ -233,6 +249,7 @@ public class OrderFinishActivity extends MainActivity{
 			//硬件更换
 			break;
 		}
+		return true;
 	}
 	
 	@Override

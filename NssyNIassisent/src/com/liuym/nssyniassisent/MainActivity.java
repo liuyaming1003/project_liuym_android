@@ -16,6 +16,7 @@ public class MainActivity extends Activity {
 	protected MainData mainData = null;
 	protected NssySoapMethod nssySoap = null;
 	protected WaittingDialog waittingDialog = null;
+	private Toast mToast = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -121,6 +122,11 @@ public class MainActivity extends Activity {
 	 * @param msg
 	 */
 	protected void showMessage(String msg){
-		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+		if(mToast != null){
+			mToast.setText(msg);
+		}else{
+			mToast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+		}
+		mToast.show();
 	}
 }

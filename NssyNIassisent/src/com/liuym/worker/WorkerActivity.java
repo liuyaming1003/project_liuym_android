@@ -16,7 +16,9 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.RadioButton;
 
 import com.liuym.adapter.MyListView;
 import com.liuym.adapter.MyListViewAdapter;
@@ -57,14 +59,14 @@ import com.liuym.zxing.CaptureActivity;
 		setContentView(firstView);
 		secondView = inflater.inflate(R.layout.activity_asset_manager, null);
 
-		findViewById(R.id.logout).setOnClickListener(new OnClickListener() {			
+		findViewById(R.id.logout_radiobutton).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				popRoot();
 			}
 		});
 
-		findViewById(R.id.second).setOnClickListener(new OnClickListener() {			
+		findViewById(R.id.second_radiobutton).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				setSecondView();
@@ -97,7 +99,7 @@ import com.liuym.zxing.CaptureActivity;
 		
 		metting_textview = (TextView)findViewById(R.id.metting_textview);
 
-		findViewById(R.id.first).setEnabled(false);
+		findViewById(R.id.first_radiobutton).setEnabled(false);
 
 		viewPager = (ViewPager)findViewById(R.id.viewPager);
 		initReapirListView();
@@ -204,13 +206,15 @@ import com.liuym.zxing.CaptureActivity;
 
 	private void setFirstView(){
 		setContentView(firstView);
+		((RadioButton)findViewById(R.id.first_radiobutton)).setChecked(true);
 	}
 
 	private void setSecondView(){
 		setContentView(secondView);
+		((RadioButton)findViewById(R.id.second_radiobutton)).setChecked(true);
 		if(secondViewIsFirst){
 			secondViewIsFirst = false;
-			findViewById(R.id.logout).setOnClickListener(new OnClickListener() {			
+			findViewById(R.id.logout_radiobutton).setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
 					popRoot();
@@ -225,9 +229,9 @@ import com.liuym.zxing.CaptureActivity;
 			asset_name.setText(realName);
 			asset_info.setText(userMail + "\n" + phone_info);
 
-			findViewById(R.id.second).setEnabled(false);
+			findViewById(R.id.second_radiobutton).setEnabled(false);
 
-			findViewById(R.id.first).setOnClickListener(new OnClickListener() {			
+			findViewById(R.id.first_radiobutton).setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
 					setFirstView();

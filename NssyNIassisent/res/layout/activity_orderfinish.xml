@@ -113,6 +113,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
+                android:background="#A7A7A7"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -392,7 +393,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:background="#FFFFFF"
-                    android:visibility="gone" >
+                    android:visibility="visible" >
                 </ListView>
             </LinearLayout>
         </LinearLayout>
