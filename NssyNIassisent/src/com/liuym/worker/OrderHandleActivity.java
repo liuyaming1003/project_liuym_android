@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,6 +59,12 @@ public class OrderHandleActivity extends MainActivity{
 		navi.getBtn_right().setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
+				
+				if(faultListArray.size() <= 1){
+					showMessage("请添加故障单");
+					return;
+				}
+				
 				AlertDialog.Builder builder = new AlertDialog.Builder(OrderHandleActivity.this);
 				builder.setMessage("此单即将结案，请确认？");
 				builder.setTitle("");
@@ -62,26 +72,49 @@ public class OrderHandleActivity extends MainActivity{
 					@Override
 					public void onClick(DialogInterface dialog, int arg1) {
 						waittingDialog.show(OrderHandleActivity.this, "", "正在结案中...");
+						JSONArray jsonArray = new JSONArray();
+						for(int i = 0 ; i < faultListArray.size(); i++){
+							final Map<String, Object> map = (Map<String, Object>)faultListArray.get(i);
+							FaultObject fault = (FaultObject)map.get("fault");
+							if(fault.faultStatus == 2){
+								JSONObject jsonObject = new JSONObject();
+								try {
+									jsonObject.put("Device_Barcode", fault.Device_Barcode);
+									jsonObject.put("Malfunction_type", fault.Malfunction_type);
+									jsonObject.put("Malfunction_Handle", fault.Malfunction_Handle);
+									jsonObject.put("Tab_Info", fault.Tab_Info);
+									jsonObject.put("Tab_Info", fault.Tab_Info);
+									jsonObject.put("Accessory_Con", fault.Accessory_Con);
+									jsonArray.put(jsonObject);
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+						
+						System.out.println("array = " + jsonArray.toString());
+
 						int repair_num = mainData.getRepairRecodeArrayList().get(mainData.order_select_index).Repair_Recode_Num;
-						nssySoap.Handle_Repair("", repair_num, 10000, new Soap.SoapInterface() {
+						nssySoap.Handle_Repair(jsonArray.toString(), repair_num, 10000, new Soap.SoapInterface() {
 							@Override
 							public void soapResult(ArrayList<Object> arrayList) {
 								waittingDialog.dismiss();
 								String result = arrayList.get(0).toString();
 								if(result.equals("s")){
-									
+									showMessage("结案成功");
+									push(WorkerActivity.class);
 								}else{
 									showMessage("错误: " + result);
 								}
 							}
-							
+
 							@Override
 							public void soapError(String error) {
 								waittingDialog.dismiss();
 								showMessage("错误信息: " + error);
 							}
 						});
-						
+
 					}
 				});
 				builder.setNegativeButton("取消", new AlertDialog.OnClickListener() {
@@ -102,7 +135,7 @@ public class OrderHandleActivity extends MainActivity{
 
 		faultListArray = new ArrayList<Map<String,Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		FaultObject faultObject = new FaultObject();
 		faultObject.faultStatus = 1;
 		map.put("fault", faultObject);
@@ -128,10 +161,14 @@ public class OrderHandleActivity extends MainActivity{
 					title.setText("故障 " + (position + 1));
 					add_layout.setVisibility(View.GONE);
 					info_layout.setVisibility(View.VISIBLE);
-					
+
 					TextView fault_type_textview = (TextView)cellView.findViewById(R.id.fault_type_textview);
 					TextView fault_msg_textview = (TextView)cellView.findViewById(R.id.fault_msg_textview);
-					fault_msg_textview.setText("备注信息: " + fault.Malfunction_Handle);
+					TextView fault_barcode_textview = (TextView)cellView.findViewById(R.id.fault_barcode_textview);
+					TextView fault_tab_textview = (TextView)cellView.findViewById(R.id.fault_tab_textview);
+					fault_tab_textview.setText("信息: " + fault.Tab_Info);
+					fault_msg_textview.setText("备注: " + fault.Malfunction_Handle);
+					fault_barcode_textview.setText("条码: " + fault.Device_Barcode);
 					switch(fault.Malfunction_type){
 					case 1://软件故障
 						fault_type_textview.setText("故障类型: 软件故障");
@@ -151,30 +188,6 @@ public class OrderHandleActivity extends MainActivity{
 						faultAdapter.notifyDataSetChanged();
 					}
 				});
-				/*cellView.setOnTouchListener(new OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-
-						if(event.getAction() == MotionEvent.ACTION_DOWN){
-							x = event.getX();
-						}
-						else if(event.getAction() == MotionEvent.ACTION_UP){
-							ux = event.getX();
-							System.out.println("distance = " + Math.abs(x - ux));
-							if(Math.abs(x - ux) > 20){
-								//滑动显示删除按钮
-								Button button = (Button)v.findViewById(R.id.del_fault_button);
-								if(button.getVisibility() == View.VISIBLE){
-									button.setVisibility(View.GONE);
-								}else{
-									button.setVisibility(View.VISIBLE);
-								}
-								return true;
-							}
-						}
-						return false;
-					}
-				});*/
 				return cellView;
 			}
 		});
@@ -202,7 +215,7 @@ public class OrderHandleActivity extends MainActivity{
 				final Map<String, Object> map = (Map<String, Object>)faultListArray.get(arg2);
 				FaultObject fault = (FaultObject)map.get("fault");
 				if(fault.faultStatus == 1){
-					
+
 				}else{
 					AlertDialog.Builder builder = new AlertDialog.Builder(OrderHandleActivity.this);
 					builder.setMessage("是否删除该故障单？");
@@ -222,36 +235,10 @@ public class OrderHandleActivity extends MainActivity{
 					});
 					builder.create().show();
 				}
-				
+
 				return false;
 			}
 		});
-
-		/*listView.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-
-				if(event.getAction() == MotionEvent.ACTION_DOWN){
-					x = event.getX();
-					y = event.getY();
-				}
-				if(event.getAction()==MotionEvent.ACTION_UP){
-		            ux=event.getX();
-		            uy=event.getY();
-		            if(Math.abs(x-ux)>20){
-		            	//滑动显示删除按钮
-		                Button button = (Button)v.findViewById(R.id.del_fault_button);
-		                if(button.getVisibility() == View.VISIBLE){
-		                		button.setVisibility(View.GONE);
-		                }else{
-		                		button.setVisibility(View.VISIBLE);
-		                }
-		            		return true;
-		            }
-		        }
-				return false;
-			}
-		});*/
 	}
 
 	@Override  
@@ -271,14 +258,14 @@ public class OrderHandleActivity extends MainActivity{
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
 	public class FaultObject{
 		public int faultStatus = 1;          //故障添加状态，1 为添加，2 为修改
-		public String Device_Barcode;        //设备条码
+		public String Device_Barcode = "";        //设备条码
 		public int Malfunction_type;         //故障类型，1 软件故障， 2 硬件故障，3 硬件更换
-		public String Malfunction_Handle;    //处理内容
-		public String Tab_Info;              //相关标签
-		public String Accessory_type;        //配件类型
-		public String Accessory_Con;         //配件内容
+		public String Malfunction_Handle = "";    //处理内容
+		public String Tab_Info = "";              //相关标签
+		public String Accessory_type = "";        //配件类型
+		public String Accessory_Con = "";         //配件内容
 	}
 }

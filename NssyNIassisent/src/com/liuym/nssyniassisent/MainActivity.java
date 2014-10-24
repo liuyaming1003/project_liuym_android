@@ -117,7 +117,7 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * 显示信息
+	 * 锟斤拷示锟斤拷息
 	 * @param msg
 	 */
 	protected void showMessage(String msg){

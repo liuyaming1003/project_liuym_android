@@ -27,10 +27,11 @@ public class NssySoapMethod{
 	 * @param timeout       超时时间
 	 * @param soapInterface 函数回调
 	 */
-	public void impersonateValidUser(String userName, String password, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("userName", userName);
-	map.put("password", password);
-	new Soap().soapRequest("impersonateValidUser", timeout, soapInterface, map);
+	public void impersonateValidUser(String userName, String password, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userName", userName);
+		map.put("password", password);
+		new Soap().soapRequest("impersonateValidUser", timeout, soapInterface, map);
 	}
 
 	/**
@@ -39,9 +40,10 @@ public class NssySoapMethod{
 	 * @param timeout       超时时间
 	 * @param soapInterface 函数回调
 	 */
-	public void Power_Judge(String UserName, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("UserName", UserName);
-	new Soap().soapRequest("Power_Judge", timeout, soapInterface, map);
+	public void Power_Judge(String UserName, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("UserName", UserName);
+		new Soap().soapRequest("Power_Judge", timeout, soapInterface, map);
 	}
 
 	/**
@@ -61,9 +63,10 @@ public class NssySoapMethod{
 	 * @param timeout       超时时间
 	 * @param soapInterface 函数回调
 	 */
-	public void Teacher_InfoList_Depart(int DepartID, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("DepartID", DepartID);
-	new Soap().soapRequest("Teacher_InfoList_Depart", timeout, soapInterface, map);
+	public void Teacher_InfoList_Depart(int DepartID, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("DepartID", DepartID);
+		new Soap().soapRequest("Teacher_InfoList_Depart", timeout, soapInterface, map);
 	}
 
 	/**
@@ -89,13 +92,14 @@ public class NssySoapMethod{
 	 * @param timeout       超时时间
 	 * @param soapInterface 函数回调
 	 */
-	public void Report_Repair_Recode(String Repair_Man, int DepartID, String Repair_Information, int RepairType, String telPhone, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Repair_Man", Repair_Man);
-	map.put("DepartID", DepartID);
-	map.put("Repair_Information", Repair_Information);
-	map.put("RepairType", RepairType);
-	map.put("Tel_Modify", telPhone);
-	new Soap().soapRequest("Report_Repair_Recode", timeout, soapInterface, map);
+	public void Report_Repair_Recode(String Repair_Man, int DepartID, String Repair_Information, int RepairType, String telPhone, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Repair_Man", Repair_Man);
+		map.put("DepartID", DepartID);
+		map.put("Repair_Information", Repair_Information);
+		map.put("RepairType", RepairType);
+		map.put("Tel_Modify", telPhone);
+		new Soap().soapRequest("Report_Repair_Recode", timeout, soapInterface, map);
 	}
 
 	/**
@@ -105,10 +109,11 @@ public class NssySoapMethod{
 	 * @param timeout       超时时间
 	 * @param soapInterface 函数回调
 	 */
-	public void System_Information_List(int System_Information_Type, int Recode_Count, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("System_Information_Type", System_Information_Type);
-	map.put("Recode_Count", Recode_Count);
-	new Soap().soapRequest("System_Information_List", timeout, soapInterface, map);
+	public void System_Information_List(int System_Information_Type, int Recode_Count, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("System_Information_Type", System_Information_Type);
+		map.put("Recode_Count", Recode_Count);
+		new Soap().soapRequest("System_Information_List", timeout, soapInterface, map);
 	}
 
 	/**
@@ -118,10 +123,11 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void User_Repair_Recode(String Domain_UserName,int Recode_Count, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Domain_UserName", Domain_UserName);
-	map.put("Recode_Count", Recode_Count);
-	new Soap().soapRequest("User_Repair_Recode", timeout, soapInterface, map);
+	public void User_Repair_Recode(String Domain_UserName,int Recode_Count, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Domain_UserName", Domain_UserName);
+		map.put("Recode_Count", Recode_Count);
+		new Soap().soapRequest("User_Repair_Recode", timeout, soapInterface, map);
 	}
 
 	/**
@@ -131,10 +137,11 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Device_Repair_Recode(String Device_Barcode, int Recode_Count, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Device_Barcode", Device_Barcode);
-	map.put("Recode_Count", Recode_Count);
-	new Soap().soapRequest("Device_Repair_Recode", timeout, soapInterface, map);
+	public void Device_Repair_Recode(String Device_Barcode, int Recode_Count, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Device_Barcode", Device_Barcode);
+		map.put("Recode_Count", Recode_Count);
+		new Soap().soapRequest("Device_Repair_Recode", timeout, soapInterface, map);
 	}
 
 	/**
@@ -144,10 +151,11 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void No_Finish_Repair_Record(int DepartID, int Recode_Count, int timeout, SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("DepartID", DepartID);
-	map.put("Recode_Count", Recode_Count);
-	new Soap().soapRequest("No_Finish_Repair_Record", timeout, soapInterface, map);
+	public void No_Finish_Repair_Record(int DepartID, int Recode_Count, int timeout, SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("DepartID", DepartID);
+		map.put("Recode_Count", Recode_Count);
+		new Soap().soapRequest("No_Finish_Repair_Record", timeout, soapInterface, map);
 	}
 
 	/**
@@ -157,10 +165,11 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Worker_Repair_List(int DepartID, String UserName, int timeout, SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("DepartID", DepartID);
-	map.put("UserName", UserName);
-	new Soap().soapRequest("Worker_Repair_List", timeout, soapInterface, map);
+	public void Worker_Repair_List(int DepartID, String UserName, int timeout, SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("DepartID", DepartID);
+		map.put("UserName", UserName);
+		new Soap().soapRequest("Worker_Repair_List", timeout, soapInterface, map);
 	}
 
 	/**
@@ -169,9 +178,10 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Worker_List(int DepartID, int timeout, SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("DepartID", DepartID);
-	new Soap().soapRequest("Worker_List", timeout, soapInterface, map);
+	public void Worker_List(int DepartID, int timeout, SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("DepartID", DepartID);
+		new Soap().soapRequest("Worker_List", timeout, soapInterface, map);
 	}
 
 	/**
@@ -181,10 +191,11 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Repair_Recode_Service(int Repair_Recode_Num, String ServiceUserName, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Repair_Recode_Num", Repair_Recode_Num);
-	map.put("ServiceUserName", ServiceUserName);
-	new Soap().soapRequest("Repair_Recode_Service", timeout, soapInterface, map);
+	public void Repair_Recode_Service(int Repair_Recode_Num, String ServiceUserName, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Repair_Recode_Num", Repair_Recode_Num);
+		map.put("ServiceUserName", ServiceUserName);
+		new Soap().soapRequest("Repair_Recode_Service", timeout, soapInterface, map);
 	}
 
 	/**
@@ -196,12 +207,13 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Repair_Recode_Transfer(int Repair_Recode_Num, String Transfer_UserName, String Recevice_UserName, String Transfer_Note, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Repair_Recode_Num", Repair_Recode_Num);
-	map.put("Transfer_UserName", Transfer_UserName);
-	map.put("Recevice_UserName", Recevice_UserName);
-	map.put("Transfer_Note", Transfer_Note);
-	new Soap().soapRequest("Repair_Recode_Transfer", timeout, soapInterface, map);
+	public void Repair_Recode_Transfer(int Repair_Recode_Num, String Transfer_UserName, String Recevice_UserName, String Transfer_Note, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Repair_Recode_Num", Repair_Recode_Num);
+		map.put("Transfer_UserName", Transfer_UserName);
+		map.put("Recevice_UserName", Recevice_UserName);
+		map.put("Transfer_Note", Transfer_Note);
+		new Soap().soapRequest("Repair_Recode_Transfer", timeout, soapInterface, map);
 	}
 
 	/**
@@ -214,13 +226,14 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Repair_Closed(int Repair_Recode_Num, String Device_Barcode,int Malfunction_type, String Malfunction_Handle, String Tab_Info , int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Repair_Recode_Num", Repair_Recode_Num);
-	map.put("Device_Barcode", Device_Barcode);
-	map.put("Malfunction_type", Malfunction_type);
-	map.put("Malfunction_Handle", Malfunction_Handle);
-	map.put("Tab_Info", Tab_Info);
-	new Soap().soapRequest("Repair_Closed", timeout, soapInterface, map);
+	public void Repair_Closed(int Repair_Recode_Num, String Device_Barcode,int Malfunction_type, String Malfunction_Handle, String Tab_Info , int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Repair_Recode_Num", Repair_Recode_Num);
+		map.put("Device_Barcode", Device_Barcode);
+		map.put("Malfunction_type", Malfunction_type);
+		map.put("Malfunction_Handle", Malfunction_Handle);
+		map.put("Tab_Info", Tab_Info);
+		new Soap().soapRequest("Repair_Closed", timeout, soapInterface, map);
 	}
 
 	/**
@@ -231,11 +244,12 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Add_Review_Information(String RI_Content, int RI_Type, String Tab_Info, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("RI_Content", RI_Content);
-	map.put("RI_Type", RI_Type);
-	map.put("Tab_Info", Tab_Info);
-	new Soap().soapRequest("Add_Review_Information", timeout, soapInterface, map);
+	public void Add_Review_Information(String RI_Content, int RI_Type, String Tab_Info, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("RI_Content", RI_Content);
+		map.put("RI_Type", RI_Type);
+		map.put("Tab_Info", Tab_Info);
+		new Soap().soapRequest("Add_Review_Information", timeout, soapInterface, map);
 	}
 
 	/**
@@ -244,9 +258,10 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Update_Tab_Info(String Tab_Info, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Tab_Info", Tab_Info);
-	new Soap().soapRequest("Update_Tab_Info", timeout, soapInterface, map);
+	public void Update_Tab_Info(String Tab_Info, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Tab_Info", Tab_Info);
+		new Soap().soapRequest("Update_Tab_Info", timeout, soapInterface, map);
 	}
 
 	/**
@@ -257,11 +272,12 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Repair_Feedback_List(int Repair_Recode_Num, int Feed_Type, int Recode_Count, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Repair_Recode_Num", Repair_Recode_Num);
-	map.put("Feed_Type", Feed_Type);
-	map.put("Recode_Count", Recode_Count);
-	new Soap().soapRequest("Repair_Feedback_List", timeout, soapInterface, map);
+	public void Repair_Feedback_List(int Repair_Recode_Num, int Feed_Type, int Recode_Count, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Repair_Recode_Num", Repair_Recode_Num);
+		map.put("Feed_Type", Feed_Type);
+		map.put("Recode_Count", Recode_Count);
+		new Soap().soapRequest("Repair_Feedback_List", timeout, soapInterface, map);
 	}
 
 	/**
@@ -283,15 +299,16 @@ public class NssySoapMethod{
 	 */
 	public void Edit_Feedback_info(int Repair_Recode_Num, int Feed_Type, int Respone_Speed_Score, int Repair_Service_Score, 
 			String Feed_content, String Domain_UserName,int edit_type, 
-			int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-			map.put("Repair_Recode_Num", Repair_Recode_Num);
-			map.put("Feed_Type", Feed_Type);
-			map.put("Respone_Speed_Score", Respone_Speed_Score);
-			map.put("Repair_Service_Score", Repair_Service_Score);
-			map.put("Feed_content", Feed_content);
-			map.put("Domain_UserName", Domain_UserName);
-			map.put("edit_type", edit_type);
-			new Soap().soapRequest("Edit_Feedback_info", timeout, soapInterface, map);
+			int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Repair_Recode_Num", Repair_Recode_Num);
+		map.put("Feed_Type", Feed_Type);
+		map.put("Respone_Speed_Score", Respone_Speed_Score);
+		map.put("Repair_Service_Score", Repair_Service_Score);
+		map.put("Feed_content", Feed_content);
+		map.put("Domain_UserName", Domain_UserName);
+		map.put("edit_type", edit_type);
+		new Soap().soapRequest("Edit_Feedback_info", timeout, soapInterface, map);
 	}
 
 	/**
@@ -301,10 +318,11 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Device_Info_List(String KeyWord, int Q_Style, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("KeyWord", KeyWord);
-	map.put("Q_Style", Q_Style);
-	new Soap().soapRequest("Device_Info_List", timeout, soapInterface, map);
+	public void Device_Info_List(String KeyWord, int Q_Style, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("KeyWord", KeyWord);
+		map.put("Q_Style", Q_Style);
+		new Soap().soapRequest("Device_Info_List", timeout, soapInterface, map);
 	}
 
 	/**
@@ -319,16 +337,17 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Update_Device_Info(String Device_Barcode, String Device_Location, String Device_User_Domain_UserName, String Device_Mac_Address, String Device_IP_Address, String Device_Name, String Device_Net_UP_Information, String Device_User, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Device_Barcode", Device_Barcode);
-	map.put("Device_Location", Device_Location);
-	map.put("Device_User_Domain_UserName", Device_User_Domain_UserName);
-	map.put("Device_Mac_Address", Device_Mac_Address);
-	map.put("Device_IP_Address", Device_IP_Address);
-	map.put("Device_Name", Device_Name);
-	map.put("Device_Net_UP_Information", Device_Net_UP_Information);
-	map.put("Device_User", Device_User);
-	new Soap().soapRequest("Update_Device_Info", timeout, soapInterface, map);
+	public void Update_Device_Info(String Device_Barcode, String Device_Location, String Device_User_Domain_UserName, String Device_Mac_Address, String Device_IP_Address, String Device_Name, String Device_Net_UP_Information, String Device_User, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Device_Barcode", Device_Barcode);
+		map.put("Device_Location", Device_Location);
+		map.put("Device_User_Domain_UserName", Device_User_Domain_UserName);
+		map.put("Device_Mac_Address", Device_Mac_Address);
+		map.put("Device_IP_Address", Device_IP_Address);
+		map.put("Device_Name", Device_Name);
+		map.put("Device_Net_UP_Information", Device_Net_UP_Information);
+		map.put("Device_User", Device_User);
+		new Soap().soapRequest("Update_Device_Info", timeout, soapInterface, map);
 	}
 
 	/**
@@ -338,10 +357,11 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Device_Redistribute(String Device_Barcode, String Device_User, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Device_Barcode", Device_Barcode);
-	map.put("Device_User", Device_User);
-	new Soap().soapRequest("Device_Redistribute", timeout, soapInterface, map);
+	public void Device_Redistribute(String Device_Barcode, String Device_User, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Device_Barcode", Device_Barcode);
+		map.put("Device_User", Device_User);
+		new Soap().soapRequest("Device_Redistribute", timeout, soapInterface, map);
 	}
 
 	/**
@@ -355,13 +375,14 @@ public class NssySoapMethod{
 	 * @param soapInterface     函数回调
 	 */
 	public void Add_log_info(String UserName, String IP_Address, String Mac_Address, 
-			String Operation, String Useragent, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-			map.put("UserName", UserName);
-			map.put("IP_Address", IP_Address);
-			map.put("Mac_Address", Mac_Address);
-			map.put("Operation", Operation);
-			map.put("Useragent", Useragent);
-			new Soap().soapRequest("Add_log_info", timeout, soapInterface, map);
+			String Operation, String Useragent, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("UserName", UserName);
+		map.put("IP_Address", IP_Address);
+		map.put("Mac_Address", Mac_Address);
+		map.put("Operation", Operation);
+		map.put("Useragent", Useragent);
+		new Soap().soapRequest("Add_log_info", timeout, soapInterface, map);
 	}
 
 	/**
@@ -370,9 +391,10 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void IP_Section_List(int DepartID, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("DepartID", DepartID);
-	new Soap().soapRequest("IP_Section_List", timeout, soapInterface, map);
+	public void IP_Section_List(int DepartID, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("DepartID", DepartID);
+		new Soap().soapRequest("IP_Section_List", timeout, soapInterface, map);
 	}
 
 	/**
@@ -381,10 +403,11 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void IP_List_Detail(String IP_S, int count, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("IP_S", IP_S);
-	map.put("count", count);
-	new Soap().soapRequest("IP_List_Detail", timeout, soapInterface, map);
+	public void IP_List_Detail(String IP_S, int count, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("IP_S", IP_S);
+		map.put("count", count);
+		new Soap().soapRequest("IP_List_Detail", timeout, soapInterface, map);
 	}
 
 	/**
@@ -393,10 +416,11 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void IP_Exist(String IP_address, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Domain_UserName", null);
-	map.put("Recode_Count", null);
-	new Soap().soapRequest("IP_Exist", timeout, soapInterface, map);
+	public void IP_Exist(String IP_address, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Domain_UserName", null);
+		map.put("Recode_Count", null);
+		new Soap().soapRequest("IP_Exist", timeout, soapInterface, map);
 	}
 
 	/**
@@ -405,9 +429,10 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Cancel_Repair_Recode(int Repair_Recode_Num, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("Repair_Recode_Num", Repair_Recode_Num);
-	new Soap().soapRequest("Cancel_Repair_Recode", timeout, soapInterface, map);
+	public void Cancel_Repair_Recode(int Repair_Recode_Num, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Repair_Recode_Num", Repair_Recode_Num);
+		new Soap().soapRequest("Cancel_Repair_Recode", timeout, soapInterface, map);
 	}
 
 	/**
@@ -416,9 +441,23 @@ public class NssySoapMethod{
 	 * @param timeout           超时时间
 	 * @param soapInterface     函数回调
 	 */
-	public void Handle_Repair(String str_Json, int Repair_Recode_Num, int timeout,  SoapInterface soapInterface){Map<String, Object> map = new HashMap<String, Object>();
-	map.put("str_Json", str_Json);
-	map.put("Repair_Recode_Num", Repair_Recode_Num);
-	new Soap().soapRequest("handle_repair", timeout, soapInterface, map);
+	public void Handle_Repair(String str_Json, int Repair_Recode_Num, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("str_Json", str_Json);
+		map.put("Repair_Recode_Num", Repair_Recode_Num);
+		new Soap().soapRequest("handle_repair", timeout, soapInterface, map);
 	}
+
+	/**
+	 * 获取标签
+	 * @param Repair_Recode_Num 单号
+	 * @param timeout           超时时间
+	 * @param soapInterface     函数回调
+	 */
+	public void TabInfo_List(int type, int timeout,  SoapInterface soapInterface){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Type", type);
+		new Soap().soapRequest("TabInfo_List", timeout, soapInterface, map);
+	}
+
 }
