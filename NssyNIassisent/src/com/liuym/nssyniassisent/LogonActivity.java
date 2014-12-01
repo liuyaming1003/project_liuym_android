@@ -6,6 +6,9 @@ import com.liuym.soap.Soap.SoapInterface;
 import com.liuym.teacher.TeacherActivity;
 import com.liuym.worker.WorkerActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,6 +27,9 @@ public class LogonActivity extends MainActivity {
 		
 		username = (EditText)findViewById(R.id.username);
 		password = (EditText)findViewById(R.id.password);
+		
+		username.setText(getLocal("username"));
+		password.setText(getLocal("password"));
 
 		findViewById(R.id.logon_button).setOnClickListener(new Button.OnClickListener() {			
 			@Override
@@ -37,6 +43,9 @@ public class LogonActivity extends MainActivity {
 						Object object = arrayList.get(0);
 						String logon_info = object.toString();
 						if(logon_info.equals("1")){
+							//保存用户名和密码
+							saveLocal("username", username.getText().toString());
+							saveLocal("password", password.getText().toString());
 							waittingDialog.show(LogonActivity.this, "", "识别用户角色, 请等待...");
 							nssySoap.Power_Judge(username.getText().toString(), 10000, new SoapInterface() {	
 								@Override
@@ -117,6 +126,20 @@ public class LogonActivity extends MainActivity {
 
 			}
 		});
+	}
+	
+	private void saveLocal(String key, String data){
+		SharedPreferences sharedPreferences = getSharedPreferences("Nssy", Context.MODE_PRIVATE);
+		Editor editor = sharedPreferences.edit();
+		editor.putString(key, data);
+		//保存数据
+		editor.commit();
+	}
+	
+	private String getLocal(String key){
+		SharedPreferences sharedPreferences = getSharedPreferences("Nssy", Context.MODE_PRIVATE);
+		//getString()第二个参数为缺省值，如果preference中不存在该key，将返回缺省值
+		return sharedPreferences.getString(key, "");
 	}
 
 	@Override

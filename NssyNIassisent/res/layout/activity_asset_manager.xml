@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/asset_left_textview"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/asset_left_bg"
                 android:drawableLeft="@drawable/asset_left_v_bg"

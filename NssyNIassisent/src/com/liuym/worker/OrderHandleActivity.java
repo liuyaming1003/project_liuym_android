@@ -83,7 +83,7 @@ public class OrderHandleActivity extends MainActivity{
 									jsonObject.put("Malfunction_type", fault.Malfunction_type);
 									jsonObject.put("Malfunction_Handle", fault.Malfunction_Handle);
 									jsonObject.put("Tab_Info", fault.Tab_Info);
-									jsonObject.put("Tab_Info", fault.Tab_Info);
+									//jsonObject.put("Tab_Info", fault.Tab_Info);
 									jsonObject.put("Accessory_Con", fault.Accessory_Con);
 									jsonArray.put(jsonObject);
 								} catch (JSONException e) {

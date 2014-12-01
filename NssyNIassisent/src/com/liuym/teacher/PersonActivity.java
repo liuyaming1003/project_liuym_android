@@ -86,7 +86,7 @@ public class PersonActivity extends MainActivity {
 						String result = arrayList.get(0).toString();
 						if(result.equals("s")){
 							showMessage("±¨ÐÞ³É¹¦");
-							if(!repari_phone.equals(username_phone_editText.getText().toString())){
+							if(Domain_UserName == mainData.getUserInfo().Domain_UserName && !repari_phone.equals(username_phone_editText.getText().toString())){
 								mainData.getUserInfo().Mobile_Tel = username_phone_editText.getText().toString();
 							}
 							pop();

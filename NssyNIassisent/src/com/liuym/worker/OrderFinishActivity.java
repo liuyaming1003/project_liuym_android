@@ -247,6 +247,7 @@ public class OrderFinishActivity extends MainActivity{
 		}
 		case 3:
 			//Ó²¼þ¸ü»»
+			faultObject.Tab_Info = "";
 			break;
 		}
 		return true;
