@@ -121,7 +121,6 @@
                         android:gravity="center"
                         android:hint="密  码  PASSWORD"
                         android:inputType="textPassword"
-                        android:maxLength="10"
                         android:singleLine="true" >
                     </EditText>
                 </RelativeLayout>
