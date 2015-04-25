@@ -1,0 +1,12 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/push_down_up</item>
+        <item name="android:windowExitAnimation">@anim/pop_up_down</item>
+    </style>
+
+</resources>

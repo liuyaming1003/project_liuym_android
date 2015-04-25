@@ -66,10 +66,10 @@ public class MainActivity extends Activity {
 		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
 	}
 
-	protected void pop(Class<?> inClass){
-		startActivity(new Intent(MainActivity.this, inClass));
-		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
-	}
+//	protected void pop(Class<?> inClass){
+//		startActivity(new Intent(MainActivity.this, inClass));
+//		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
+//	}
 
 	protected void pop(int resultCode, Map<String, Object> map){
 		Intent intent = new Intent();
@@ -85,8 +85,16 @@ public class MainActivity extends Activity {
 		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
 	}
 	
+	protected void pop(Class<?> inClass){
+		Intent intent = new Intent(MainActivity.this, inClass);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
+	}
+	
 	protected void pop(Class<?> inClass, int resultCode, Map<String, Object> map){
 		Intent intent = new Intent(MainActivity.this, inClass);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		Bundle bundle = new Bundle();
 		if(map != null){
 			SerializableMap serializableMap = new SerializableMap();
@@ -101,10 +109,12 @@ public class MainActivity extends Activity {
 	
 	
 
-	protected void popRoot(){
-		startActivity(new Intent(MainActivity.this, LogonActivity.class));
-		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
-	}
+//	protected void popRoot(){
+//		Intent intent = new Intent(MainActivity.this, LogonActivity.class);
+//		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//		startActivity(intent);
+//		overridePendingTransition(R.anim.navigation_pop_in, R.anim.navigation_pop_out);
+//	}
 
 
 

@@ -85,7 +85,7 @@ public class TeacherActivity extends MainActivity {
 		findViewById(R.id.logout_radiobutton).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				popRoot();
+				pop();
 			}
 		});
 

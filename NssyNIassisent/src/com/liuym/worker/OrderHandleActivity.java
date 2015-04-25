@@ -102,7 +102,7 @@ public class OrderHandleActivity extends MainActivity{
 								String result = arrayList.get(0).toString();
 								if(result.equals("s")){
 									showMessage("结案成功");
-									push(WorkerActivity.class);
+									pop(WorkerActivity.class);
 								}else{
 									showMessage("错误: " + result);
 								}

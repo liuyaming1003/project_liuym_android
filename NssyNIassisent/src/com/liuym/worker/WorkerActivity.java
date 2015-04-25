@@ -8,17 +8,14 @@ import java.util.Map;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.RadioButton;
 
 import com.liuym.adapter.MyListView;
 import com.liuym.adapter.MyListViewAdapter;
@@ -30,7 +27,6 @@ import com.liuym.nssyniassisent.R;
 import com.liuym.nssyniassisent.SerializableMap;
 import com.liuym.nssyniassisent.MainData.Repair_Recode;
 import com.liuym.nssyniassisent.MainData.System_Infomation;
-import com.liuym.nssyniassisent.MainData.UserRepairRecode;
 import com.liuym.soap.Soap.SoapInterface;
 import com.liuym.zxing.CaptureActivity;
 
@@ -62,7 +58,7 @@ import com.liuym.zxing.CaptureActivity;
 		findViewById(R.id.logout_radiobutton).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				popRoot();
+				pop();
 			}
 		});
 
@@ -217,7 +213,7 @@ import com.liuym.zxing.CaptureActivity;
 			findViewById(R.id.logout_radiobutton).setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					popRoot();
+					pop();
 				}
 			});
 			
